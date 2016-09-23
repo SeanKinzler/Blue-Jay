@@ -10,7 +10,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>I don't even want to die right now.</div>
+      <div>I don't even want to die right now. { this.state.cat }</div>
     );
   }
 }

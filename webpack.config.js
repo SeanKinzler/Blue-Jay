@@ -6,13 +6,11 @@ module.exports = {
     path: './client/bundled/',
     filename: 'bundle.js'
   },
-
-  target: 'node',
   module: {
     loaders: [{
       test: /\.jsx$/,
       exclude: '/node_modules | /server | /client/bundled ',
-      loader: 'babel-loader',
+      loader: 'babel',
       query: {
         presets: ['react', 'es2015']
       }
