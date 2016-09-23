@@ -20,17 +20,18 @@ var propagateToGlobal = function (window) {
   }
 };
 propagateToGlobal(win);
+bundle = require('../client/bundled/bundle.js');
 
 
 describe('Client tests', function () {
   describe('Landing page', function () {
-    before(function () {
-
-      bundle = require('../client/bundled/bundle.js');
-    });
-
     it('should contain an "app" div', function () {
       expect(!!document.getElementById('app')).to.equal(true);
+    });
+
+    it('should dynamically render React components', function () {
+      var reactElement = document.getElementById('app');
+      expect(!!reactElement.children.length).to.equal(true);
     });
   });
 });
