@@ -4,10 +4,11 @@
   "description": "A virtual classroom platform",
   "main": "index.js",
   "scripts": {
-    "test": "mocha tests",
+    "test": "webpack && mocha tests",
     "permatest": "mocha tests --no-exit --watch . ",
     "rb": "git pull upstream master --rebase && git push origin master",
-    "start": "nodemon server/index.js"
+    "start": "nodemon server/index.js",
+    "compile": "webpack -d --watch"
   },
   "repository": {
     "type": "git",
