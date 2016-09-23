@@ -13,16 +13,14 @@ describe('Example tests', function () {
 });
 
 describe('jsDOM', function () {
-
   it('should grab a window, given a url', function () {
     jsdom.env({
       url: 'http://www.google.com',
+      scripts: ["http://code.jquery.com/jquery.js"],
       done: function (errors, window) {
         expect(!!errors).to.equal(false);
         expect(!!window).to.equal(true);
       }
     });
   });
-
-  
 });
