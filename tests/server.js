@@ -9,18 +9,32 @@ var should = chai.should;
 describe('Server', function () {
 
   it('should have a "/users/login" endpoint', function (done) {
-    request(app).get('/users/login', function (err, resp, body) {
-      expect(!!err).to.equal(false);
-      done();
-    });
+    request(app)
+      .post('/users/login')
+      .send({
+        username: 'steve',
+        password: 'steveIsCool'
+      })
+      .end(function (err, resp, body) {
+        expect(!!resp).to.equal(true);
+        done();
+      });
   });
 
   it('should have a "/users/signup" endpoint', function (done) {
-    request(app).get('/users/signup', function (err, resp, body) {
-      expect(!!err).to.equal(false);
-      done();
-    });
+    request(app)
+      .post('/users/signup')
+      .send({
+        username: 'steve',
+        password: 'steveIsCool'
+      })
+      .end(function (err, resp, body) {
+        expect(!!resp).to.equal(true);
+        done();
+      });
   });
+
+
 });
 
 
