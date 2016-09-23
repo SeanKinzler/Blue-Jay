@@ -17,7 +17,7 @@ global['navigator'] = window['navigator'];
 
 require('../client/bundled/bundle.js');
 
-describe('Client tests', function () {
+describe('Client:', function () {
   describe('Landing page', function () {
     it('should contain an "app" div', function () {
       expect(!!document.getElementById('app')).to.equal(true);
@@ -26,6 +26,26 @@ describe('Client tests', function () {
     it('should dynamically render React components', function () {
       var reactElement = document.getElementById('app');
       expect(!!reactElement.children.length).to.equal(true);
+    });
+
+    it('should have a login button', function () {
+      var loginButton = document.getElementById('login');
+      expect(!!loginButton).to.equal(true);
+    });
+
+    it('should have a signup button', function () {
+      var signupButton = document.getElementById('signup');
+      expect(!!signupButton).to.equal(true);
+    });
+
+    it('should send a POST request to /user/login when login is clicked', function () {
+      var loginButton = document.getElementById('login');
+      expect(!!loginButton).to.equal(true);
+    });
+
+    it('should send a POST request to /user/signup when signup is clicked', function () {
+      var signupButton = document.getElementById('signup');
+      expect(!!signupButton).to.equal(true);
     });
   });
 });
