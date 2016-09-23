@@ -1,12 +1,11 @@
 var chai = require('chai');
 var sinon = require('sinon');
-var jsdom = require('jsdom');
+var jsdom = require('jsdom').jsdom;
 var expect = chai.expect;
 var should = chai.should;
-var bundle;
 
 
-var doc = jsdom.jsdom('<!doctype html><html><body><div id="app"></div></body></html>');
+var doc = jsdom('<!doctype html><html><body><div id="app"></div></body></html>');
 var win = doc.defaultView;
 global.document = doc;
 global.window = win;
@@ -18,9 +17,11 @@ var propagateToGlobal = function (window) {
       }
     }
   }
+  global['navigator'] = window['navigator'];
 };
 propagateToGlobal(win);
-bundle = require('../client/bundled/bundle.js');
+
+require('../client/bundled/bundle.js');
 
 
 describe('Client tests', function () {
