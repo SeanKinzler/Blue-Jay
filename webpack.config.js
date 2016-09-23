@@ -1,17 +1,21 @@
 var webpack = require('webpack');
 
 module.exports = {
-  entry: './client/testFile.js',
+  entry: './client/index.jsx',
   output: {
-    path: './bundled/',
+    path: './client/bundled/',
     filename: 'bundle.js'
   },
 
   target: 'node',
   module: {
     loaders: [{
-      exclude: '/node_modules | /server',
-      loader: 'babel-loader'
+      test: /\.jsx$/,
+      exclude: '/node_modules | /server | /client/bundled ',
+      loader: 'babel-loader',
+      query: {
+        presets: ['react', 'es2015']
+      }
     }]
   }
 };
