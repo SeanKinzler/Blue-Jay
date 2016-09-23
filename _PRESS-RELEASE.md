@@ -17,28 +17,28 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+  Skillstream: learn anywhere.
 
 ## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  Bringing motivated students and experts together.
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  Skillstream is the ultimate virtual classroom solution.  Motivated individuals can choose classes and instructors that fit their needs, giving students the freedom of choice.  Instructors can increase their student base around the world by accumulating positive reviews.
 
 ## Problem ##
-  > Describe the problem your product solves.
+  Skillstream gives the neighborhood piano teacher access to students across the globe, while allowing students to find the best.
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  Optimized video streaming, specialized classroom tools, and a motivated are what allows skillstream to increase opportunities without sacrificing teaching effectiveness. 
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+  Our goal is to make education available to busy people around the world.
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  Signin with Google or Facebook to join a class today!
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  Through Skillstream I found time to learn yoga despite my busy schedule, and I did it from home!
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  If you are motivated to learn something new, or are excited to share your knowledge with others, head over to Skillstreams.com and get started.

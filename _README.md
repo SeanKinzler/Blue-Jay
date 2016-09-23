@@ -1,12 +1,12 @@
-# Project Name
+# Skillstreams
 
 > Pithy project description
 
 ## Team
 
-  - __Product Owner__: teamMember
+  - __Product Owner__: Eric Zolayvar
   - __Scrum Master__: SeanKinzler
-  - __Development Team Members__: teamMember, teamMember
+  - __Development Team Members__: Chad Springer, David Moneysmith
 
 ## Table of Contents
 
