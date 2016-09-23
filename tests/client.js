@@ -27,8 +27,6 @@ describe('Client tests', function () {
       var reactElement = document.getElementById('app');
       expect(!!reactElement.children.length).to.equal(true);
     });
-
-    it('should send a ')
   });
 });
 
