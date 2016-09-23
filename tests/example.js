@@ -1,5 +1,6 @@
 var chai = require('chai');
 var sinon = require('sinon');
+var jsdom = require('jsdom');
 
 var should = chai.should;
 var expect = chai.expect;
