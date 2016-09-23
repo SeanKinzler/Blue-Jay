@@ -4,7 +4,7 @@
   "description": "A virtual classroom platform",
   "main": "index.js",
   "scripts": {
-    "test": "mocha tests",
+    "test": "mocha tests --watch .",
     "rb": "git pull upstream master --rebase && git push origin master"
   },
   "repository": {
