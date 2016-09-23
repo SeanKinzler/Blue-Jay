@@ -10,7 +10,9 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>I don't even want to die right now. { this.state.cat }</div>
+      <div onClick={function () {
+        console.log(this.state.cat);
+      }.bind(this)}>I am a cat.</div>
     );
   }
 }
