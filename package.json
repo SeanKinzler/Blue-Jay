@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha tests --watch .",
-    "rb": "git pull upstream master --rebase && git push origin master"
+    "rb": "git pull upstream master --rebase && git push origin master",
+    "start": "nodemon server/index.js"
   },
   "repository": {
     "type": "git",
