@@ -19,6 +19,8 @@ require('../client/bundled/bundle.js');
 
 describe('Client:', function () {
   describe('Landing page', function () {
+    var server, response;
+
     it('should contain an "app" div', function () {
       expect(!!document.getElementById('app')).to.equal(true);
     });
@@ -38,14 +40,41 @@ describe('Client:', function () {
       expect(!!signupButton).to.equal(true);
     });
 
-    it('should send a POST request to /user/login when login is clicked', function () {
-      var loginButton = document.getElementById('login');
-      expect(!!loginButton).to.equal(true);
+    before(function () {
+      server = sinon.fakeServer.create();
+      server.respondWith('POST', 'users/login', [
+        200,
+        { 'Content-Type': 'application/json' },
+        'Logged in!'
+      ]);
+
+      server.respondWith('POST', 'users/signup', [
+        200,
+        { 'Content-Type': 'application/json' },
+        'Signed up!'
+      ]);
     });
 
-    it('should send a POST request to /user/signup when signup is clicked', function () {
+    it('should POST to /users/login when login is clicked', function (done) {
+      var loginButton = document.getElementById('login');
+
+      loginButton.click();
+
+      setTimeout(function () {
+        expect(!!loginButton).to.equal(true);
+        done();
+      }, 0);
+    });
+
+    it('should POST to /users/signup when signup is clicked', function (done) {
       var signupButton = document.getElementById('signup');
-      expect(!!signupButton).to.equal(true);
+
+      signupButton.click();
+
+      setTimeout(function () {
+        expect(!!signupButton).to.equal(true);
+        done();
+      }, 0);
     });
   });
 });
