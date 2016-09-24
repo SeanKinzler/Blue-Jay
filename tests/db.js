@@ -9,6 +9,9 @@ var Sequelize = require('sequelize');
 var db = require('../server/db/db');
 var User = require('../server/db/userModel');
 var Class = require('../server/db/classModel');
+require('../server/db/user_classModel');
+
+// db.sync({force: true})
 describe('DB init tests', function () {
 
   it('is connected to the db', function(done) {
@@ -47,4 +50,31 @@ describe('DB init tests', function () {
       });
     });
   });
+
+  it ('should join users and classrooms', function(done) {
+    User.create({username: 'test', password: 'testpass'})
+    .then(function() {
+      User.findOne({where:{username: 'test'}})
+      .then(function(user) {
+        Class.create({classname: 'testclass'})
+        .then(function() {
+          Class.findOne({where: {classname: 'testclass'}})
+          .then(function(classroom) {
+            user.addClass(classroom)
+            .then(function() {
+              classroom.getUsers().then(function(joinUser) {
+                console.log('username: ', joinUser[0].username);
+                expect(joinUser[0].username).to.equal('test');
+                expect(joinUser[0].password).to.equal('testpass');
+                user.destroy();
+                classroom.destroy();
+                done();
+              })
+            })
+          })
+        })
+      })
+    })
+  })
 });
+
