@@ -1,17 +1,6 @@
-var express = require('express');
-var path = require('path');
-var app = express();
+var app = require('./config/app-config.js');
 
 var port = process.env.PORT || 8000;
-
-app.use(express.static(path.join(__dirname, '../client')));
-
-
-
-
-
-
-
 app.listen(port);
+console.log('Listening on port: ' + port);
 
-console.log('Listening on port:', port);
