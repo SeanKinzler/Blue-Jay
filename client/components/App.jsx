@@ -1,60 +1,46 @@
-import React, { Component } from 'react';
-import LoginForm from './loginForm.jsx';
-import SignupForm from './signupForm.jsx';
+// import React, { Component } from 'react';
+import {React} from 'react';
+import {ReactDOM} from 'react-dom';
+import {LoginPage} from './login';
+import {VideoPage} from './video';
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-  }
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      loggedIn: false
+    }
 
-  login(e) {
-    var username = document.getElementById('loginUsername').value;
-    var password = document.getElementById('loginPassword').value;
-    fetch('http://localhost:8000/users/login', {
-      method: 'POST',
-      body: JSON.stringify({
-        username: username,
-        password: password
-      })
-    }).then(function (response) {
-      response.json()
-      .then(function (json) {
-        console.log(json);
-      });
-    }).catch(function (error) {
-      console.log(error);
-    });
-  }
+    //Login Handlers:
+    this.loginHandlers = {
+      login: (event) => {
+        this.setState({loggedIn: true});
+      }
+    }
 
-  signup(e) {
-    var username = document.getElementById('signupUsername').value;
-    var password = document.getElementById('signupPassword1').value;
-    fetch('http://localhost:8000/users/signup', {
-      method: 'POST',
-      body: JSON.stringify({
-        username: username,
-        password: password
-      })
-    }).then(function (response) {
-      response.json()
-      .then(function (json) {
-        console.log(json);
-      });
-    }).catch(function (error) {
-      console.log(error);
-    });
+    //Video Handlers:
+    this.videoHandlers = {
+      start: (event) => { console.log('Start Video') },
+      stop: (event) => { console.log('Stop Video') }
+    }
   }
 
   render() {
     return (
       <div>
         <h1>Blue Jay</h1>
-        <LoginForm login={this.login} />
-        <SignupForm singup={this.signup} />
       </div>
     );
   }
+
+  // render() {
+  //   return (
+  //     <div>
+  //       <h1>Blue Jay</h1>
+  //       {this.state.loggedIn ? <Login /> : <Video />}
+  //     </div>
+  //   );
+  // }
 }
 
-
-
+ReactDOM.render(<App />, document.getElementById('app'));
