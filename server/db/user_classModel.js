@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-var db = require('./db');
+var db = require('./db.js');
 var User = require('./userModel');
 var Class = require('./classModel');
 
@@ -27,7 +27,7 @@ User.belongsToMany(Class, {
 Class.belongsToMany(User, {
   through: 'user_class',
   foreignKey: 'class_id'
-})
+});
 // console.log('synced');
 // user_class.sync({force: true})
 // module.exports = user_class;

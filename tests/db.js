@@ -20,6 +20,7 @@ describe('DB init tests', function () {
       done();
     }).catch(function(err) {
       assert(false, true, 'db connect failed');
+      done();
     });
   });
 
