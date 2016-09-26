@@ -126,7 +126,10 @@ if (location.hostname !== 'localhost') {
 }
 
 function maybeStart() {
-  console.log('>>>>>>> maybeStart() ', isStarted, localStream, isChannelReady);
+  console.log('>>>>>>> maybeStart() ');
+  console.log('isStarted: ' + isStarted);
+  console.log('localStream: ' + localStream);
+  console.log('isChannelReady' + isChannelReady);
   if (!isStarted && typeof localStream !== 'undefined' && isChannelReady) {
     console.log('>>>>>> creating peer connection');
     createPeerConnection();

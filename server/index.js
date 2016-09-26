@@ -1,7 +1,7 @@
 var app = require('./config/app-config.js');
 var path = require('path');
 var nodeStatic = require('node-static');
-var socketIO = require('socket.io');
+var socketIO = require('socket.io')();
 var fs = require('fs');
 var os = require('os');
 var https = require('https');
@@ -35,7 +35,8 @@ io.sockets.on('connection', function(socket) {
   socket.on('create or join', function(room) {
     log('Received request to create or join room ' + room);
 
-    var numClients = io.sockets.sockets.length;
+    socket.emit('join');
+    var numClients = 1;
     log('Room ' + room + ' now has ' + numClients + ' client(s)');
 
     if (numClients === 1) {

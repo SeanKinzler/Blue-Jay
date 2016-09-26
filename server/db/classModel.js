@@ -12,7 +12,7 @@ var Class = db.define('classes', {
     allowNull: false, 
     unique: true
   }
-})
+});
 // console.log('synced');
 // Class.sync({force: true})
 module.exports = Class;

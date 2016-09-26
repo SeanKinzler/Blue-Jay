@@ -24,7 +24,7 @@ var User = db.define('users', {
   password: {
     type: Sequelize.STRING
   }
-})
+});
 // console.log('synced');
 // User.sync({force: true})
 module.exports = User;
