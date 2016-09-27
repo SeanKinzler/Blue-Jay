@@ -9,9 +9,15 @@ export default () => {
     		<div className='col s12 l6'>
 		    	<h4>Upcoming</h4>
 		    	<ul>
-		    		<li>Time: Now - Channel: One - Topic</li>
-		    		<li>Time: Tomorrow 12:30pm - Channel: Two - Topic</li>
-		    		<li>Time: Saturday 4:00pm - Channel: Three - Topic</li>
+		    		<li>
+		    			<Link to='channel/one'>Time: Now - Channel: One - Topic</Link>
+		    		</li>
+		    		<li>
+		    			<Link to='channel/two'>Time: Tomorrow 12:30pm - Channel: Two - Topic</Link>
+		    		</li>
+		    		<li>
+		    			<Link to='channel/three'>Time: Saturday 4:00pm - Channel: Three - Topic</Link>
+		    		</li>
 		    	</ul>
 		    </div>
 		    <div className='col s12 l6'>		    

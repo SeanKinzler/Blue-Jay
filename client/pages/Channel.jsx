@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import Video from '../components/Video.jsx';
 import {Link} from 'react-router';
-export default () => {
-
+export default ({params}) => {
   return(
     <div className=''>
-      <h1 className='center-align'>Ins Class Name Here</h1>
+      <h4 className='center-align'>Channel: { `${params.channelId}` }</h4>
       <Video />
       <div id='infoPane'>
         <div className='teal' id='infoBanner'>
@@ -13,7 +12,5 @@ export default () => {
         </div>
       </div>
     </div>
-    )
-  
+  )  
 }
-
