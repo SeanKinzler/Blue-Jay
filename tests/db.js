@@ -7,9 +7,6 @@ var assert = chai.assert;
 
 var Sequelize = require('sequelize');
 var db = require('../server/db/db');
-var User = require('../server/db/userModel');
-var Class = require('../server/db/classModel');
-require('../server/db/user_classModel');
 
 // db.sync({force: true})
 describe('DB init tests', function () {
@@ -24,6 +21,9 @@ describe('DB init tests', function () {
     });
   });
 
+  var User = require('../server/db/userModel');
+  var Class = require('../server/db/classModel');
+  require('../server/db/user_classModel');
   it('should add a user', function (done) {
     User.create({username: 'test', password: 'testpass'})
     .then(function() {
