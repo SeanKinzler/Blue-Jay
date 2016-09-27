@@ -27,7 +27,6 @@ var room = prompt('What room do you want to join?') || 'lobby';
 // room = prompt('Enter room name:');
 
 var socket = io.connect();
-console.log('>>>>>>>>>>>>>>>>>>>>>>>>>', io.connect.toString());
 if (room !== '') {
   socket.emit('create or join', room);
   console.log('Attempted to create or  join room', room);
