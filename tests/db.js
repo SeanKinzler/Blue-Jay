@@ -31,9 +31,9 @@ describe('DB init tests', function () {
         where: {username: 'test'}
       })
       .then(function(user) {
-        expect(user.password).to.equal('testpass')
+        expect(user.password).to.equal('testpass');
         user.destroy();
-        done()
+        done();
       });
     });
   });
@@ -55,7 +55,7 @@ describe('DB init tests', function () {
   it ('should join users and classrooms', function(done) {
     User.create({username: 'test', password: 'testpass'})
     .then(function() {
-      User.findOne({where:{username: 'test'}})
+      User.findOne({where: {username: 'test'}})
       .then(function(user) {
         Class.create({classname: 'testclass'})
         .then(function() {
@@ -70,12 +70,12 @@ describe('DB init tests', function () {
                 user.destroy();
                 classroom.destroy();
                 done();
-              })
-            })
-          })
-        })
-      })
-    })
-  })
+              });
+            });
+          });
+        });
+      });
+    });
+  });
 });
 
