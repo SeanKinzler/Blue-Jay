@@ -9,7 +9,7 @@ render((
   <Router history={browserHistory}> 
     <Route path='/' component={App}>
       <IndexRoute component={Dashboard} />
-      <Route path='/channel' component={Channel} />
+      <Route path='channel/:channelId' component={Channel} />
     </Route>
   </Router>
   ), document.getElementById('App'));
