@@ -37,11 +37,11 @@ export default class Video extends Component {
     return (
     <div className="page videoPage">
       <h1>Video Here</h1>
-      <video id="localVideo" muted autoPlay></video>
-      <video id="remoteVideo" autoPlay></video>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.js"></script>
-      <script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-      <script type="text/javascript" src="./lib/webRTC.js"></script>
+      <div id="putVidsHere">
+        <video id="localVideo" muted autoPlay></video>
+        <video id="remoteVideo" autoPlay></video>
+      </div>
+
     </div>
     );
   }
