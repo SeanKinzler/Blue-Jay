@@ -8,8 +8,8 @@ import Dashboard from './pages/Dashboard.jsx';
 render((
   <Router history={browserHistory}> 
     <Route path='/' component={App}>
-      <IndexRoute component={Dashboard} />
-      <Route path='/channel' component={Channel} />
+      <IndexRoute component={Channel} />
+      <Route path='/channel' component={Dashboard} />
     </Route>
   </Router>
   ), document.getElementById('App'));

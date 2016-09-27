@@ -36,10 +36,22 @@ export default class Video extends Component {
   render () {
     return (
     <div>
-      <h1 className="center-align">Video Here</h1>
-      <div className="row center-align" id="putVidsHere">
-        <video className="col s4" id="localVideo" muted autoPlay></video>
-        <video className="col s4" id="remoteVideo" autoPlay></video>
+      <div className='row' id='putVidsHere'>
+        <video className='col s8' id='localVideo'
+          poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png" 
+          muted autoPlay></video>
+        <div className='col s4'>
+          <video  className='col s12' id='remoteVideo'
+          poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png"
+          autoPlay></video>
+          <div className='container'>
+            <h5>chat app?</h5>
+            <h5>chat app?</h5>
+            <h5>chat app?</h5>
+            <h5>chat app?</h5>
+          </div>
+        </div>
+        
       </div>
 
     </div>
