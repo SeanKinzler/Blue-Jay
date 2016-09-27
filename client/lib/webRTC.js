@@ -176,6 +176,10 @@ function handleIceCandidate(event) {
 }
 
 function handleRemoteStreamAdded(event) {
+  // var newVid = document.createElement('video');
+  // newVid.src = window.URL.createObjectURL(event.stream);
+  // var vidDiv = document.getElementById('putVidsHere');
+  // vidDiv.appendChild(newVid);
   console.log('Remote stream added.');
   remoteVideo.src = window.URL.createObjectURL(event.stream);
   remoteStream = event.stream;
