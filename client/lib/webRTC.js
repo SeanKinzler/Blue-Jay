@@ -22,7 +22,7 @@ var sdpConstraints = {
 
 /////////////////////////////////////////////
 
-var room = 'lobby';
+var room = prompt('What room do you want to join?') || 'lobby';
 // Could prompt for room name:
 // room = prompt('Enter room name:');
 

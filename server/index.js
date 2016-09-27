@@ -15,7 +15,6 @@ var fileServer = new nodeStatic.Server();
 
 var server = https.createServer(serverConfig, app);
 
-
 var io = socketIO.listen(server);
 io.sockets.on('connection', function(socket) {
   console.log('connected!');
