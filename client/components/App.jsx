@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { render } from 'react-dom';
+import { Router, IndexRoute, Route, browserHistory, Link } from 'react-router';
 import LoginForm from './LoginForm.jsx';
 import SignupForm from './SignupForm.jsx';
 import Video from './Video.jsx';
+import Dashboard from '../pages/Dashboard.jsx';
 
 export default class App extends Component {
   constructor(props) {
@@ -53,12 +56,11 @@ export default class App extends Component {
   }
   //<LoginForm loginHandler={this.loginHandler.bind(this)} />
   render() {
+    var children = this.props.children;
     return (
       <div>
         <h1>Blue Jay!</h1>
-        <Video />
-        <p>break</p>
-        <SignupForm signupHandler={this.signupHandler.bind(this)} />
+        { children } 
       </div>
     );
   }
