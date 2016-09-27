@@ -35,11 +35,11 @@ export default class Video extends Component {
 
   render () {
     return (
-    <div className="page videoPage">
-      <h1>Video Here</h1>
-      <div id="putVidsHere">
-        <video id="localVideo" muted autoPlay></video>
-        <video id="remoteVideo" autoPlay></video>
+    <div>
+      <h1 className="center-align">Video Here</h1>
+      <div className="row center-align" id="putVidsHere">
+        <video className="col s4" id="localVideo" muted autoPlay></video>
+        <video className="col s4" id="remoteVideo" autoPlay></video>
       </div>
 
     </div>
