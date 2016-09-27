@@ -10,7 +10,7 @@ export default ({signupHandler}) => {
   			<input type='password' name='password2' placeholder='Confirm password' required />
   			<input type='submit' name='submit' value='Submit' />
   		</form>
-  	</div>
+    </div>
   );
 };
 

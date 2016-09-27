@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import LoginForm from './LoginForm.jsx';
 import SignupForm from './SignupForm.jsx';
+import Video from './Video.jsx';
 
 export default class App extends Component {
   constructor(props) {
@@ -50,12 +51,13 @@ export default class App extends Component {
       console.log(error);
     })
   }
-
+  //<LoginForm loginHandler={this.loginHandler.bind(this)} />
   render() {
     return (
       <div>
         <h1>Blue Jay!</h1>
-        <LoginForm loginHandler={this.loginHandler.bind(this)} />
+        <Video />
+        <p>break</p>
         <SignupForm signupHandler={this.signupHandler.bind(this)} />
       </div>
     );
