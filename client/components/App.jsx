@@ -5,6 +5,7 @@ import LoginForm from './LoginForm.jsx';
 import SignupForm from './SignupForm.jsx';
 import Video from './Video.jsx';
 import Dashboard from '../pages/Dashboard.jsx';
+import NavBar from './NavBar.jsx';
 
 export default class App extends Component {
   constructor(props) {
@@ -59,7 +60,7 @@ export default class App extends Component {
     var children = this.props.children;
     return (
       <div>
-        <h1>Blue Jay!</h1>
+        <NavBar />
         { children } 
       </div>
     );
