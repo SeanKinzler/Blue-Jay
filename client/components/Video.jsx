@@ -37,13 +37,13 @@ export default class Video extends Component {
     return (
     <div>
       <div className='row' id='putVidsHere'>
-        <video className='col s8' id='localVideo'
+        <video className='col s8' id='remoteVideo'
           poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png" 
-          muted autoPlay></video>
-        <div className='col s4'>
-          <video  className='col s12' id='remoteVideo'
-          poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png"
           autoPlay></video>
+        <div className='col s4'>
+          <video  className='col s12' id='localVideo'
+          poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png"
+          mute autoPlay></video>
           <div className='container'>
             <h5>chat app?</h5>
             <h5>chat app?</h5>
