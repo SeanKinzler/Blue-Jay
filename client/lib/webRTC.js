@@ -22,12 +22,11 @@ var sdpConstraints = {
 
 /////////////////////////////////////////////
 
-var room = 'lobby';
+var room = prompt('What room do you want to join?') || 'lobby';
 // Could prompt for room name:
 // room = prompt('Enter room name:');
 
 var socket = io.connect();
-
 if (room !== '') {
   socket.emit('create or join', room);
   console.log('Attempted to create or  join room', room);
@@ -177,6 +176,10 @@ function handleIceCandidate(event) {
 }
 
 function handleRemoteStreamAdded(event) {
+  // var newVid = document.createElement('video');
+  // newVid.src = window.URL.createObjectURL(event.stream);
+  // var vidDiv = document.getElementById('putVidsHere');
+  // vidDiv.appendChild(newVid);
   console.log('Remote stream added.');
   remoteVideo.src = window.URL.createObjectURL(event.stream);
   remoteStream = event.stream;

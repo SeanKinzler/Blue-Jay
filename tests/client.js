@@ -29,53 +29,6 @@ describe('Client:', function () {
       var reactElement = document.getElementById('app');
       expect(!!reactElement.children.length).to.equal(true);
     });
-
-    it('should have a login button', function () {
-      var loginButton = document.getElementById('login');
-      expect(!!loginButton).to.equal(true);
-    });
-
-    it('should have a signup button', function () {
-      var signupButton = document.getElementById('signup');
-      expect(!!signupButton).to.equal(true);
-    });
-
-    before(function () {
-      server = sinon.fakeServer.create();
-      server.respondWith('POST', 'users/login', [
-        200,
-        { 'Content-Type': 'application/json' },
-        'Logged in!'
-      ]);
-
-      server.respondWith('POST', 'users/signup', [
-        200,
-        { 'Content-Type': 'application/json' },
-        'Signed up!'
-      ]);
-    });
-
-    it('should POST to /users/login when login is clicked', function (done) {
-      var loginButton = document.getElementById('login');
-
-      loginButton.click();
-
-      setTimeout(function () {
-        expect(!!loginButton).to.equal(true);
-        done();
-      }, 0);
-    });
-
-    it('should POST to /users/signup when signup is clicked', function (done) {
-      var signupButton = document.getElementById('signup');
-
-      signupButton.click();
-
-      setTimeout(function () {
-        expect(!!signupButton).to.equal(true);
-        done();
-      }, 0);
-    });
   });
 });
 
