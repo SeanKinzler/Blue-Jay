@@ -1,56 +1,62 @@
 import React, { Component } from 'react';
-import LoginForm from './loginForm.jsx';
-import SignupForm from './signupForm.jsx';
+import LoginForm from './LoginForm.jsx';
+import SignupForm from './SignupForm.jsx';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      authenticated: false
+    };
   }
 
-  login(e) {
-    var username = document.getElementById('loginUsername').value;
-    var password = document.getElementById('loginPassword').value;
-    fetch('https://localhost:8443/users/login', {
+
+  loginHandler(e) {
+    e.preventDefault();
+    fetch('https://localhost:8000/users/login', {
       method: 'POST',
       body: JSON.stringify({
-        username: username,
-        password: password
+        username: e.target.username.value,
+        password: e.target.password.value
       })
-    }).then(function (response) {
-      response.json()
-      .then(function (json) {
-        console.log(json);
-      });
-    }).catch(function (error) {
+    })
+    .then((response) => {
+      this.state = {authenticated: true}
+    })
+    .catch((error) => {
       console.log(error);
-    });
+    })
   }
 
-  signup(e) {
-    var username = document.getElementById('signupUsername').value;
-    var password = document.getElementById('signupPassword1').value;
-    fetch('https://localhost:8443/users/signup', {
+  signupHandler(e) {
+    e.preventDefault();
+    // Place this logic elsewhere
+    if (e.target.password1.value !== e.target.password2.value) {
+      alert('Passwords dont match')
+      return;
+    }
+    fetch('https://localhost:8000/users/signup', {
       method: 'POST',
       body: JSON.stringify({
-        username: username,
-        password: password
+        username: e.target.username.value,
+        password1: e.target.password1.value,
+        password2: e.target.password2.value
       })
-    }).then(function (response) {
-      response.json()
-      .then(function (json) {
-        console.log(json);
-      });
-    }).catch(function (error) {
+    })
+    .then((response) => {
+      this.state = {authenticated: true}
+    })
+    .catch((error) => {
       console.log(error);
-    });
+    })
   }
 
   render() {
     return (
       <div>
-        <h1>Blue Jay</h1>
-        <LoginForm login={this.login} />
-        <SignupForm singup={this.signup} />
+        <h1>Blue Jay!</h1>
+        <LoginForm loginHandler={this.loginHandler.bind(this)} />
+        <SignupForm signupHandler={this.signupHandler.bind(this)} />
       </div>
     );
   }
