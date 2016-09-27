@@ -37,8 +37,11 @@ export default class Video extends Component {
     return (
     <div className="page videoPage">
       <h1>Video Here</h1>
-      <video id="localVideo" muted autoPlay></video>
-      <video id="remoteVideo" autoPlay></video>
+      <div id="putVidsHere">
+        <video id="localVideo" muted autoPlay></video>
+        <video id="remoteVideo" autoPlay></video>
+      </div>
+
     </div>
     );
   }
