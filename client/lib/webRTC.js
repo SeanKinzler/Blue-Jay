@@ -26,10 +26,10 @@ var ICE = {
 
 // FOR KINZLER TO EDIT. //////////////////////////////////////////////////////////////////////
 
-var addVideo = function (source) {
+var addVideo = function (source, elementId) {
 
   var video = document.createElement('video');
-  video.id = targetUserId;
+  video.id = elementId;
   video.src = window.URL.createObjectURL(source);
   
   document.getElementById('putVidsHere').appendChild(video);
@@ -64,7 +64,7 @@ var sendOffer = function (targetUserId, yourUserId) {
     peers[id].addStream(mediaStream);
 
     peers[id].onaddstream = function (media) {
-      addVideo(media.stream);
+      addVideo(media.stream, targetUserId);
     };
 
     peers[id].onicecandidate = function (event) {
@@ -121,7 +121,7 @@ var sendAnswer = function (receivedData) {
     peers[id].addStream(mediaStream);
 
     peers[id].onaddstream = function (media) {
-      addVideo(media.stream);
+      addVideo(media.stream, receivedData.returnAddress);
     };
 
     peers[id].onicecandidate = function (event) {
