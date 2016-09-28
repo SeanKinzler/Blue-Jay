@@ -18,17 +18,36 @@ var server = https.createServer(serverConfig, app);
 var io = socketIO.listen(server);
 
 io.sockets.on('connection', function(socket) {
-  var user;
 
-  socket.on('start', function (data) {
-    user = data;
-    console.log(user);
+  socket.on('offer', function (data) {
+    socket.to(data.recipient).emit('offer', data);
+  });
+
+  socket.on('answer', function (data) {
+    socket.to(data.recipient).emit('answer', data);
   });
 
   socket.on('check', function (roomName) {
     if (socket.adapter.rooms[roomName]) {
+      var userIds = [];
+      var yourId;
+
+      for (var key in socket.adapter.rooms[roomName].sockets) {
+        userIds.push(key);
+      }
+
       socket.join(roomName);
-      socket.emit('joined', 'You have joined the room: "' + roomName + '"');
+      for (var key in socket.adapter.rooms[roomName].sockets) {
+        if (userIds.indexOf(key) === -1) {
+          yourId = key;
+        }
+      }
+
+      socket.emit('joined', {
+        message: 'You have joined the room: "' + roomName + '"',
+        userIds: userIds,
+        yourId: yourId
+      });
     } else {
       socket.join(roomName);
       socket.emit('created', 'You have created the room: "' + roomName + '"');
