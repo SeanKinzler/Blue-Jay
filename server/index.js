@@ -25,6 +25,16 @@ io.sockets.on('connection', function(socket) {
     console.log(user);
   });
 
+  socket.on('check', function (roomName) {
+    if (socket.adapter.rooms[roomName]) {
+      socket.join(roomName);
+      socket.emit('joined', 'You have joined the room: "' + roomName + '"');
+    } else {
+      socket.join(roomName);
+      socket.emit('created', 'You have created the room: "' + roomName + '"');
+    }
+  });
+
 });
 
 

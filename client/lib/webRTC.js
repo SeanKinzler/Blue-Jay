@@ -1,26 +1,38 @@
-var user;
+var room;
+var peers = {};
 
-while (!user) {
-  user = prompt('What is your username?');
+while (!localStorage.user) {
+  localStorage.user = prompt('What is your username?');
+}
+
+while (!room) {
+  room = prompt('Which room do you want to join?');
 }
 
 socket = io.connect();
 
-socket.emit('start', user);
+socket.on('joined', function (data) {
+  console.log(data);
+});
 
-navigator.getUserMedia({
+socket.on('created', function (data) {
+  console.log(data);
+});
 
-  video: true,
-  audio: true 
+socket.emit('start', localStorage.user);
 
-}, function (stream) {
+var askForCamera = function () {
+  navigator.getUserMedia({
+    video: true,
+    audio: false, 
+  }, function (stream) {
+    var localSrc = window.URL.createObjectURL(stream);
+    document.getElementById('localVideo').src = localSrc;
+  }, function (error) {
+    setTimeout(function () {
+      askForCamera();
+    }, 500);
+  });
+}; askForCamera();
 
-  var videoSrc = window.URL.createObjectURL(stream);
-  
-  document.getElementById('localVideo');
-
-}, function (error) {
-  
-  console.log(error);
-
-})
+socket.emit('check', room);
