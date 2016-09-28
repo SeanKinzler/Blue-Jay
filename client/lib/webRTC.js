@@ -40,24 +40,46 @@ var askForCamera = function () {
 
 var sendOffer = function (targetUserId, yourUserId) {
   peers.length++;
-  var id = peers.length + '';
+  var id = targetUserId;
   navigator.getUserMedia({
     video: true,
     audio: true
   }, function (mediaStream) {
     peers[id] = new RTCPeerConnection(ICE);
 
+    peers[id].addStream(mediaStream);
+
     peers[id].onaddstream = function (media) {
-      document.getElementById('remoteVideo').src = window.URL.createObjectURL(media);
+      var video = document.createElement('video');
+      video.src = window.URL.createObjectURL(media.stream);
+      document.getElementById('putVidsHere').appendChild(video);
     };
 
     peers[id].onicecandidate = function (event) {
-      if (event.candidate) {
-
+      if (!!event.candidate) {
+        socket.emit('ice-candidate', {
+          recipient: targetUserId,
+          candidate: event.candidate,
+          returnAddress: yourUserId,
+        });
+      } else {
+        socket.emit('ice-merge', {
+          recipient: targetUserId,
+          sdp: peers[id].localDescription,
+          returnAddress: yourUserId,
+        });
       }
     };
 
-    peers[id].addStream(mediaStream);
+    peers[id].oniceconnectionstatechange = function(event) {
+      if (peers[id].iceConnectionState === 'completed') {
+        socket.emit('ice-merge', {
+          recipient: targetUserId,
+          sdp: peers[id].localDescription,
+          returnAddress: yourUserId,
+        });
+      }
+    };
 
     peers[id].createOffer(function (offerObj) {
       peers[id].setLocalDescription(offerObj);
@@ -66,7 +88,7 @@ var sendOffer = function (targetUserId, yourUserId) {
         offer: offerObj,
         returnAddress: yourUserId,
       });
-      console.log('Sent offer!')
+      console.log('Sent offer!');
     }, function (error) {
       console.log(error);
     });
@@ -77,26 +99,51 @@ var sendOffer = function (targetUserId, yourUserId) {
 
 var sendAnswer = function (receivedData) {
   peers.length++;
-  var id = peers.length + '';
+  var id = receivedData.returnAddress;
   navigator.getUserMedia({
     video: true,
     audio: true,
   }, function (mediaStream) {
     peers[id] = new RTCPeerConnection(ICE);
 
+    peers[id].addStream(mediaStream);
+
     peers[id].onaddstream = function (media) {
-      document.getElementById('remoteVideo').src = window.URL.createObjectURL(media);
+      var video = document.createElement('video');
+      video.src = window.URL.createObjectURL(media.stream);
+      document.getElementById('putVidsHere').appendChild(video); 
     };
 
     peers[id].onicecandidate = function (event) {
-      if (event.candidate) {
-
+      if (!!event.candidate) {
+        socket.emit('ice-candidate', {
+          recipient: receivedData.returnAddress,
+          candidate: event.candidate,
+          returnAddress: receivedData.recipient,
+        });
+      } else {
+        socket.emit('ice-merge', {
+          recipient: receivedData.returnAddress,
+          sdp: peers[id].localDescription,
+          returnAddress: receivedData.recipient,
+        });
       }
     };
 
-    peers[id].addStream(mediaStream);
+    peers[id].oniceconnectionstatechange = function(event) {
+      if (peers[id].iceConnectionState === 'completed') {
+        socket.emit('ice-merge', {
+          recipient: receivedData.returnAddress,
+          sdp: peers[id].localDescription,
+          returnAddress: receivedData.recipient,
+        });
+      }
+    };
 
-    peers[id].setRemoteDescription(new RTCSessionDescription(receivedData.offer));
+    peers[id].setRemoteDescription(new RTCSessionDescription(receivedData.offer))
+    .catch(function (error) {
+      console.log(error);
+    });
 
     peers[id].createAnswer(function (answerObj) {
       peers[id].setLocalDescription(answerObj);
@@ -118,7 +165,7 @@ var sendAnswer = function (receivedData) {
 socket = io.connect();
 
 socket.on('joined', function (data) {
-  
+  console.log(data.message);
   data.userIds.forEach(function (user, index) {
     sendOffer(user, data.yourId);
   });
@@ -127,21 +174,39 @@ socket.on('joined', function (data) {
   console.log(error);
 });
 
-socket.on('offer', function (data) {
-  console.log('Got offer!:'); 
-  console.log(data);
-  sendAnswer(data);
-});
-
-socket.on('answer', function (data) {
-  console.log('Got answer!:\n');
-  console.log(data);
-});
-
 socket.on('created', function (data) {
   console.log(data);
 });
 
+socket.on('offer', function (data) {
+  console.log('Got offer!'); 
+  sendAnswer(data);
+});
+
+socket.on('answer', function (data) {
+  console.log('Got answer!\n');
+  peers[data.returnAddress].setRemoteDescription(new RTCSessionDescription(data.answer))
+  .catch(function (error) {
+    console.log(error);
+  });
+});
+
+socket.on('ice-candidate', function (data) {
+  if (!!peers[data.returnAddress]) {
+    peers[data.returnAddress].addIceCandidate(new RTCIceCandidate(data.candidate))
+    .catch(function (error) {
+      console.error(error);
+    });
+  }
+});
+
+socket.on('ice-merge', function (data) {
+  console.log(peers);
+  peers[data.returnAddress].setRemoteDescription(new RTCSessionDescription(data.sdp))
+  .catch(function (error) {
+    console.log(error);
+  });
+});
 
 askForCamera();
 

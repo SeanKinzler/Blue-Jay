@@ -27,6 +27,14 @@ io.sockets.on('connection', function(socket) {
     socket.to(data.recipient).emit('answer', data);
   });
 
+  socket.on('ice-candidate', function (data) {
+    socket.to(data.recipient).emit('ice-candidate', data);
+  });
+
+  socket.on('ice-merge', function (data) {
+    socket.to(data.recipient).emit('ice-merge', data);
+  });
+
   socket.on('check', function (roomName) {
     if (socket.adapter.rooms[roomName]) {
       var userIds = [];
@@ -53,7 +61,6 @@ io.sockets.on('connection', function(socket) {
       socket.emit('created', 'You have created the room: "' + roomName + '"');
     }
   });
-
 });
 
 
