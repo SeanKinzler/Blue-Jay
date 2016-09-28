@@ -24,6 +24,20 @@ var ICE = {
   iceServers: [STUN, TURN]
 };
 
+// FOR KINZLER TO EDIT. //////////////////////////////////////////////////////////////////////
+
+var addVideo = function (source) {
+
+  var video = document.createElement('video');
+  video.id = targetUserId;
+  video.src = window.URL.createObjectURL(source);
+  
+  document.getElementById('putVidsHere').appendChild(video);
+
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
 var askForCamera = function () {
   navigator.getUserMedia({
     video: true,
@@ -36,7 +50,7 @@ var askForCamera = function () {
       askForCamera();
     }, 500);
   });
-}; 
+};
 
 var sendOffer = function (targetUserId, yourUserId) {
   peers.length++;
@@ -50,10 +64,7 @@ var sendOffer = function (targetUserId, yourUserId) {
     peers[id].addStream(mediaStream);
 
     peers[id].onaddstream = function (media) {
-      var video = document.createElement('video');
-      video.id = targetUserId;
-      video.src = window.URL.createObjectURL(media.stream);
-      document.getElementById('putVidsHere').appendChild(video);
+      addVideo(media.stream);
     };
 
     peers[id].onicecandidate = function (event) {
@@ -110,10 +121,7 @@ var sendAnswer = function (receivedData) {
     peers[id].addStream(mediaStream);
 
     peers[id].onaddstream = function (media) {
-      var video = document.createElement('video');
-      video.id = receivedData.returnAddress;
-      video.src = window.URL.createObjectURL(media.stream);
-      document.getElementById('putVidsHere').appendChild(video); 
+      addVideo(media.stream);
     };
 
     peers[id].onicecandidate = function (event) {
