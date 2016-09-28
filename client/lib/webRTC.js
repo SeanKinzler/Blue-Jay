@@ -51,6 +51,7 @@ var sendOffer = function (targetUserId, yourUserId) {
 
     peers[id].onaddstream = function (media) {
       var video = document.createElement('video');
+      video.id = targetUserId;
       video.src = window.URL.createObjectURL(media.stream);
       document.getElementById('putVidsHere').appendChild(video);
     };
@@ -110,6 +111,7 @@ var sendAnswer = function (receivedData) {
 
     peers[id].onaddstream = function (media) {
       var video = document.createElement('video');
+      video.id = receivedData.returnAddress;
       video.src = window.URL.createObjectURL(media.stream);
       document.getElementById('putVidsHere').appendChild(video); 
     };
