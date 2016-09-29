@@ -18,7 +18,7 @@ app.post('/users/signup', (req, res) => {
 
 // Catch-all will redirect to react app then re-routed by react-router
 app.get('*', (req, res) => {
-	                    res.sendFile(path.resolve(__dirname, '../../client', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '../../client', 'index.html'));
 });
 
 module.exports = app;
