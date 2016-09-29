@@ -19,6 +19,10 @@ var Class = require('./classModel');
 //   }
 // })
 
+Class.belongsTo(User, {
+  as: 'Instructor'
+});
+
 User.belongsToMany(Class, {
   through: 'user_class',
   foreignKey: 'user_id'
@@ -28,6 +32,7 @@ Class.belongsToMany(User, {
   through: 'user_class',
   foreignKey: 'class_id'
 });
+
 // console.log('synced');
 // user_class.sync({force: true})
 // module.exports = user_class;

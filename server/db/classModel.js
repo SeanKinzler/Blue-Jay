@@ -11,7 +11,25 @@ var Class = db.define('classes', {
     type: Sequelize.STRING, 
     allowNull: false, 
     unique: true
-  }
+  },
+  access: {
+    type: Sequelize.BOOLEAN,
+    // allowNull: false,
+  },
+  keywords: {
+    type: Sequelize.STRING,
+    // allowNull: false,
+
+  },
+  scheduleDays: {
+    type: Sequelize.STRING,
+    // allowNull: false,
+  },
+  scheduleTime: {
+    type: Sequelize.STRING,
+    // allowNull: false,
+  },
+
 });
 // console.log('synced');
 // Class.sync({force: true})

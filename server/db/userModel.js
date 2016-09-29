@@ -12,15 +12,16 @@ var User = db.define('users', {
     allowNull: false, 
     unique: true
   }, 
-  // firstName: {
-  //   type: Sequelize.STRING
-  // },
-  // lastName: {
-  //   type: Sequelize.STRING
-  // },
-  // email: {
-  //   type: Sequelize.STRING, unique: true
-  // },
+  firstName: {
+    type: Sequelize.STRING
+  },
+  lastName: {
+    type: Sequelize.STRING
+  },
+  email: {
+    type: Sequelize.STRING, 
+    // unique: true
+  },
   password: {
     type: Sequelize.STRING
   }

@@ -3,13 +3,8 @@ import Video from '../components/Video.jsx';
 import {Link} from 'react-router';
 export default ({params}) => {
   return(
-<<<<<<< af0e03dee7900bb9c4cf78c7df0b0188428c88d0
     <div className=''>
       <h4 className='center-align'>Channel: { `${params.channelId}` }</h4>
-=======
-    <div>
-      <h1 className='center-align'>Ins Class Name Here</h1>
->>>>>>> add to teacher/class info
       <Video />
       <div id='infoPane'>
         <div className='teal' id='infoBanner'>
