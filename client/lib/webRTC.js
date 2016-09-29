@@ -45,6 +45,22 @@ var addVideo = function (source, elementId) {
   }
 };
 
+var removeVideo = function (id) {
+
+  var addedVideo = document.getElementById(id);
+
+  if (!addedVideo) {
+
+    document.getElementById('remoteVideo').src = '';
+
+  } else {
+
+    addedVideo.parentNode.removeChild(addedVideo);
+
+  }
+
+};
+
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 var askForCamera = function () {
@@ -99,6 +115,8 @@ var sendOffer = function (targetUserId, yourUserId) {
           sdp: peers[id].localDescription,
           returnAddress: yourUserId,
         });
+      } else if (peers[id].iceConnectionState === 'disconnected') {
+        removeVideo(targetUserId);
       }
     };
 
@@ -156,6 +174,8 @@ var sendAnswer = function (receivedData) {
           sdp: peers[id].localDescription,
           returnAddress: receivedData.recipient,
         });
+      } else if (peers[id].iceConnectionState === 'disconnected') {
+        removeVideo(receivedData.returnAddress);
       }
     };
 
