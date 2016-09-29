@@ -29,3 +29,14 @@ var User = db.define('users', {
 // console.log('synced');
 // User.sync({force: true})
 module.exports = User;
+
+// class schedule
+// sched table, row for each meeting UT time
+
+// keywords (instructor adds on create) 255 chars
+
+// class title
+
+// recomended audiance?
+
+// private? t/f
