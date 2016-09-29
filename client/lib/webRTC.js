@@ -28,12 +28,21 @@ var ICE = {
 
 var addVideo = function (source, elementId) {
 
-  var video = document.createElement('video');
-  video.id = elementId;
-  video.src = window.URL.createObjectURL(source);
-  
-  document.getElementById('putVidsHere').appendChild(video);
+  var remoteVideo = document.getElementById('remoteVideo');
 
+  if (!remoteVideo.src) {
+
+    remoteVideo.src = window.URL.createObjectURL(source);
+
+  } else {
+
+    var newVideo = document.createElement('video');
+    newVideo.className = 'col s8';
+    newVideo.id = elementId;
+    newVideo.src = window.URL.createObjectURL(source);
+
+    document.getElementById('putVidsHere').appendChild(newVideo);
+  }
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -218,6 +227,16 @@ socket.on('ice-merge', function (data) {
   });
 });
 
+
 askForCamera();
 
 socket.emit('check', room);
+
+
+
+
+
+
+
+
+
