@@ -1,4 +1,4 @@
-var room;
+var room = window.location.pathname.slice(window.location.pathname.lastIndexOf('/') + 1);
 var peers = { length: 0 };
 
 while (!localStorage.user) {
