@@ -7,8 +7,8 @@ var assert = chai.assert;
 
 var Sequelize = require('sequelize');
 var db = require('../server/db/db');
-
-// db.sync({force: true})
+{force: true}
+// db.sync({force: true});
 describe('DB init tests', function () {
 
   it('is connected to the db', function(done) {
@@ -61,6 +61,7 @@ describe('DB init tests', function () {
         .then(function() {
           Class.findOne({where: {classname: 'testclass'}})
           .then(function(classroom) {
+            classroom.setInstructor(user);
             user.addClass(classroom)
             .then(function() {
               classroom.getUsers().then(function(joinUser) {
