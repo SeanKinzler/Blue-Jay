@@ -1,0 +1,9 @@
+.chatterbox {
+  width: 2000px;
+  height: 10px;
+  overflow: scroll;
+}
+
+.red {
+  color: red;
+}
