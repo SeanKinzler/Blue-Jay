@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import style from '../styles.js';
 export default class Video extends Component {
 
   constructor(props) {
@@ -24,11 +24,10 @@ export default class Video extends Component {
 
   // }
   componentDidMount() {
-
-    var script3 = document.createElement('script')
-    script3.id = '3'
-    script3.type = 'text/javascript'
-    script3.src = './../lib/webRTC.js'
+    var script3 = document.createElement('script');
+    script3.id = '3';
+    script3.type = 'text/javascript';
+    script3.src = './../lib/webRTC.js';
     script3.async = true;
     document.body.appendChild(script3);
   }
@@ -44,13 +43,47 @@ export default class Video extends Component {
             <video  className='col s12' id='localVideo'
             poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png"
             mute autoPlay></video>
-            <div className='container'>
-              <h5>chat app?</h5>
-              <h5>chat app?</h5>
-              <h5>chat app?</h5>
-              <h5>chat app?</h5>
-            </div>
           </div>
+          <div id='chats' className='col s4' style={ style.chatterbox }>
+          <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div><div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+            <div>Chad App</div>
+          </div>
+          <form></form>
         </div>
       </div>
     );
