@@ -23,12 +23,12 @@ export const signOutUser = () => {
 }
 
 export const signUpUser = (values) => {
-		console.log('values from action:', values)
-	return (dispatch) => {
-		// AJAX CALL TO SIGN UP API ENDPOINT
-		// ON SUCCESS
-		dispatch(signInUser());
-	}
+	// 	console.log('values from action:', values)
+	// return (dispatch) => {
+	// 	// AJAX CALL TO SIGN UP API ENDPOINT
+	// 	// ON SUCCESS
+	// 	dispatch(signInUser());
+	// }
 	
 	// browserHistory.push('/');
 	return {
