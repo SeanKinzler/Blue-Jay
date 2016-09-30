@@ -1,4 +1,4 @@
-import { SIGN_IN_USER, SIGN_OUT_USER, AUTH_ERROR } from '../actions/index.jsx';
+import { SIGN_IN_USER, SIGN_OUT_USER, SIGN_UP_USER, AUTH_ERROR } from '../actions/index.jsx';
 
 const initialState = {
 	authenticated: false,
@@ -17,6 +17,11 @@ const Auth = (state = initialState, action) => {
 				authenticated: false,
 				error: false
 			});
+		case SIGN_UP_USER:
+			return Object.assign({}, state, {
+				authenticated: true,
+				error: false
+			});			
 		case AUTH_ERROR:
 			return Object.assign({}, state, {
 				error: action.payload.message
