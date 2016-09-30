@@ -35,30 +35,46 @@ io.sockets.on('connection', function(socket) {
     socket.to(data.recipient).emit('ice-merge', data);
   });
 
-  socket.on('check', function (roomName) {
-    if (socket.adapter.rooms[roomName]) {
+  socket.on('check', function (data) {
+    if (socket.adapter.rooms[data.roomName]) {
       var userIds = [];
       var yourId;
 
-      for (var key in socket.adapter.rooms[roomName].sockets) {
+      for (var key in socket.adapter.rooms[data.roomName].sockets) {
         userIds.push(key);
       }
 
-      socket.join(roomName);
-      for (var key in socket.adapter.rooms[roomName].sockets) {
+      socket.join(data.roomName);
+      for (var key in socket.adapter.rooms[data.roomName].sockets) {
         if (userIds.indexOf(key) === -1) {
           yourId = key;
         }
       }
 
       socket.emit('joined', {
-        message: 'You have joined the room: "' + roomName + '"',
+        message: 'You have joined the room: "' + data.roomName + '"',
         userIds: userIds,
         yourId: yourId
       });
+
+      socket.emit('chatMessage', {
+        user: 'You have joined the room: ' + data.roomName,
+        text: '',
+      });
+
+      socket.broadcast.to(data.room).emit('chatMessage', {
+        user: data.user + 'has joined the room.',
+        text: '',
+      });  
+
     } else {
-      socket.join(roomName);
-      socket.emit('created', 'You have created the room: "' + roomName + '"');
+      socket.join(data.roomName);
+
+      socket.emit('created', 'You have created the room: "' + data.roomName + '"');
+      socket.emit('chatMessage', { 
+        user: 'You have created the room: "' + data.roomName + '"',
+        text: '', 
+      });
     }
   });
 

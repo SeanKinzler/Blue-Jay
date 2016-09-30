@@ -7,7 +7,10 @@ export default class ChatContainer extends Component {
     super(props);
     this.state = {
       number: props.number,
-      messages: []
+      messages: [{
+        user: '',
+        text: 'You have entered the room: "' + window.location.pathname.slice(window.location.pathname.lastIndexOf('/') + 1) + '"',
+      }]
     };
 
     window.__context = this;

@@ -1,4 +1,4 @@
-var room = window.location.pathname.slice(window.location.pathname.lastIndexOf('/') + 1);
+window.room = window.location.pathname.slice(window.location.pathname.lastIndexOf('/') + 1);
 var peers = { length: 0 };
 
 while (!localStorage.user) {
@@ -250,7 +250,10 @@ socket.on('ice-merge', function (data) {
 
 askForCamera();
 
-socket.emit('check', room);
+socket.emit('check', {
+  roomName: room,
+  user: localStorage.user
+});
 
 
 
