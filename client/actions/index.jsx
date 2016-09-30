@@ -9,10 +9,11 @@ export const SIGN_OUT_USER = 'SIGN_OUT_USER';
 export const SIGN_UP_USER = 'SIGN_UP_USER';
 export const AUTH_ERROR = 'AUTH_ERROR';
 
-export const signInUser = () => {
+export const signInUser = (username) => {
 	browserHistory.push('/');
 	return {
-		type: SIGN_IN_USER
+		type: SIGN_IN_USER,
+		payload: username
 	}
 }
 
