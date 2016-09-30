@@ -1,4 +1,5 @@
 import { browserHistory } from 'react-router';
+import axios from 'axios';
 
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
@@ -22,31 +23,20 @@ export const signOutUser = () => {
 	}
 }
 
-export const signUpUser = (values) => {
-	// 	console.log('values from action:', values)
-	// return (dispatch) => {
-	// 	// AJAX CALL TO SIGN UP API ENDPOINT
-	// 	// ON SUCCESS
-	// 	dispatch(signInUser());
-	// }
-	
-	// browserHistory.push('/');
-	return {
-		type: SIGN_UP_USER
+export const signUpUser = (credentials) => {
+	return (dispatch) => {
+		axios({
+			url: 'https://localhost:8443/users/signup',
+			method: 'POST',
+			dataType: 'json',
+			data: credentials
+		})
+		.then((res) => {
+			dispatch(signInUser());
+			browserHistory.push('/');
+		})
+		.catch((err) => {
+			dispatch(signInUser());					
+		})
 	}
 }
-
-// export function signUpUser(credentials) {
-//   return function(dispatch) {
-//     ref.createUser({
-//       email: credentials.email,
-//       password: credentials.password
-//     }, function (error, userData) {
-//       if (error) {
-//         dispatch(authError(error));
-//       } else {
-//         dispatch(signInUser(credentials));
-//       }
-//     });
-//   }
-// }
