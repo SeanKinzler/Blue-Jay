@@ -62,19 +62,15 @@ io.sockets.on('connection', function(socket) {
         text: '',
       });
 
-      socket.broadcast.to(data.room).emit('chatMessage', {
-        user: data.user + 'has joined the room.',
-        text: '',
+      socket.broadcast.to(data.roomName).emit('chatMessage', {
+        user: '',
+        text: data.user + ' has joined the room.',
       });  
 
     } else {
       socket.join(data.roomName);
 
       socket.emit('created', 'You have created the room: "' + data.roomName + '"');
-      socket.emit('chatMessage', { 
-        user: 'You have created the room: "' + data.roomName + '"',
-        text: '', 
-      });
     }
   });
 
