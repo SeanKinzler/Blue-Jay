@@ -201,7 +201,7 @@ var sendAnswer = function (receivedData) {
   });
 };
 
-socket = io.connect();
+window.socket = io.connect();
 
 socket.on('joined', function (data) {
   console.log(data.message);

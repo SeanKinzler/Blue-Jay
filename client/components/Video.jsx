@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-
+import style from '../styles.js';
+import ChatContainer from './ChatContainer.jsx';
 export default class Video extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
   }
 
   // componentWillMount() {
@@ -23,12 +23,11 @@ export default class Video extends Component {
   //   document.body.appendChild(script2);
 
   // }
-  componentDidMount() {
-
-    var script3 = document.createElement('script')
-    script3.id = '3'
-    script3.type = 'text/javascript'
-    script3.src = './../lib/webRTC.js'
+  componentWillMount() {
+    var script3 = document.createElement('script');
+    script3.id = '3';
+    script3.type = 'text/javascript';
+    script3.src = './../lib/webRTC.js';
     script3.async = true;
     document.body.appendChild(script3);
   }
@@ -37,20 +36,22 @@ export default class Video extends Component {
     return (
       <div>
         <div className='row' id='putVidsHere'>
-          <video className='col s8' id='remoteVideo'
+          <video className='col s9' id='remoteVideo'
+            style={ style.flush }
             poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png" 
             autoPlay></video>
-          <div className='col s4'>
-            <video  className='col s12' id='localVideo'
+          <div className='col s3'>
+            <video className='col s12' id='localVideo'
+            style={ style.flush }
             poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png"
-            mute autoPlay></video>
-            <div className='container'>
-              <h5>chat app?</h5>
-              <h5>chat app?</h5>
-              <h5>chat app?</h5>
-              <h5>chat app?</h5>
+            autoPlay></video>
+          </div>
+          <div id='chats' className='col s3' >
+            <div className="col s11">
+              <ChatContainer number={ 1 } />
             </div>
           </div>
+          <form></form>
         </div>
       </div>
     );
