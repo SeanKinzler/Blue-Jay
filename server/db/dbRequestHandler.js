@@ -23,6 +23,12 @@ module.exports = {
     });
   },
 
+  getUsers: (req, res) => {
+    User.find().then(function(users) {
+      res.send({'data': JSON.stringify(users)});
+    });
+  },
+
   //must have classname, access T/F, keywords, 
   //schedule info
   addClass: (req, res) => {
@@ -40,6 +46,12 @@ module.exports = {
       classroom.destroy();
       res.send({'data': 'Classroom deleted.'});
     });
+  },
+
+  getClasses: (req ,res) => {
+    Classroom.find().then(function(classes) {
+      res.send({'data': JSON.stringify(classes)});
+    })
   },
 
   addStudent: (req, res) => {
