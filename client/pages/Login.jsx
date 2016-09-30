@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import * as Actions from '../actions/index.jsx';
 
 class Login extends Component {
@@ -30,6 +31,9 @@ class Login extends Component {
 						</div>
 					</div>
 				</form>
+				<div className='center-align'>
+					<Link to='signup'>Signup</Link> for an account.
+				</div>
 			</div>
 		)
 	}
