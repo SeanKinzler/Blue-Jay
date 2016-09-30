@@ -7,9 +7,15 @@ var assert = chai.assert;
 
 var Sequelize = require('sequelize');
 var db = require('../server/db/db');
-{ force: true; }
+
 // db.sync({force: true});
 describe('DB init tests', function () {
+
+  it('has access to the environment variables', function () {
+    expect(process.env.DBHOST).to.not.equal(undefined);
+    expect(process.env.DBPORT).to.not.equal(undefined);
+    expect(process.env.DBPASSWORD).to.not.equal(undefined);
+  });
 
   it('is connected to the db', function(done) {
     db.authenticate().then(function(err) {
