@@ -12,9 +12,9 @@ var db = require('../server/db/db');
 describe('Database', function () {
 
   it('should have access to the environment variables', function () {
-    expect(process.env.DBHOST).to.not.equal(undefined);
-    expect(process.env.DBPORT).to.not.equal(undefined);
-    expect(process.env.DBPASSWORD).to.not.equal(undefined);
+    expect(typeof process.env.DBHOST).to.equal('string');
+    expect(typeof process.env.DBPORT).to.equal('number');
+    expect(typeof process.env.DBPASSWORD).to.equal('string');
   });
 
   it('should be accessible', function(done) {
