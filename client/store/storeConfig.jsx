@@ -1,5 +1,5 @@
 import { createStore, compose, applyMiddleware } from 'redux';
-import ReduxPromise from 'redux-promise';
+import thunk from 'redux-thunk';
 import rootReducer from '../reducers/index.jsx';
 
 const storeConfig = (initialState) => {
@@ -7,7 +7,7 @@ const storeConfig = (initialState) => {
 		rootReducer,
 		initialState,
 		compose (
-			applyMiddleware(ReduxPromise),
+			applyMiddleware(thunk),
 			window.devToolsExtension ? window.devToolsExtension() : f => f
 		)
 	)
