@@ -1,37 +1,68 @@
 import React, { Component } from 'react';
 import Message from './ChatMessage.jsx';
+import style from '../styles.js';
 
 export default class ChatContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: [
-        { 
-          user: 'Chad',
-          text: 'I luv to chat.',
-        }, 
-        {
-          user: 'Eric',
-          text: 'I love to chat to Chad.',
-        }, 
-        {
-          user: 'Kinzler',
-          text: 'I love to chat to Chad too, Chad.',
-        },
-        {
-          user: 'Chad',
-          text: 'Please, stop.'
-        }
-      ]
+      number: props.number,
+      messages: []
     };
+
+    window.__context = this;
+  }
+
+  componentDidMount() {
+    var context = this;
+    setTimeout(function () {
+      window.socket.on('chatMessage', function (data) {
+        context.state.messages.push({
+          user: data.user,
+          text: data.text
+        });
+
+        context.forceUpdate();
+      });
+    }, 750);
+  }
+
+  sendMessage(e) {
+    e.preventDefault();
+
+    var submission = document.getElementById('messageText');
+
+    socket.emit('chatMessage', {
+      room: room,
+      user: localStorage.user,
+      text: submission.value,
+    });
+
+    window.__context.state.messages.push({
+      user: localStorage.user,
+      text: submission.value,
+    });
+
+    window.__context.forceUpdate();
+
+    submission.value = '';
+
   }
 
   render() {
     return (
       <div>
-        {this.state.messages.map(function (messageObject) {
-          return <Message message={ messageObject } />
-        })}
+        <div id='chats' style={ style.chatterbox }>
+          { 
+            this.state.messages.map(function (messageObject, index) {
+              return <Message message={ messageObject } key={ index } />
+            }) 
+          }
+        </div>
+        <form onSubmit={ this.sendMessage }>
+          <input type='text' id='messageText'></input>
+          <input type='submit' text='Send'></input>
+        </form>
       </div>
     );
   }

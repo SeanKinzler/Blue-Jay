@@ -61,6 +61,10 @@ io.sockets.on('connection', function(socket) {
       socket.emit('created', 'You have created the room: "' + roomName + '"');
     }
   });
+
+  socket.on('chatMessage', function (data) {
+    socket.broadcast.to(data.room).emit('chatMessage', data);
+  });
 });
 
 

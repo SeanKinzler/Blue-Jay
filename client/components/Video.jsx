@@ -23,7 +23,7 @@ export default class Video extends Component {
   //   document.body.appendChild(script2);
 
   // }
-  componentDidMount() {
+  componentWillMount() {
     var script3 = document.createElement('script');
     script3.id = '3';
     script3.type = 'text/javascript';
@@ -36,17 +36,19 @@ export default class Video extends Component {
     return (
       <div>
         <div className='row' id='putVidsHere'>
-          <video className='col s8' id='remoteVideo'
+          <video className='col s9' id='remoteVideo'
+            style={ style.flush }
             poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png" 
             autoPlay></video>
-          <div className='col s4'>
+          <div className='col s3'>
             <video className='col s12' id='localVideo'
+            style={ style.flush }
             poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png"
-            mute autoPlay></video>
+            autoPlay></video>
           </div>
-          <div id='chats' className='col s4' style={ style.chatterbox }>
+          <div id='chats' className='col s3' >
             <div className="col s11">
-              <ChatContainer />
+              <ChatContainer number={ 1 } />
             </div>
           </div>
           <form></form>

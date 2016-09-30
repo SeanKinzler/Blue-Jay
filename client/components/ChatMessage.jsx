@@ -3,10 +3,11 @@ import style from '../styles.js';
 
 export default (props) => {
   return (
-    <p>
+    <div>
+      <br></br>
       <div className="title">{ props.message.user }:</div>
       <div>{ props.message.text }</div>
-    </p>
+    </div>
   );
 };
 
