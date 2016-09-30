@@ -9,15 +9,15 @@ var Sequelize = require('sequelize');
 var db = require('../server/db/db');
 
 // db.sync({force: true});
-describe('DB init tests', function () {
+describe('Database', function () {
 
-  it('has access to the environment variables', function () {
+  it('should have access to the environment variables', function () {
     expect(process.env.DBHOST).to.not.equal(undefined);
     expect(process.env.DBPORT).to.not.equal(undefined);
     expect(process.env.DBPASSWORD).to.not.equal(undefined);
   });
 
-  it('is connected to the db', function(done) {
+  it('should be accessible', function(done) {
     db.authenticate().then(function(err) {
       assert(true, true, 'db connect success');
       done();

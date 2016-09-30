@@ -1,8 +1,8 @@
 var Sequelize = require('sequelize');
 
-console.log(process.env.DBHOST);
-console.log(process.env.DBPORT);
-console.log(process.env.DBPASSWORD);
+process.env.DBHOST = 'blue-jay-users.cnt8aiilpqcs.us-west-2.rds.amazonaws.com';
+process.env.DBPORT = 3306;
+process.env.DBPASSWORD = 'lionHead2';
 
 var db = new Sequelize('bluejay', 'root', process.env.DBPASSWORD, {
   host: process.env.DBHOST,
