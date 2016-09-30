@@ -6,7 +6,14 @@ import * as Actions from '../actions/index.jsx';
 class Signup extends Component {
 
 	signUpHandler(values) {
-		this.props.signUpUser(values);
+		var credentials = {
+			username: values.username.value,
+			firstName: values.firstName.value,
+			lastName: values.lastName.value,
+			email: values.email.value,
+			password: values.password.value
+		}
+		this.props.signUpUser(credentials);
 	}
 
 	render() {
@@ -16,27 +23,27 @@ class Signup extends Component {
 					<form onSubmit={ (e) => { e.preventDefault(); this.signUpHandler(e.target); } } className='col s12'>
 				    <div className='row'>
 				      <div className='input-field col s6'>
-				        <input id='first_name' type='text' className='validate' />
+				        <input id='first_name' name='firstName' type='text' className='validate' />
 				        <label htmlFor='first_name'>First Name</label>
 				      </div>
 				      <div className='input-field col s6'>
-				        <input id='last_name' type='text' className='validate' />
+				        <input id='last_name' name='lastName' type='text' className='validate' />
 				        <label htmlFor='last_name'>Last Name</label>
 				      </div>
 				    </div>
 				    <div className='row'>
 				      <div className='input-field col s6'>
-				        <input id='email' type='email' className='validate' />
+				        <input id='email' name='email' type='email' className='validate' />
 				        <label htmlFor='email'>Email</label>
 				      </div>
 				      <div className='input-field col s6'>
-				        <input id='username' type='text' className='validate' />
+				        <input id='username' name='username' type='text' className='validate' />
 				        <label htmlFor='username'>Username</label>
 				      </div>
 				    </div>
 				    <div className='row'>
 				      <div className='input-field col s6'>
-				        <input id='password' type='password' className='validate' />
+				        <input id='password' name='password' type='password' className='validate' />
 				        <label htmlFor='password'>Password</label>
 				      </div>
 				      <div className='input-field col s6'>
