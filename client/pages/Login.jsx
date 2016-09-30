@@ -1,9 +1,44 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as Actions from '../actions/index.jsx';
 
-export default class Login extends Component {
+class Login extends Component {
+
+	signInHandler() {
+		this.props.signInUser();
+	}
+
 	render() {
 		return (
-			<div>Login Page</div>
+			<div className='container'>
+				<form onSubmit={ (e) => { e.preventDefault(); this.signInHandler(); } } className='col s6 offset-s6'>
+					<div className='row'>
+						<div className='input-field col s6 offset-s3' >
+							<input id='username' type='text' name='username' />
+							<label htmlFor="username">Username</label>
+						</div>
+					</div>
+					<div className='row'>
+						<div className='input-field col s6 offset-s3' >
+							<input id='password' type='password' name='password'/>
+							<label htmlFor="password">Password</label>
+						</div>
+					</div>
+					<div className='row'>
+						<div className='input-field col s6 offset-s3' >
+							<input className='btn' type='submit' value='Login' />
+						</div>
+					</div>
+				</form>
+			</div>
 		)
 	}
 }
+
+const mapStateToProps = (state) => {
+  return {
+    authenticated: state.auth.authenticated
+  }
+}
+
+export default connect(mapStateToProps, Actions)(Login);
