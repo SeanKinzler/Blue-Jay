@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import style from '../styles.js';
-import ChatMessage from './ChatMessage.jsx';
+import ChatContainer from './ChatContainer.jsx';
 export default class Video extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
   }
 
   // componentWillMount() {
@@ -41,21 +40,14 @@ export default class Video extends Component {
             poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png" 
             autoPlay></video>
           <div className='col s4'>
-            <video  className='col s12' id='localVideo'
+            <video className='col s12' id='localVideo'
             poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png"
             mute autoPlay></video>
           </div>
           <div id='chats' className='col s4' style={ style.chatterbox }>
-            <ChatMessage />
-            <ChatMessage />
-            <ChatMessage />
-            <ChatMessage />
-            <ChatMessage />
-            <ChatMessage />
-            <ChatMessage />
-            <ChatMessage />
-            <ChatMessage />
-            <ChatMessage />
+            <div className="col s11">
+              <ChatContainer />
+            </div>
           </div>
           <form></form>
         </div>

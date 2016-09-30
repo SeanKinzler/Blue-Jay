@@ -1,8 +1,12 @@
 module.exports = {
 
   chatterbox: {
-    'max-height': '200px',
+    'maxHeight': '200px',
     'height': '200px',
     'overflow': 'scroll',
   },
+
+  chatMessage: {
+    'height': '30px'
+  }
 };
