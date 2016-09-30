@@ -34,6 +34,10 @@ describe('DB init tests', function () {
         expect(user.password).to.equal('testpass');
         user.destroy();
         done();
+      })
+      .catch(function (error) {
+        console.log(error);
+        done();
       });
     });
   });
