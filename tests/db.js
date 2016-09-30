@@ -13,7 +13,8 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
   var Sequelize = require('sequelize');
   var db = require('../server/db/db');
 
-  // db.sync({force: true});
+  //{ force: true; }
+  // db.sync(/*{ force: true; }*/);
   describe('Database', function () {
 
     it('should have access to the environment variables', function () {
