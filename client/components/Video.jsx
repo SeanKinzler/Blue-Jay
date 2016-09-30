@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import style from '../styles.js';
+import ChatMessage from './ChatMessage.jsx';
 export default class Video extends Component {
 
   constructor(props) {
@@ -45,43 +46,16 @@ export default class Video extends Component {
             mute autoPlay></video>
           </div>
           <div id='chats' className='col s4' style={ style.chatterbox }>
-          <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div><div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
-            <div>Chad App</div>
+            <ChatMessage />
+            <ChatMessage />
+            <ChatMessage />
+            <ChatMessage />
+            <ChatMessage />
+            <ChatMessage />
+            <ChatMessage />
+            <ChatMessage />
+            <ChatMessage />
+            <ChatMessage />
           </div>
           <form></form>
         </div>

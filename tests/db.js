@@ -7,7 +7,7 @@ var assert = chai.assert;
 
 var Sequelize = require('sequelize');
 var db = require('../server/db/db');
-{force: true}
+{ force: true; }
 // db.sync({force: true});
 describe('DB init tests', function () {
 

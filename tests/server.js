@@ -23,43 +23,43 @@ describe('Server:', function () {
       request(app)
         .post('/users/signup')
         .send({
-          "username":"test1",
-          "password":"testpass",
-          "firstName":"Sean",
-          "lastName":"K",
-          "email":"test1@test1.com"
+          'username': 'test1',
+          'password': 'testpass',
+          'firstName': 'Sean',
+          'lastName': 'K',
+          'email': 'test1@test1.com'
         })
         .end(function (err, resp, body) {
           expect(!!resp).to.equal(true);
           done();
         });
-    })
+    });
 
     it('should have a "DELETE => /users/remove" endpoint', function (done) {
       request(app)
         .delete('/users/remove')
         .send({
-          "username":"test1",
-          "password":"testpass",
-          "firstName":"Sean",
-          "lastName":"K",
-          "email":"test1@test1.com"
+          'username': 'test1',
+          'password': 'testpass',
+          'firstName': 'Sean',
+          'lastName': 'K',
+          'email': 'test1@test1.com'
         })
         .end(function (err, resp, body) {
           expect(!!resp).to.equal(true);
           done();
         });
-    })
+    });
 
     it('should have a "POST => /classes/create" endpoint', function (done) {
       request(app)
         .post('/classes/create')
         .send({
-          "classname":"testclass",
-          "access":true,
-          "keywords":"[one,two,three]",
-          "scheduleDays":"MTuWThFSaSu",
-          "scheduleTime":"1800"
+          'classname': 'testclass',
+          'access': true,
+          'keywords': '[one,two,three]',
+          'scheduleDays': 'MTuWThFSaSu',
+          'scheduleTime': '1800'
         })
         .end(function (err, resp, body) {
           expect(!!resp).to.equal(true);
@@ -71,27 +71,27 @@ describe('Server:', function () {
       request(app)
         .delete('/classes/remove')
         .send({
-          "classname":"testclass",
-          "access":true,
-          "keywords":"[one,two,three]",
-          "scheduleDays":"MTuWThFSaSu",
-          "scheduleTime":"1800"
+          'classname': 'testclass',
+          'access': true,
+          'keywords': '[one,two,three]',
+          'scheduleDays': 'MTuWThFSaSu',
+          'scheduleTime': '1800'
         })
         .end(function (err, resp, body) {
           expect(!!resp).to.equal(true);
           done();
         });
-    })
+    });
 
     xit('should have a "POST => /users/signup" endpoint', function (done) {
       request(app)
         .post('/users/signup')
         .send({
-          "username":"test1",
-          "password":"testpass",
-          "firstName":"Sean",
-          "lastName":"K",
-          "email":"test1@test1.com"
+          'username': 'test1',
+          'password': 'testpass',
+          'firstName': 'Sean',
+          'lastName': 'K',
+          'email': 'test1@test1.com'
         })
         .end(function (err, resp, body) {
           expect(!!resp).to.equal(true);
