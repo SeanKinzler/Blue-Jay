@@ -16,7 +16,14 @@ export default class ChatContainer extends Component {
     window.__context = this;
   }
 
+  componentDidUpdate() {
+    var chatBox = document.getElementById('chats');
+    console.log(chatBox);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
   componentDidMount() {
+
     var context = this;
     setTimeout(function () {
       window.socket.on('chatMessage', function (data) {
@@ -49,7 +56,6 @@ export default class ChatContainer extends Component {
     window.__context.forceUpdate();
 
     submission.value = '';
-
   }
 
   render() {
