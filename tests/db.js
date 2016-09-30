@@ -8,12 +8,14 @@ var assert = chai.assert;
 var Sequelize = require('sequelize');
 var db = require('../server/db/db');
 
+
+
 // db.sync({force: true});
 describe('Database', function () {
 
   it('should have access to the environment variables', function () {
     expect(typeof process.env.DBHOST).to.equal('string');
-    expect(typeof process.env.DBPORT).to.equal('number');
+    expect(process.env.DBPORT).to.equal('3306');
     expect(typeof process.env.DBPASSWORD).to.equal('string');
   });
 
