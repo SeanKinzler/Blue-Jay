@@ -1,7 +1,9 @@
-version: "1.0.0"
+version: "2"
 
 services: 
   bluejay: 
-    image: bluejay
+    image: seankinzler/bluejay
     volumes: 
       - ./:/my-dir
+    ports: 
+      - "8443:8443"

@@ -1,0 +1,17 @@
+{
+ "Bluebird": "1",
+ "Authentication": {
+   "Bucket": "bluejayconfig",
+   "Key": ".dockercfg.json"
+ },
+ "Image": {
+    "Name": "seankinzler/bluejay",
+    "Update": "true"
+  },
+ "Ports": [
+   {
+     "ContainerPort": "8443"
+   }
+ ],
+ "Logging": "/var/log"
+}
