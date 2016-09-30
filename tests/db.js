@@ -11,15 +11,13 @@ var assert = chai.assert;
 var Sequelize = require('sequelize');
 var db = require('../server/db/db');
 
-
-
 // db.sync({force: true});
 describe('Database', function () {
 
   it('should have access to the environment variables', function () {
-    expect(typeof process.env.DBHOST).to.equal('string');
-    expect(process.env.DBPORT).to.equal('3306');
-    expect(typeof process.env.DBPASSWORD).to.equal('string');
+    expect(process.env.DBHOST).to.not.equal(undefined);
+    expect(process.env.DBPORT).to.not.equal(undefined);
+    expect(process.env.DBPASSWORD).to.not.equal(undefined);
   });
 
   it('should be accessible', function(done) {
@@ -33,6 +31,15 @@ describe('Database', function () {
   });
 
   it('should add a user', function (done) {
+    User.findOne({
+      where: {username: 'test'}
+    })
+    .then(function(user) {
+      if (user) {
+        user.destroy();
+      }
+    });
+
     User.create({username: 'test', password: 'testpass'})
     .then(function() {
       User.findOne({
@@ -41,10 +48,6 @@ describe('Database', function () {
       .then(function(user) {
         expect(user.password).to.equal('testpass');
         user.destroy();
-        done();
-      })
-      .catch(function (error) {
-        console.log(error);
         done();
       });
     });
@@ -76,7 +79,8 @@ describe('Database', function () {
             classroom.setInstructor(user);
             user.addClass(classroom)
             .then(function() {
-              classroom.getUsers().then(function(joinUser) {
+              classroom.getUsers()
+              .then(function(joinUser) {
                 console.log('username: ', joinUser[0].username);
                 expect(joinUser[0].username).to.equal('test');
                 expect(joinUser[0].password).to.equal('testpass');
