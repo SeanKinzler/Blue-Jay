@@ -7,8 +7,12 @@ module.exports = {
   //firstname, lastname, email
   addUser: (req, res) => {
     var params = req.body;
-    User.create(params).then(function(data, err) {
+    User.create(params)
+    .then(function(data, err) {
       res.send({'data': 'User created.'});
+    })
+    .catch(function (error) {
+      res.send(error);
     });
   },
 
