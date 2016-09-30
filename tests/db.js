@@ -1,3 +1,6 @@
+var User = require('../server/db/userModel');
+var Class = require('../server/db/classModel');
+require('../server/db/user_classModel');
 var chai = require('chai');
 var sinon = require('sinon');
 
@@ -29,9 +32,6 @@ describe('Database', function () {
     });
   });
 
-  var User = require('../server/db/userModel');
-  var Class = require('../server/db/classModel');
-  require('../server/db/user_classModel');
   it('should add a user', function (done) {
     User.create({username: 'test', password: 'testpass'})
     .then(function() {
