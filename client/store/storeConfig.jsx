@@ -1,4 +1,5 @@
-import { createStore, compose } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
+import ReduxPromise from 'redux-promise';
 import rootReducer from '../reducers/index.jsx';
 
 const storeConfig = (initialState) => {
@@ -6,7 +7,8 @@ const storeConfig = (initialState) => {
 		rootReducer,
 		initialState,
 		compose (
-		  window.devToolsExtension ? window.devToolsExtension() : f => f
+			applyMiddleware(ReduxPromise),
+			window.devToolsExtension ? window.devToolsExtension() : f => f
 		)
 	)
 }

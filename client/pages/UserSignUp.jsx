@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as Actions from '../actions/index.jsx';
 
 class Signup extends Component {
 
-	signUpHandler() {
-		this.props.signUpUser();
+	signUpHandler(values) {
+		this.props.signUpUser(values);
 	}
 
 	render() {
 		return (
 			<div className='container'>					
 				<div className='row'>
-					<form onSubmit={ (e) => { e.preventDefault(); this.signUpHandler(); } } className='col s12'>
+					<form onSubmit={ (e) => { e.preventDefault(); this.signUpHandler(e.target); } } className='col s12'>
 				    <div className='row'>
 				      <div className='input-field col s6'>
 				        <input id='first_name' type='text' className='validate' />
@@ -59,6 +60,12 @@ const mapStateToProps = (state) => {
   return {
     authenticationError: state.auth.error
   }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  };
 }
 
 export default connect(mapStateToProps, Actions)(Signup);
