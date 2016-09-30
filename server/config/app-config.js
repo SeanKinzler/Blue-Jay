@@ -15,6 +15,8 @@ app.post('/users/login', (req, res) => {
 app.post('/users/signup', (req, res) => { dbHandler.addUser(req, res); });
 app.delete('/users/remove', (req, res) => { dbHandler.deleteUser(req, res); });
 
+app.post('/users/schedule', (req, res) => {dbHandler.getSchedule(req,res)})
+
 app.post('/classes/create', (req, res) => { dbHandler.addClass(req, res); });
 app.delete('/classes/remove', (req, res) => { dbHandler.deleteClass(req, res); });
  
