@@ -5,14 +5,19 @@ import * as Actions from '../actions/index.jsx';
 
 class Login extends Component {
 
-	signInHandler() {
-		this.props.signInUser();
+	signInHandler(form) {
+		this.props.signInUser({
+			username: form.username.value,
+			password: form.password.value
+		});
 	}
 
 	render() {
 		return (
 			<div className='container'>
-				<form onSubmit={ (e) => { e.preventDefault(); this.signInHandler(); } } className='col s6 offset-s6'>
+				<form 
+					onSubmit={ (e) => { e.preventDefault(); this.signInHandler(e.target); } } 
+					className='col s6 offset-s6'>
 					<div className='row'>
 						<div className='input-field col s6 offset-s3' >
 							<input id='username' type='text' name='username' />

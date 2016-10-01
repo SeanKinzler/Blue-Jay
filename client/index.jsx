@@ -8,8 +8,10 @@ import Dashboard from './pages/Dashboard.jsx';
 import UserSignUp from './pages/UserSignUp.jsx';
 import Login from './pages/Login.jsx'
 import configureStore from './store/storeConfig.jsx';
+import { persistStore } from 'redux-persist';
 
 const store = configureStore();
+persistStore(store);
 
 render((
 	<Provider store={store}>

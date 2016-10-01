@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/Blue-Jay-Blues/Blue-Jay#readme",
   "dependencies": {
+    "axios": "^0.14.0",
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.14.0",
@@ -40,6 +41,8 @@
     "react-router": "^2.8.1",
     "redux": "^3.6.0",
     "redux-form": "^6.0.5",
+    "redux-persist": "^4.0.0-alpha6",
+    "redux-thunk": "^2.1.0",
     "sequelize": "^3.24.3",
     "socket.io": "^1.4.8",
     "socket.io-client": "^1.4.8",
