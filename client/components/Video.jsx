@@ -18,24 +18,13 @@ class Video extends Component {
     };
   }
 
-  // componentWillMount() {
-  //   var script1 = document.createElement('script')
-  //   script1.id = '1'
-  //   script1.type = 'text/javascript'
-  //   script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.js'
-  //   script1.async = true;
-  //   document.body.appendChild(script1);
-
-  //   var script2 = document.createElement('script')
-  //   script2.id = '2'
-  //   script2.type = 'text/javascript'
-  //   script2.src = 'https://webrtc.github.io/adapter/adapter-latest.js'
-  //   script2.async = true;
-  //   document.body.appendChild(script2);
-
-  // }
   componentWillMount() {
-    EZRTC(this.state.room, this.props.username, this.state.socket);
+    localStorage.username = this.props.username || localStorage.username;
+    EZRTC(this.state.room, localStorage.username, this.state.socket);
+  }
+
+  componentWillUnmount() {
+    this.state.socket.disconnect();
   }
 
   render () {
@@ -63,7 +52,7 @@ class Video extends Component {
           <div className='col s12 m3' >
               <ChatContainer 
                 room={ this.state.room }
-                user={ this.props.username }
+                user={ localStorage.username }
                 socket={ this.state.socket } 
               />
           </div>
