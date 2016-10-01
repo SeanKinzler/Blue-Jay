@@ -111,7 +111,7 @@ module.exports = {
         }).catch((err) => {res.sendStatus(403)}) 
       });
     })
-    res.send({'data': 'Student added to class.'});
+    res.send({ 'data': 'Student added to class.' });
   },
   
   removeStudent: (req, res) => {
