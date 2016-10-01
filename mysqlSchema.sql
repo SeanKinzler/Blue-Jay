@@ -72,10 +72,10 @@ CREATE TABLE `schedules` (
 -- Foreign Keys 
 -- ---
 
-ALTER TABLE `classes` ADD FOREIGN KEY (instructorid) REFERENCES `users` (`id`);
-ALTER TABLE `users_classes` ADD FOREIGN KEY (classid) REFERENCES `classes` (`id`);
-ALTER TABLE `users_classes` ADD FOREIGN KEY (userid) REFERENCES `users` (`id`);
-ALTER TABLE `schedules` ADD FOREIGN KEY (classid) REFERENCES `classes` (`id`);
+ALTER TABLE `classes` ADD FOREIGN KEY (instructorid) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `users_classes` ADD FOREIGN KEY (classid) REFERENCES `classes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `users_classes` ADD FOREIGN KEY (userid) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `schedules` ADD FOREIGN KEY (classid) REFERENCES `classes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- ---
 -- Table Properties

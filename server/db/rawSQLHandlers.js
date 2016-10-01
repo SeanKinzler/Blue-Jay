@@ -18,7 +18,11 @@ module.exports = {
       'VALUES ("' + values.join('", "') + '")'
 
     ].join(' '), function (error, rows, fields) {
-      res.send(arguments);
+      if (error) {
+        res.sendStatus(404);
+      } else {
+        res.send(rows);
+      }
     });
   },
 
@@ -26,14 +30,22 @@ module.exports = {
   deleteUser: (req, res) => {
     sql('DELETE FROM users WHERE username="' + req.body.username + '"', 
     function (error, rows, fields) {
-      res.send(arguments);
+      if (error) {
+        res.sendStatus(404);
+      } else {
+        res.send(rows);
+      }
     });    
   },
 
   getUser: (req, res) => {
     sql('SELECT * FROM users WHERE username="' + req.body.username + '"',
     function (error, rows, fields) {
-      res.send(rows);
+      if (error) {
+        res.sendStatus(404);
+      } else {
+        res.send(rows);
+      }
     });
   },
 
@@ -54,7 +66,11 @@ module.exports = {
       'VALUES ("' + values.join('", "') + '")'
 
     ].join(' '), function (error, rows, fields) {
-      res.send(arguments);
+      if (error) {
+        res.sendStatus(404);
+      } else {
+        res.send(rows);
+      }
     });
   },
 
@@ -63,7 +79,7 @@ module.exports = {
     sql('DELETE FROM classes WHERE classname="' + req.body.classname + '"', 
     function (error, rows, fields) {
       if (error) {
-        res.send(404);
+        res.sendStatus(404);
       } else {
         res.send(rows);
       }
@@ -75,7 +91,11 @@ module.exports = {
   getClasses: (req, res) => {
     sql('SELECT * FROM classes WHERE classname="' + req.body.classname + '"',
     function (error, rows, fields) {
-      res.send(rows);
+      if (error) {
+        res.sendStatus(404);
+      } else {
+        res.send(rows);
+      }
     });
   },
 

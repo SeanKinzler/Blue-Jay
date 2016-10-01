@@ -38,6 +38,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
         }
       }, {
         send: function (input) {
+          expect(input).to.not.equal(404);
           done();
         }
       });
@@ -51,6 +52,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
       }, {
         send: function (input) {
           userId = input[0].id;
+          expect(input).to.not.equal(404);
           done();
         }
       });
@@ -67,6 +69,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
         }
       }, {
         send: function (input) {
+          expect(input).to.not.equal(404);
           done();
         }
       });
@@ -79,9 +82,10 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
         }
       }, {
         send: function (input) {
+          expect(input).to.not.equal(404);
           done();
         }
-      })
+      });
     });
 
     it('should join users and classrooms', function(done) {
@@ -95,6 +99,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
         }
       }, {
         send: function (input) {
+          expect(input).to.not.equal(404);
           done();
         }
       });
@@ -107,7 +112,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
         }
       }, {
         send: function (input) {
-          console.log(input);
+          expect(input).to.not.equal(404);
           done();
         }
       });
