@@ -2,7 +2,7 @@ var Sequelize = require('sequelize');
 var db = require('./db.js');
 var User = require('./userModel');
 var Class = require('./classModel');
-var Scheudle = require('./scheduleModel');
+var Schedule = require('./scheduleModel');
 
 // var user_class = db.define('users', {
 //   id: {
@@ -34,8 +34,8 @@ Class.belongsToMany(User, {
   foreignKey: 'class_id'
 });
 
-Schedule.hasOne(Class {
-  as: 'schedule'
+Schedule.belongsTo(Class, {
+  as: 'Class'
 });
 
 // console.log('synced');
