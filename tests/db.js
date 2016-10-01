@@ -88,10 +88,6 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
       });
     });
 
-    it('should join users and classrooms', function(done) {
-      done();
-    });
-
     it('should be able to delete users', function (done) {
       dbHelpers.deleteUser({
         body: {
