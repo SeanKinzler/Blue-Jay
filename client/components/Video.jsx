@@ -46,7 +46,7 @@ export default class Video extends Component {
             poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png"
             autoPlay></video>
           </div>
-          <div id='chats' className='col s3' >
+          <div className='col s3' >
             <div className="col s11">
               <ChatContainer number={ 1 } />
             </div>
