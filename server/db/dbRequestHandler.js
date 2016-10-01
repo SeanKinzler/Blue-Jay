@@ -90,13 +90,9 @@ module.exports = {
   getSchedule: (req, res) => {
     User.getClasses().then((classes) => {
       classes.getSchedules().then((schedules) => {
-        console.log(schedules);
         res.send({data: JSON.stringify(schedules)});
       })
     })
   },
-
-
-
-
 };
+
