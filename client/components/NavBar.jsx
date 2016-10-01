@@ -12,11 +12,20 @@ class NavBar extends Component {
   renderAuthLinks() {
     if (this.props.authenticated) {
       return (
-        <a href='#' onClick={ (e) => { e.preventDefault(); this.handleSignout(); } }>Logout</a>
+        <div>
+          <li>
+            <Link to='dashboard'>Dashboard</Link>
+          </li>
+          <li>
+            <a href='#' onClick={ (e) => { e.preventDefault(); this.handleSignout(); } }>Logout</a>
+          </li>
+        </div>
       )
     } else {
       return (
-        <Link to='login'>Login</Link>
+        <li>
+          <Link to='login'>Login</Link>
+        </li>
       )
     }
   }
@@ -27,9 +36,7 @@ class NavBar extends Component {
         <div className='nav-wrapper blue darken-1'>
           <Link className='brand-logo center' to='/'>BlueBird</Link>
           <ul id="nav-mobile" className="right">
-            <li>
               { this.renderAuthLinks() }
-            </li>
           </ul>       
         </div>
       </nav>
