@@ -6,6 +6,7 @@ import ChatContainer from './ChatContainer.jsx';
 import EZRTC from '../lib/webRTC';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
+
 class Video extends Component {
 
   constructor(props) {
@@ -34,7 +35,7 @@ class Video extends Component {
 
   // }
   componentWillMount() {
-    EZRTC(this.state.room, this.state.user, this.state.socket);
+    EZRTC(this.state.room, this.props.username, this.state.socket);
   }
 
   render () {
@@ -55,7 +56,7 @@ class Video extends Component {
             <div className="col s11">
               <ChatContainer 
                 room={ this.state.room }
-                user={ this.state.user }
+                user={ this.props.username }
                 socket={ this.state.socket } />
             </div>
           </div>
