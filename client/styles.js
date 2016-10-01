@@ -18,5 +18,7 @@ module.exports = {
   flush: {
     margin: '0px',
     padding: '0px',
+    width: '320px',
+    heigh: '240px'
   }
 };
