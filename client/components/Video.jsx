@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import style from '../styles.js';
+import { bindActionCreators } from 'redux';
+import * as Actions from '../actions/index.jsx';
 import ChatContainer from './ChatContainer.jsx';
 import EZRTC from '../lib/webRTC';
 import io from 'socket.io-client';
-
-export default class Video extends Component {
+import { connect } from 'react-redux';
+class Video extends Component {
 
   constructor(props) {
     super(props);
@@ -63,3 +65,18 @@ export default class Video extends Component {
     );
   }
 };
+
+
+const mapStateToProps = (state) => {
+  return {
+    username: state.auth.username
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, Actions)(Video);
