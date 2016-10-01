@@ -6,10 +6,12 @@ export default class ChatContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      number: props.number,
+      socket: props.socket,
+      user: props.user,
+      room: props.room,
       messages: [{
         user: '',
-        text: 'You have entered the room: "' + window.location.pathname.slice(window.location.pathname.lastIndexOf('/') + 1) + '"',
+        text: 'You have entered the room: "' + props.room + '"',
       }]
     };
 
@@ -18,23 +20,19 @@ export default class ChatContainer extends Component {
 
   componentDidUpdate() {
     var chatBox = document.getElementById('chats');
-    console.log(chatBox);
     chatBox.scrollTop = chatBox.scrollHeight;
   }
 
   componentDidMount() {
-
     var context = this;
-    setTimeout(function () {
-      window.socket.on('chatMessage', function (data) {
-        context.state.messages.push({
-          user: data.user,
-          text: data.text
-        });
-
-        context.forceUpdate();
+    this.state.socket.on('chatMessage', function (data) {
+      context.state.messages.push({
+        user: data.user,
+        text: data.text
       });
-    }, 750);
+
+      context.forceUpdate();
+    });
   }
 
   sendMessage(e) {
@@ -42,20 +40,20 @@ export default class ChatContainer extends Component {
 
     var submission = document.getElementById('messageText');
 
-    socket.emit('chatMessage', {
-      room: room,
-      user: localStorage.user,
+    window.__context.state.socket.emit('chatMessage', {
+      room: window.__context.state.room,
+      user: window.__context.state.user,
       text: submission.value,
     });
 
     window.__context.state.messages.push({
-      user: localStorage.user,
+      user: window.__context.state.user,
       text: submission.value,
     });
 
-    window.__context.forceUpdate();
-
     submission.value = '';
+
+    window.__context.forceUpdate();
   }
 
   render() {

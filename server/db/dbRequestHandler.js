@@ -58,10 +58,10 @@ module.exports = {
     });
   },
 
-  getClasses: (req ,res) => {
+  getClasses: (req, res) => {
     Classroom.find().then(function(classes) {
       res.send({'data': JSON.stringify(classes)});
-    })
+    });
   },
 
   addStudent: (req, res) => {
