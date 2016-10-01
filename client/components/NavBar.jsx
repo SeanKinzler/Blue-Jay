@@ -34,7 +34,7 @@ class NavBar extends Component {
     return (
       <nav>
         <div className='nav-wrapper blue darken-1'>
-          <Link className='brand-logo center' to='/'>BlueBird</Link>
+          <Link className='brand-logo center' to='/'>BlueJay</Link>
           <ul id="nav-mobile" className="right">
               { this.renderAuthLinks() }
           </ul>       
