@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { Router, IndexRoute, Route, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import App from './components/App.jsx';
+import Home from './pages/Home.jsx';
 import Channel from './pages/Channel.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import UserSignUp from './pages/UserSignUp.jsx';
@@ -17,7 +18,8 @@ render((
 	<Provider store={store}>
 	  <Router history={browserHistory}> 
 	    <Route path='/' component={App}>
-	      <IndexRoute component={Dashboard} />
+	      <IndexRoute component={Home} />
+	      <Route path='dashboard' component={Dashboard} />
 	      <Route path='channel/:channelId' component={Channel} />
 	      <Route path='login' component={Login} />
 	      <Route path='signup' component={UserSignUp} />
