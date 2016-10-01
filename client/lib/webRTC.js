@@ -37,7 +37,7 @@ module.exports = function (room, user, socket) {
     } else {
 
       var newVideo = document.createElement('video');
-      newVideo.className = 'col s8';
+      newVideo.className = 'col s3';
       newVideo.id = elementId;
       newVideo.src = window.URL.createObjectURL(source);
 

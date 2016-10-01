@@ -14,7 +14,7 @@ class NavBar extends Component {
       return (
         <div>
           <li>
-            <Link to='dashboard'>Dashboard</Link>
+            <Link to='/dashboard'>Dashboard</Link>
           </li>
           <li>
             <a href='#' onClick={ (e) => { e.preventDefault(); this.handleSignout(); } }>Logout</a>
@@ -24,7 +24,7 @@ class NavBar extends Component {
     } else {
       return (
         <li>
-          <Link to='login'>Login</Link>
+          <Link to='/login'>Login</Link>
         </li>
       )
     }

@@ -19,32 +19,44 @@ class Video extends Component {
   }
 
   componentWillMount() {
-    EZRTC(this.state.room, this.props.username, this.state.socket);
+    localStorage.username = this.props.username || localStorage.username;
+    EZRTC(this.state.room, localStorage.username, this.state.socket);
+  }
+
+  componentWillUnmount() {
+    this.state.socket.disconnect();
   }
 
   render () {
     return (
-      <div>
-        <div className='row' id='putVidsHere'>
-          <video className='col s9' id='remoteVideo'
-            style={ style.flush }
-            poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png" 
-            autoPlay></video>
-          <div className='col s3'>
-            <video className='col s12' id='localVideo'
-            style={ style.flush }
-            poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png"
-            autoPlay></video>
+      <div className='container'>
+        <div className='row'>
+          
+          <div className='col s12 m9'>
+            <div className='row' id='putVidsHere'>
+              <video
+                className='col s9 m12' 
+                id='remoteVideo'
+                poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png" 
+                autoPlay>
+              </video>
+              <video
+                className='col s3' 
+                id='localVideo'
+                poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png"
+                autoPlay>
+              </video>
+            </div>  
           </div>
-          <div className='col s3' >
-            <div className="col s11">
+     
+          <div className='col s12 m3' >
               <ChatContainer 
                 room={ this.state.room }
-                user={ this.props.username }
-                socket={ this.state.socket } />
-            </div>
+                user={ localStorage.username }
+                socket={ this.state.socket } 
+              />
           </div>
-          <form></form>
+
         </div>
       </div>
     );
