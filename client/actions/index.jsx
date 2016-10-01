@@ -4,6 +4,7 @@ import axios from 'axios';
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const REQUEST_CHANNELS = 'REQUEST_CHANNELS';
+export const REQUEST_ERROR = 'REQUEST_ERROR';
 export const SIGN_IN_USER = 'SIGN_IN_USER';
 export const SIGN_OUT_USER = 'SIGN_OUT_USER';
 export const SIGN_UP_USER = 'SIGN_UP_USER';
@@ -46,5 +47,32 @@ export const authError = (error) => {
 	return {
 		type: AUTH_ERROR,
 		payload: error
+	}
+}
+
+export const requestError = (error) => {
+	return {
+		type: REQUEST_ERROR,
+		payload: error
+	}
+}
+
+export const requestChannels = (channels) => {
+	return {
+		type: REQUEST_CHANNELS,
+		data: channels
+	}
+}
+
+export const getChannels = () => {
+	console.log('requesting channels')
+	return (dispatch) => {
+		axios.get('https://localhost:8443/classes/all')
+		.then((res) => {
+			dispatch(requestChannels(res));
+		})
+		.catch((err) => {
+			dispatch(requestError(err));
+		})
 	}
 }
