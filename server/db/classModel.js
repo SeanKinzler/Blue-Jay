@@ -20,15 +20,7 @@ var Class = db.define('classes', {
     type: Sequelize.STRING,
     // allowNull: false,
 
-  },
-  scheduleDays: {
-    type: Sequelize.STRING,
-    // allowNull: false,
-  },
-  scheduleTime: {
-    type: Sequelize.STRING,
-    // allowNull: false,
-  },
+  }
 
 });
 // console.log('synced');

@@ -10,7 +10,7 @@ var User = db.define('users', {
   username: {
     type: Sequelize.STRING, 
     allowNull: false, 
-    unique: true
+    // unique: true
   }, 
   firstName: {
     type: Sequelize.STRING
