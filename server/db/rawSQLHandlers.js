@@ -39,30 +39,43 @@ module.exports = {
 
   //must have classname, access T/F, keywords, 
   //schedule info
-  addClass: (req, res) => {
-    Classroom.create(req.body).then((data) => {
-      res.send({'data': 'Classroom created.'});
-    }).catch(function (error) {
-      res.send(error);
+  addClass: (req, res) => { 
+    var keys = [];
+    var values = [];
+
+    for (var key in req.body) {
+      keys.push(key);
+      values.push(req.body[key]);
+    }
+
+    sql([
+
+      'INSERT INTO classes (' + keys.join(', ') + ')',
+      'VALUES ("' + values.join('", "') + '")'
+
+    ].join(' '), function (error, rows, fields) {
+      res.send(arguments);
     });
   },
 
   //must take obj with classname key
   deleteClass: (req, res) => {
-    Classroom.find({
-      where: {classname: req.body.classname}
-    }).then((classroom) => {
-      classroom.destroy();
-      res.send({'data': 'Classroom deleted.'});
-    }).catch(function (error) {
-      res.send(error);
-    });
+    sql('DELETE FROM classes WHERE classname="' + req.body.classname + '"', 
+    function (error, rows, fields) {
+      if (error) {
+        res.send(404);
+      } else {
+        res.send(rows);
+      }
+    });    
+
   },
 
 
-  getClasses: (req ,res) => {
-    Classroom.findAll().then((classes) => {
-      res.send({'data': JSON.stringify(classes)});
+  getClasses: (req, res) => {
+    sql('SELECT * FROM classes WHERE classname="' + req.body.classname + '"',
+    function (error, rows, fields) {
+      res.send(rows);
     });
   },
 

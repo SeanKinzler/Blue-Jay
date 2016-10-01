@@ -12,6 +12,8 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
 
   describe('Database', function () {
     var random = bcrypt.hashSync('asdf', 5);
+    var random2 = bcrypt.hashSync('asdf', 5);
+    var userId = 1;
 
     it('should have access to the environment variables', function () {
       expect(process.env.DBHOST).to.not.equal(undefined);
@@ -48,9 +50,42 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
         }
       }, {
         send: function (input) {
+          userId = input[0].id;
           done();
         }
       });
+    });
+
+
+    it('should be able to create classes', function(done) {
+      dbHelpers.addClass({
+        body: {
+          'classname': random,
+          'access': random,
+          'keywords': random,
+          'instructorid': userId,
+        }
+      }, {
+        send: function (input) {
+          done();
+        }
+      });
+    });
+
+    it('should be able to find classes', function (done) {
+      dbHelpers.getClasses({
+        body: {
+          classname: random,
+        }
+      }, {
+        send: function (input) {
+          done();
+        }
+      })
+    });
+
+    it('should join users and classrooms', function(done) {
+      done();
     });
 
     it('should be able to delete users', function (done) {
@@ -65,12 +100,17 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
       });
     });
 
-    it('should add a classroom', function(done) {
-      done();
-    });
-
-    it('should join users and classrooms', function(done) {
-      done();
+    it('should be able to delete classes', function (done) {
+      dbHelpers.deleteClass({
+        body: {
+          classname: random,
+        }
+      }, {
+        send: function (input) {
+          console.log(input);
+          done();
+        }
+      });
     });
   });
 }
