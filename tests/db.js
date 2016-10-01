@@ -3,6 +3,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
   var User = require('../server/db/userModel');
   var Class = require('../server/db/classModel');
   require('../server/db/user_classModel');
+  var Schedule = require('../server/db/scheduleModel')
   var chai = require('chai');
   var sinon = require('sinon');
 
@@ -13,7 +14,8 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
   var Sequelize = require('sequelize');
   var db = require('../server/db/db');
 
-  // db.sync({force: true});
+  //{ force: true }
+  // db.sync({ force: true });
   describe('Database', function () {
 
     it('should have access to the environment variables', function () {
@@ -44,6 +46,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
 
       User.create({username: 'test', password: 'testpass'})
       .then(function() {
+        console.log('user created');
         User.findOne({
           where: {username: 'test'}
         })
@@ -79,11 +82,11 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
             Class.findOne({where: {classname: 'testclass'}})
             .then(function(classroom) {
               classroom.setInstructor(user);
+              console.log(user.prototype);
               user.addClass(classroom)
               .then(function() {
                 classroom.getUsers()
                 .then(function(joinUser) {
-                  console.log('username: ', joinUser[0].username);
                   expect(joinUser[0].username).to.equal('test');
                   expect(joinUser[0].password).to.equal('testpass');
                   user.destroy();
@@ -97,5 +100,28 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
       });
     });
   });
+
+  // it ('should have schedules', function(done) {
+  //   User.create({username: 'test2', password: 'testpass'}).then(function(user) {
+  //     Class.create({classname: 'testclass2'}).then(function(classroom) {
+  //       Schedule.create({
+  //         dayOfWeek: 0, 
+  //         startTime: '1500', 
+  //         endTime: '1600'
+  //       }).then(function (sched) {
+  //         classroom.addUser(user)
+  //         classroom.setSchedule(sched).then(function() {
+  //           classroom.getSchedule().then(function(testSched) {
+  //             expect(testSched.dayOfWeek).to.equal(0);
+  //             user.destroy();
+  //             sched.destroy();
+  //             classroom.destroy();
+  //             done();
+  //           })
+  //         })
+  //       })
+  //     })
+  //   })
+  // })
 
 }
