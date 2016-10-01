@@ -9,6 +9,15 @@ export const SIGN_IN_USER = 'SIGN_IN_USER';
 export const SIGN_OUT_USER = 'SIGN_OUT_USER';
 export const SIGN_UP_USER = 'SIGN_UP_USER';
 export const AUTH_ERROR = 'AUTH_ERROR';
+export const JOIN_CHANNEL = 'JOIN_CHANNEL';
+export const JOIN_CHANNEL_ERROR = 'JOIN_CHANNEL_ERROR';
+
+export const joinChannel = (socket) => {
+	return {
+		type: JOIN_CHANNEL,
+		payload: socket
+	}
+}
 
 export const signInUser = (credentials) => {
 	browserHistory.push('/');

@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../actions/index.jsx';
-
+import ChannelList from '../components/ChannelList.jsx';
 class Dashboard extends Component {
 
 	componentWillMount() {
@@ -15,21 +15,11 @@ class Dashboard extends Component {
 	    <div className='container'>
 	    	<div className='row'>
 	    		<div className='col s12 l6'>
-			    	<h4>Upcoming</h4>
-			    	<ul>
-			    		<li>
-			    			<Link to='channel/one'>Time: Now - Channel: One - Topic</Link>
-			    		</li>
-			    		<li>
-			    			<Link to='channel/two'>Time: Tomorrow 12:30pm - Channel: Two - Topic</Link>
-			    		</li>
-			    		<li>
-			    			<Link to='channel/three'>Time: Saturday 4:00pm - Channel: Three - Topic</Link>
-			    		</li>
-			    	</ul>
+			    	<h5 className='center-align'>Upcoming</h5>
+			    	<ChannelList />
 			    </div>
 			    <div className='col s12 l6'>		    
-			    	<h4>Subscribed</h4>
+			    	<h5 className='center-align'>Subscribed</h5>
 			    	<ul>
 				    	<li>Super cool channel 10</li>
 				    	<li>Super cool channel 11</li>
@@ -37,13 +27,13 @@ class Dashboard extends Component {
 				    </ul>
 			    </div>
 			    <div className='col s12 l6'>
-			    	<h4>My Channels</h4>
+			    	<h5 className='center-align'>My Channels</h5>
 			    	<ul>
 				    	<li>You don't have any channels. Sign up here!</li>
 				    </ul>
 			    </div>
 			    <div className='col s12 l6'>
-			    	<h4>Account Settings</h4>
+			    	<h5 className='center-align'>Account Settings</h5>
 			    	<ul>
 				    	<li>Profile</li>
 				    	<li>Notifications</li>
