@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 
 export default () => {
 	return (
-		<ul className="collection">
+		<ul className="collection with-header">
 		  <li className="collection-item avatar">
 		    <i className="material-icons circle blue">loop</i>
 		    <span className="title">Kazoo Masters</span>
