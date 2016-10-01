@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser').json;
 var path = require('path');
-var dbHandler = require('../db/dbRequestHandler');
+var dbHandler = require('../db/rawSQLHandlers');
 
 var app = express();
 app.use(bodyParser());

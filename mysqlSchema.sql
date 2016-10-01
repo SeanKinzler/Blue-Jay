@@ -2,22 +2,22 @@
 -- Globals
 -- ---
 
--- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
--- SET FOREIGN_KEY_CHECKS=0;
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET FOREIGN_KEY_CHECKS=0;
 
 -- ---
 -- Table 'users'
 -- 
 -- ---
 
--- DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `users`;
     
 CREATE TABLE `users` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `username` VARCHAR NULL DEFAULT NULL,
-  `firstname` VARCHAR NULL DEFAULT NULL,
-  `lastname` VARCHAR NULL DEFAULT NULL,
-  `email` VARCHAR NULL DEFAULT NULL,
+  `username` VARCHAR(255) NULL DEFAULT NULL,
+  `firstname` VARCHAR(255) NULL DEFAULT NULL,
+  `lastname` VARCHAR(255) NULL DEFAULT NULL,
+  `email` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY (`username`)
 );
@@ -27,13 +27,13 @@ CREATE TABLE `users` (
 -- 
 -- ---
 
--- DROP TABLE IF EXISTS `classes`;
+DROP TABLE IF EXISTS `classes`;
     
 CREATE TABLE `classes` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `classname` VARCHAR NULL DEFAULT NULL,
-  `access` VARCHAR NULL DEFAULT NULL,
-  `keywords` VARCHAR NULL DEFAULT NULL,
+  `classname` VARCHAR(255) NULL DEFAULT NULL,
+  `access` VARCHAR(255) NULL DEFAULT NULL,
+  `keywords` VARCHAR(255) NULL DEFAULT NULL,
   `instructorid` INTEGER NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
@@ -43,7 +43,7 @@ CREATE TABLE `classes` (
 -- 
 -- ---
 
--- DROP TABLE IF EXISTS `users_classes`;
+DROP TABLE IF EXISTS `users_classes`;
     
 CREATE TABLE `users_classes` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE `users_classes` (
 -- 
 -- ---
 
--- DROP TABLE IF EXISTS `schedules`;
+DROP TABLE IF EXISTS `schedules`;
     
 CREATE TABLE `schedules` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
