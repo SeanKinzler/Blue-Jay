@@ -12,14 +12,14 @@ class NavBar extends Component {
   renderAuthLinks() {
     if (this.props.authenticated) {
       return (
-        <div>
+        <span>
           <li>
             <Link to='/dashboard'>Dashboard</Link>
           </li>
           <li>
             <a href='#' onClick={ (e) => { e.preventDefault(); this.handleSignout(); } }>Logout</a>
           </li>
-        </div>
+        </span>
       )
     } else {
       return (
@@ -36,7 +36,10 @@ class NavBar extends Component {
         <div className='nav-wrapper blue darken-1'>
           <Link className='brand-logo center' to='/'>BlueJay</Link>
           <ul id="nav-mobile" className="right">
-              { this.renderAuthLinks() }
+            <li>
+              <Link to='/search'>Search</Link>
+            </li>
+            { this.renderAuthLinks() }
           </ul>       
         </div>
       </nav>
