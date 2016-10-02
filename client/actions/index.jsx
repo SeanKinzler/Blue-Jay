@@ -4,6 +4,7 @@ import axios from 'axios';
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const REQUEST_CHANNELS = 'REQUEST_CHANNELS';
+export const SEARCH_CHANNELS = 'SEARCH_CHANNELS';
 export const REQUEST_ERROR = 'REQUEST_ERROR';
 export const SIGN_IN_USER = 'SIGN_IN_USER';
 export const SIGN_OUT_USER = 'SIGN_OUT_USER';
@@ -83,5 +84,12 @@ export const getChannels = () => {
 		.catch((err) => {
 			dispatch(requestError(err));
 		})
+	}
+}
+
+export const searchChannels = (term) => {
+	return {
+		type: SEARCH_CHANNELS,
+		term: term 
 	}
 }
