@@ -2,12 +2,29 @@ import React, { Component } from 'react';
 import {Link} from 'react-router';
 
 export default class Carousel extends Component {
-	componentDidMount() {
-		setInterval(function(){
+	constructor(props) {
+		super(props);
+		this.state = {
+			timeoutId: ''
+		};
+	}
+	
+	carouselSlide() {
+		return setInterval(function(){
 		  $('.carousel').carousel('next');
 		}, 3000);
+	}
+
+	componentDidMount() {
+		var timeoutId = this.carouselSlide();
+		this.setState({timeoutId: timeoutId});
 		$('.carousel.carousel-slider').carousel({full_width: true});
 	}
+
+	componentWillUnmount() {
+		clearInterval(this.state.timeoutId);
+	}
+
 	render() {
 		return (
 			<div className="carousel carousel-slider center" data-indicators="true">

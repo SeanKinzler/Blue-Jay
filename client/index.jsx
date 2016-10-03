@@ -10,6 +10,7 @@ import UserSignUp from './pages/UserSignUp.jsx';
 import Login from './pages/Login.jsx'
 import configureStore from './store/storeConfig.jsx';
 import { persistStore } from 'redux-persist';
+import Search from './pages/Search.jsx';
 
 const store = configureStore();
 persistStore(store);
@@ -20,6 +21,7 @@ render((
 	    <Route path='/' component={App}>
 	      <IndexRoute component={Home} />
 	      <Route path='dashboard' component={Dashboard} />
+	      <Route path='search' component={Search} />
 	      <Route path='channel/:channelId' component={Channel} />
 	      <Route path='login' component={Login} />
 	      <Route path='signup' component={UserSignUp} />
