@@ -11,6 +11,9 @@ export const SIGN_OUT_USER = 'SIGN_OUT_USER';
 export const SIGN_UP_USER = 'SIGN_UP_USER';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const JOIN_CHANNEL = 'JOIN_CHANNEL';
+export const FILTER_CHANNEL_CATEGORIES = 'FILTER_CHANNEL_CATEGORIES';
+export const FILTER_CHANNEL_PRICES = 'FILTER_CHANNEL_PRICES';
+export const FILTER_CHANNEL_TYPES = 'FILTER_CHANNEL_TYPES';
 export const JOIN_CHANNEL_ERROR = 'JOIN_CHANNEL_ERROR';
 
 export const joinChannel = (socket) => {
@@ -91,5 +94,26 @@ export const searchChannels = (term) => {
 	return {
 		type: SEARCH_CHANNELS,
 		term: term 
+	}
+}
+
+export const filterChannelCategories = (categories) => {
+	return {
+		type: FILTER_CHANNEL_CATEGORIES,
+		categories: categories,
+	}
+}
+
+export const filterChannelPrices = (prices) => {
+	return {
+		type: FILTER_CHANNEL_PRICES,
+		prices: prices,
+	}
+}
+
+export const filterChannelType = (types) => {
+	return {
+		type: FILTER_CHANNEL_TYPES,
+		types: types,
 	}
 }
