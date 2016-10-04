@@ -2,6 +2,7 @@ module.exports = function (room, user, socket) {
   peers = {};
   var parent = null;
   var children = {};
+  var parentStream;
 
   var STUN = {
     urls: 'stun:stun.l.google.com:19302'
@@ -82,6 +83,7 @@ module.exports = function (room, user, socket) {
       parent.addStream(mediaStream);
 
       parent.onaddstream = function (media) {
+        parentStream = media.stream;
         addVideo(media.stream, targetUserId);
       };
 
@@ -140,7 +142,11 @@ module.exports = function (room, user, socket) {
       children[id] = new RTCPeerConnection(ICE);
       peers[id] = children[id];
 
-      children[id].addStream(mediaStream);
+      if (!parent) {
+        children[id].addStream(mediaStream);
+      } else {
+        children[id].addStream(parentStream);
+      }
 
       children[id].onaddstream = function (media) {
         // addVideo(media.stream, receivedData.returnAddress);

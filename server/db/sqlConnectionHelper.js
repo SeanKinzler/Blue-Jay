@@ -1,5 +1,6 @@
 var mysql = require('mysql');
 
+
 var db = mysql.createConnection({
   host: process.env.DBHOST,
   user: 'root',
@@ -7,15 +8,18 @@ var db = mysql.createConnection({
   database: 'bluejay'
 });
 
-db.connect();
 
 var execute = function (query, callback) {
+
+  db.connect();
 
   db.query(query, function () {
 
     callback.apply(null, arguments);
 
+    db.end();
   });
+
 };
 
 

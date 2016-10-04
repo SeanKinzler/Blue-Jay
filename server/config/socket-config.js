@@ -43,9 +43,12 @@ io.sockets.on('connection', function(socket) {
 
       socket.emit('joined', {
         message: 'You have joined the room: "' + data.roomName + '"',
-        userIds: [rooms[data.roomName].hostId],
+        userIds: [rooms[data.roomName].lastJoined],
         yourId: yourId
       });
+
+      rooms[data.roomName].lastJoined = yourId;
+
 
       socket.emit('chatMessage', {
         user: 'You have joined the room: ' + data.roomName,
@@ -62,7 +65,8 @@ io.sockets.on('connection', function(socket) {
 
       for (var key in socket.adapter.rooms[data.roomName].sockets) {
         rooms[data.roomName] = {
-          hostId: key
+          hostId: key,
+          lastJoined: key
         };
       }
         
