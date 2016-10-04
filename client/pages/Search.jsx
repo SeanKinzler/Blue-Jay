@@ -8,6 +8,10 @@ import SearchResultsExtended from '../components/SearchResultsExtended.jsx';
 
 class Search extends Component {
 
+	makeStreamQuery() {
+		this.props.getStreams();
+	}
+
 	componentDidMount() {
 		$('select').material_select();
 		$('select').on(
