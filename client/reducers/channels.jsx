@@ -3,7 +3,10 @@ import { REQUEST_CHANNELS,
 		SEARCH_CHANNELS, 
 		FILTER_CHANNEL_CATEGORIES, 
 		FILTER_CHANNEL_PRICES,
-		FILTER_CHANNEL_TYPES } 
+		FILTER_CHANNEL_TYPES,
+		FILTER_CHANNEL_DAYS,
+		FILTER_CHANNEL_TIMES,
+		TOGGLE_SEARCH_RESULTS_VIEW } 
 from '../actions/index.jsx';
 
 const initialState = {
@@ -12,6 +15,9 @@ const initialState = {
 	categories: [],
 	prices: [],
 	types: [],
+	days: [],
+	times: [],
+	view: 'compact',
 	error: null
 }
 
@@ -41,6 +47,18 @@ const Channel = (state = initialState, action) => {
 			return Object.assign({}, state, {
 				types: action.types
 			})
+		case FILTER_CHANNEL_DAYS:
+			return Object.assign({}, state, {
+				days: action.days
+			})
+		case FILTER_CHANNEL_TIMES:
+			return Object.assign({}, state, {
+				times: action.times
+			})
+		case TOGGLE_SEARCH_RESULTS_VIEW:
+			return Object.assign({}, state, {
+				view: action.view
+			})			
 		default:
 			return state;
 	}
