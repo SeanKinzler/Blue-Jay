@@ -1,5 +1,6 @@
 var server = require('./app-config.js');
 var socketIO = require('socket.io')();
+var Tree = require('./connectionTree.js');
 
 var io = socketIO.listen(server);
 

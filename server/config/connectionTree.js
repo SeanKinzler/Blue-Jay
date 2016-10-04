@@ -96,16 +96,23 @@ Tree.prototype.breadthFirstSelect = function (callback) {
   }
 };
 
-// console.log('\n\nTree Tests: ');
-
-// var tests = {};
 
 
 
 
-// for (var key in tests) {
-//   console.log('Test ' + key + ': \t' + (tests[key] ? 'PASS' : 'FAIL'));
-// }
+
+
+module.exports = Tree;
+
+
+
+
+
+
+
+
+
+
 
 
 
