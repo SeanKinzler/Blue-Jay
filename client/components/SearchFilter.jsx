@@ -7,9 +7,10 @@ const SearchFilter = ({filterOptions}) => {
 			id={filterOptions.title}
 			data-handler={filterOptions.handler}
 			multiple
+			defaultValue={filterOptions.selected}
 		>
 			<option value="" disabled>{filterOptions.title}</option>
-			{ filterOptions.data.map((option) => {
+			{ filterOptions.options.map((option) => {
 				return (
 					<option 
 						key={option}
