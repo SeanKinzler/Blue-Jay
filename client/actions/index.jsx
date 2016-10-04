@@ -14,6 +14,9 @@ export const JOIN_CHANNEL = 'JOIN_CHANNEL';
 export const FILTER_CHANNEL_CATEGORIES = 'FILTER_CHANNEL_CATEGORIES';
 export const FILTER_CHANNEL_PRICES = 'FILTER_CHANNEL_PRICES';
 export const FILTER_CHANNEL_TYPES = 'FILTER_CHANNEL_TYPES';
+export const FILTER_CHANNEL_DAYS = 'FILTER_CHANNEL_DAYS';
+export const FILTER_CHANNEL_TIMES = 'FILTER_CHANNEL_TIMES';
+export const TOGGLE_SEARCH_RESULTS_VIEW = 'TOGGLE_SEARCH_RESULTS_VIEW';
 export const JOIN_CHANNEL_ERROR = 'JOIN_CHANNEL_ERROR';
 
 export const joinChannel = (socket) => {
@@ -111,9 +114,30 @@ export const filterChannelPrices = (prices) => {
 	}
 }
 
-export const filterChannelType = (types) => {
+export const filterChannelTypes = (types) => {
 	return {
 		type: FILTER_CHANNEL_TYPES,
 		types: types,
+	}
+}
+
+export const filterChannelDays = (days) => {
+	return {
+		type: FILTER_CHANNEL_DAYS,
+		days: days,
+	}
+}
+
+export const filterChannelTimes = (times) => {
+	return {
+		type: FILTER_CHANNEL_TIMES,
+		times: times,
+	}
+}
+
+export const toggleSearchResultsView = (view) => {
+	return {
+		type: TOGGLE_SEARCH_RESULTS_VIEW,
+		view: view,
 	}
 }
