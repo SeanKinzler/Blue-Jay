@@ -76,13 +76,13 @@ export const requestError = (error) => {
 export const requestStreams = (streams) => {
 	return {
 		type: REQUEST_STREAMS,
-		data: streams
+		data: streams.data
 	}
 }
 
 export const getStreams = () => {
 	return (dispatch) => {
-		axios.get('https://localhost:8443/classes/all')
+		axios.get('https://localhost:8443/api/streams')
 		.then((res) => {
 			dispatch(requestStreams(res));
 		})
