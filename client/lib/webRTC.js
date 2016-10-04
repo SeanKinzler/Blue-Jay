@@ -22,8 +22,7 @@ module.exports = function (room, user, socket) {
 
   var addVideo = function (source, elementId) {
 
-    var remoteVideo = document.getElementById('remoteVideo');
-    remoteVideo.src = window.URL.createObjectURL(source);
+    document.getElementById('remoteVideo').src = window.URL.createObjectURL(source);
 
   };
 
