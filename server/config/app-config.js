@@ -12,17 +12,24 @@ app.post('/users/login', (req, res) => {
   res.send({'data': 'Login recieved!'});
 });
 
-app.post('/users/signup', (req, res) => { dbHandler.addUser(req, res); });
-app.delete('/users/remove', (req, res) => { dbHandler.deleteUser(req, res); });
-app.get('/users/all', (req, res) => { dbHandler.getUsers(req, res); });
-app.post('/users/schedule', (req, res) => { dbHandler.getSchedule(req, res); });
 
-app.post('/classes/create', (req, res) => { dbHandler.addClass(req, res); });
-app.delete('/classes/remove', (req, res) => { dbHandler.deleteClass(req, res); });
-app.get('/classes/all', (req, res) => { dbHandler.getClasses(req, res); });
- 
-app.post('/classes/signup', (req, res) => {dbHandler.addStudent(req, res)});
-// app.post('/classes/:class/', (req, res) => {dbHandler.removeStudent(req, res)});
+app.get('/api/users', (req, res) => { dbHandler.getUsers(req, res); });
+app.post('/api/users', (req, res) => { dbHandler.addUser(req, res); });
+
+app.get('/api/users/:username', (req, res) => { dbHandler.getUser(req, res); });
+app.delete('/api/users/:username', (req, res) => { dbHandler.deleteUser(req, res); });
+app.put('/api/users/:username/', (req, res) => { dbHandler.updateUser(req, res); })
+
+app.get('/api/users/:username/subscriptions', (req, res) => { dbHandler.getSchedule(req, res); });
+app.post('/api/users/:username/subscriptions', (req, res) => { dbHandler.subscribeUser(req, res); });
+app.put('/api/users/:username/subscriptions', (req, res) => { dbHandler.updateSubscription(req, res); });
+
+app.post('/api/streams', (req, res) => { dbHandler.addStream(req, res); });
+app.get('/api/streams/', (req, res) => { dbHandler.searchStreams(req, res); });
+
+app.get('/api/streams/:title', (req, res) => { dbHandler.getStream(req, res); });
+app.put('/api/streams/:title', (req, res) => { dbHandler.updateStream(req, res); });
+app.delete('/api/streams/:title', (req, res) => { dbHandler.deleteStream(req, res); });
 
 
 // Catch-all will redirect to react app then re-routed by react-router
