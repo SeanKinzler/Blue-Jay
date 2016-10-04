@@ -23,6 +23,21 @@ class Search extends Component {
 		) 
 	}
 
+	changeViewHandler(view) {
+		this.props.toggleSearchResultsView(view)
+	}
+
+	renderFilterView() {
+		var compact = this.props.view.type === 'compact' ? 'blue' : '';
+		var extended = this.props.view.type === 'extended' ? 'blue' : '';
+		return (
+			<span className='align-center'>
+				<i onClick={ () => {this.changeViewHandler('compact')} } className={`material-icons ${compact}`}>view_module</i>
+				<i onClick={ () => {this.changeViewHandler('extended')} } className={`material-icons ${extended}`}>view_list</i>
+			</span>
+		)
+	}
+
 	render() {
 		return (
 			<div className='container'>
@@ -44,7 +59,7 @@ class Search extends Component {
 						<SearchFilter filterOptions={this.props.times} />
 					</div>
 					<div className='col s4 m2'>
-						{'Toogle Display'}
+						{ this.renderFilterView() }
 					</div>
 				</div>
 			</div>
@@ -54,6 +69,9 @@ class Search extends Component {
 
 const mapStateToProps = (state) => {
 	return {
+		view: {
+			type: state.streams.view
+		},
 		categories: {
 			title: 'Categories', 
 			handler: 'filterStreamCategories',
