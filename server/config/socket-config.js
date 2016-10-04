@@ -4,7 +4,6 @@ var Tree = require('./connectionTree.js');
 
 var io = socketIO.listen(server);
 
-
 var rooms = {};
 
 
@@ -30,18 +29,18 @@ io.sockets.on('connection', function(socket) {
     if (socket.adapter.rooms[data.roomName]) {
       var yourId = socket.id;
 
-      socket.emit('joined', {
-        message: 'You have joined the room: "' + data.roomName + '"',
-        userIds: [rooms[data.roomName].lastJoined],
-        yourId: yourId
-      });
+      rooms[data.roomName].add(yourId, 0, function (targetId, selfId) {
 
-      rooms[data.roomName].lastJoined = yourId;
+        socket.emit('joined', {
+          message: 'You have joined the room: "' + data.roomName + '"',
+          userIds: targetId,
+          yourId: selfId,
+        });
 
-
-      socket.emit('chatMessage', {
-        user: 'You have joined the room: ' + data.roomName,
-        text: '',
+        socket.emit('chatMessage', {
+          user: 'You have joined the room: ' + data.roomName,
+          text: '',
+        });
       });
 
       socket.broadcast.to(data.roomName).emit('chatMessage', {
@@ -52,12 +51,7 @@ io.sockets.on('connection', function(socket) {
     } else {
       socket.join(data.roomName);
 
-      console.log(socket.adapter.rooms);
-
-      rooms[data.roomName] = {
-        hostId: socket.id,
-        lastJoined: socket.id,
-      };
+      rooms[data.roomName] = new Tree(socket.id, 0);
         
       socket.emit('created', 'You have created the room: "' + data.roomName + '"');
     }

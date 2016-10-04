@@ -55,7 +55,7 @@ Tree.prototype._insert = function (tree, callback) {
   }
 };
 
-Tree.prototype.remove = function (key) {
+Tree.prototype.remove = function (key, callback) {
   for (var i = 0; i < this.children.length; i++) {
     if (this.children[i].key === key) {
       var temp = this.children[i];
@@ -63,7 +63,7 @@ Tree.prototype.remove = function (key) {
       this.children.splice(i, 1);
       
       temp.children.forEach(function (child) {
-        temp.host._insert(child);
+        temp.host._insert(child, callback);
       });
 
     } else {
@@ -95,12 +95,6 @@ Tree.prototype.breadthFirstSelect = function (callback) {
     callback(current);
   }
 };
-
-
-
-
-
-
 
 module.exports = Tree;
 
