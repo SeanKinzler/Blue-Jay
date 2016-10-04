@@ -21,7 +21,7 @@ const initialState = {
 	error: null
 }
 
-const Channel = (state = initialState, action) => {
+const Stream = (state = initialState, action) => {
 	switch (action.type) {
 		case REQUEST_STREAMS:
 			return Object.assign({}, state, {
