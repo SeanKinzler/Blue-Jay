@@ -18,18 +18,18 @@ app.post('/api/users', (req, res) => { dbHandler.addUser(req, res); });
 
 app.get('/api/users/:username', (req, res) => { dbHandler.getUser(req, res); });
 app.delete('/api/users/:username', (req, res) => { dbHandler.deleteUser(req, res); });
-app.put('/api/users/:username/', (req, res) => {dbHandler.})
+app.put('/api/users/:username/', (req, res) => { dbHandler.updateUser(req, res); })
 
 app.get('/api/users/:username/subscriptions', (req, res) => { dbHandler.getSchedule(req, res); });
 app.post('/api/users/:username/subscriptions', (req, res) => { dbHandler.subscribeUser(req, res); });
 app.put('/api/users/:username/subscriptions', (req, res) => { dbHandler.updateSubscription(req, res); });
 
 app.post('/api/streams', (req, res) => { dbHandler.addStream(req, res); });
-app.get('/api/streams/', (req, res) => { dbHandler.searchClasses(req, res); });
+app.get('/api/streams/', (req, res) => { dbHandler.searchStreams(req, res); });
 
 app.get('/api/streams/:title', (req, res) => { dbHandler.getStream(req, res); });
 app.put('/api/streams/:title', (req, res) => { dbHandler.updateStream(req, res); });
-app.delete('/api/streams/:title', (req, res) => { dbHandler.deleteClass(req, res); });
+app.delete('/api/streams/:title', (req, res) => { dbHandler.deleteStream(req, res); });
 
 
 // Catch-all will redirect to react app then re-routed by react-router

@@ -26,7 +26,7 @@ module.exports = {
   },
 
   getUsers: (req, res) => {
-    sql('SELECT * FROM USERS', (error, rows, fields) => {
+    sql('SELECT * FROM users', (error, rows, fields) => {
       if(error) {
         res.sendStatus(404);
       } else {
@@ -35,9 +35,20 @@ module.exports = {
     })
   },
 
+  getUser: (req, res) => {
+    sql('SELECT * FROM users WHERE username="' + req.params.username + '"',
+    function (error, rows, fields) {
+      if (error) {
+        res.sendStatus(404);
+      } else {
+        res.send(rows);
+      }
+    });
+  },
+
   //must take obj with username key
   deleteUser: (req, res) => {
-    sql('DELETE FROM users WHERE username="' + req.body.username + '"', 
+    sql('DELETE FROM users WHERE username="' + req.params.username + '"', 
     function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);
@@ -47,15 +58,24 @@ module.exports = {
     });    
   },
 
-  getUser: (req, res) => {
-    sql('SELECT * FROM users WHERE username="' + req.body.username + '"',
-    function (error, rows, fields) {
-      if (error) {
-        res.sendStatus(404);
-      } else {
-        res.send(rows);
-      }
-    });
+  updateUser: (req, res) => {
+    var changes = '';
+    for (key in req.body) {
+      changes = changes + key + ' = "' + req.body[key] + '", '
+    }
+    if (changes.length > 2) {
+      changes = changes.slice(0, -2);
+    }
+    console.log('changes: ', changes)
+    sql('UPDATE users SET ' + changes + ' WHERE username="' + req.params.username + '";', 
+      function(error, rows, fields) {
+        console.log('error', error)
+        if (error) {
+          res.sendStatus(404);
+        } else {
+          res.send(rows)
+        }
+      })
   },
 
   //must have classname, access T/F, keywords, 
