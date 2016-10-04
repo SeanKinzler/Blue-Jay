@@ -23,20 +23,8 @@ module.exports = function (room, user, socket) {
   var addVideo = function (source, elementId) {
 
     var remoteVideo = document.getElementById('remoteVideo');
+    remoteVideo.src = window.URL.createObjectURL(source);
 
-    if (!remoteVideo.src) {
-
-      remoteVideo.src = window.URL.createObjectURL(source);
-
-    } else {
-
-      var newVideo = document.createElement('video');
-      newVideo.className = 'col s3';
-      newVideo.id = elementId;
-      newVideo.src = window.URL.createObjectURL(source);
-
-      document.getElementById('putVidsHere').appendChild(newVideo);
-    }
   };
 
   var removeVideo = function (id) {
@@ -202,8 +190,9 @@ module.exports = function (room, user, socket) {
     });
   };
 
-  socket.on('joined', function (data) {
-    console.log(data.message);
+
+  socket.on('RTC-target', function (data) {
+    console.log(data);
     data.userIds.forEach(function (user, index) {
       sendOffer(user, data.yourId);
     });
@@ -246,14 +235,19 @@ module.exports = function (room, user, socket) {
     });
   });
 
+  socket.on('start', function (data) {
+    socket.emit('stop', {
+      roomName: room,
+      user: user,
+      time: data,
+    });
+  });
+
 
   askForCamera();
 
-  socket.emit('check', {
-    roomName: room,
-    user: user
-  });
 
+  socket.emit('ready');
 };
 
 

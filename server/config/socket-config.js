@@ -6,34 +6,24 @@ var io = socketIO.listen(server);
 
 var rooms = {};
 
+var currentRoom = {};
+
 
 io.sockets.on('connection', function(socket) {
 
-  socket.on('offer', function (data) {
-    socket.to(data.recipient).emit('offer', data);
+  socket.on('ready', function () {
+    socket.emit('start', Date.now());
   });
 
-  socket.on('answer', function (data) {
-    socket.to(data.recipient).emit('answer', data);
-  });
-
-  socket.on('ice-candidate', function (data) {
-    socket.to(data.recipient).emit('ice-candidate', data);
-  });
-
-  socket.on('ice-merge', function (data) {
-    socket.to(data.recipient).emit('ice-merge', data);
-  });
-
-  socket.on('check', function (data) {
+  socket.on('stop', function (data) {
+    currentRoom[socket.id] = data.roomName;
     if (socket.adapter.rooms[data.roomName]) {
       var yourId = socket.id;
 
-      rooms[data.roomName].add(yourId, 0, function (targetId, selfId) {
+      rooms[data.roomName].add(yourId, Date.now() - data.time, function (targetId, selfId) {
 
-        socket.emit('joined', {
-          message: 'You have joined the room: "' + data.roomName + '"',
-          userIds: targetId,
+        socket.emit('RTC-target', {
+          userIds: [targetId],
           yourId: selfId,
         });
 
@@ -57,13 +47,37 @@ io.sockets.on('connection', function(socket) {
     }
   });
 
+  socket.on('offer', function (data) {
+    socket.to(data.recipient).emit('offer', data);
+  });
+
+  socket.on('answer', function (data) {
+    socket.to(data.recipient).emit('answer', data);
+  });
+
+  socket.on('ice-candidate', function (data) {
+    socket.to(data.recipient).emit('ice-candidate', data);
+  });
+
+  socket.on('ice-merge', function (data) {
+    socket.to(data.recipient).emit('ice-merge', data);
+  });
+
+
   socket.on('chatMessage', function (data) {
     socket.broadcast.to(data.room).emit('chatMessage', data);
   });
 
   socket.on('disconnect', function () {
-    console.log(socket.adapter.rooms);
-    console.log(socket.id);
+    if (rooms[currentRoom[socket.id]]) {
+
+      rooms[currentRoom[socket.id]].remove(socket.id, function (targetId, selfId) {
+        socket.to(selfId).emit('RTC-target', {
+          userIds: [targetId],
+          yourId: selfId,
+        });
+      });
+    }
   });
 });
 

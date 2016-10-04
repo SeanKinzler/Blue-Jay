@@ -11,7 +11,7 @@ Tree.prototype.add = function (key, value, callback) {
 
   var check = function (node, totalPing) {
     totalPing = totalPing + node.value || node.value;
-    if (totalPing < lowestPing && node.children.length < 2) {
+    if (totalPing <= lowestPing && node.children.length < 2) {
       lowestPing = node.value;
       target = node;
     } else {
@@ -51,7 +51,7 @@ Tree.prototype._insert = function (tree, callback) {
   target.children.push(tree);
 
   if (callback) {
-    callback(target.key, key);
+    callback(target.key, tree.key);
   }
 };
 
