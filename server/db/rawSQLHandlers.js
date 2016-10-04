@@ -1,8 +1,7 @@
 var sql = require('./sqlConnectionHelper.js');
 
 module.exports = {
-  //must have username, password, 
-  //firstname, lastname, email
+  //must have googleId, createdAt, avatarUrl
   addUser: (req, res) => {
     var keys = [];
     var values = [];
@@ -26,20 +25,18 @@ module.exports = {
     });
   },
 
-  //must take obj with username key
-  deleteUser: (req, res) => {
-    sql('DELETE FROM users WHERE username="' + req.body.username + '"', 
-    function (error, rows, fields) {
-      if (error) {
+  getUsers: (req, res) => {
+    sql('SELECT * FROM users', (error, rows, fields) => {
+      if(error) {
         res.sendStatus(404);
       } else {
         res.send(rows);
       }
-    });    
+    })
   },
 
   getUser: (req, res) => {
-    sql('SELECT * FROM users WHERE username="' + req.body.username + '"',
+    sql('SELECT * FROM users WHERE username="' + req.params.username + '"',
     function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);
@@ -49,9 +46,39 @@ module.exports = {
     });
   },
 
+  //must take obj with username key
+  deleteUser: (req, res) => {
+    sql('DELETE FROM users WHERE username="' + req.params.username + '"', 
+    function (error, rows, fields) {
+      if (error) {
+        res.sendStatus(404);
+      } else {
+        res.send(rows);
+      }
+    });    
+  },
+
+  updateUser: (req, res) => {
+    var changes = '';
+    for (key in req.body) {
+      changes = changes + key + ' = "' + req.body[key] + '", '
+    }
+    if (changes.length > 2) {
+      changes = changes.slice(0, -2);
+    }
+    sql('UPDATE users SET ' + changes + ' WHERE username="' + req.params.username + '";', 
+      function(error, rows, fields) {
+        if (error) {
+          res.sendStatus(404);
+        } else {
+          res.send(rows)
+        }
+      })
+  },
+
   //must have classname, access T/F, keywords, 
   //schedule info
-  addClass: (req, res) => { 
+  addStream: (req, res) => { 
     var keys = [];
     var values = [];
 
@@ -61,10 +88,8 @@ module.exports = {
     }
 
     sql([
-
-      'INSERT INTO classes (' + keys.join(', ') + ')',
+      'INSERT INTO streams (' + keys.join(', ') + ')',
       'VALUES ("' + values.join('", "') + '")'
-
     ].join(' '), function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);
@@ -74,9 +99,42 @@ module.exports = {
     });
   },
 
+  searchStreams: (req, res) => {
+    sql('SELECT * FROM streams', function(error, rows, fields) {
+      if(error) {
+        res.sendStatus(404);
+      } else {
+        res.send(rows);
+      }
+    })
+  },
+
+  updateStream: (req, res) => {
+    var changes = '';
+    for (key in req.body) {
+      if (key === 'subscriberCount') {
+        changes = changes + key + ' = ' + req.body[key] + ', '
+      } else {
+        changes = changes + key + ' = "' + req.body[key] + '", '
+      }
+    }
+    if (changes.length > 2) {
+      changes = changes.slice(0, -2);
+    }
+    sql('UPDATE streams SET ' + changes + ' WHERE title="' + req.params.title + '";', 
+      function(error, rows, fields) {
+        console.log(error);
+        if (error) {
+          res.sendStatus(404);
+        } else {
+          res.send(rows);
+        }
+      })
+  },
+
   //must take obj with classname key
-  deleteClass: (req, res) => {
-    sql('DELETE FROM classes WHERE classname="' + req.body.classname + '"', 
+  deleteStream: (req, res) => {
+    sql('DELETE FROM streams WHERE title="' + req.params.title + '"', 
     function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);
@@ -88,8 +146,8 @@ module.exports = {
   },
 
 
-  getClasses: (req, res) => {
-    sql('SELECT * FROM classes WHERE classname="' + req.body.classname + '"',
+  getStream: (req, res) => {
+    sql('SELECT * FROM streams WHERE title="' + req.params.title + '"',
     function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);

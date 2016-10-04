@@ -28,7 +28,21 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
       });
     });
 
-    it('should be able to create users', function (done) {
+ it('should be able to find all users', function (done) {
+      dbHelpers.getUsers({
+        params: {
+          'username': random
+        }
+      }, {
+        send: function (input) {
+          userId = input[0].id;
+          expect(input).to.not.equal(404);
+          done();
+        }
+      });
+    });
+
+    it('should be able to create a user', function (done) {
       dbHelpers.addUser({
         body: {
           'username': random,
@@ -44,9 +58,9 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
       });
     });
 
-    it('should be able to find users', function (done) {
+    it('should be able to find a user', function (done) {
       dbHelpers.getUser({
-        body: {
+        params: {
           'username': random
         }
       }, {
@@ -58,14 +72,17 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
       });
     });
 
-
-    it('should be able to create classes', function(done) {
-      dbHelpers.addClass({
+    it('should be able to update a user', function (done) {
+      dbHelpers.updateUser({
+        params: {
+          'username': random,
+        },
         body: {
-          'classname': random,
-          'access': random,
-          'keywords': random,
-          'instructorid': userId,
+          'username': random2,
+          'firstname': random,
+          'lastname': random,
+          'email': random,
+          'avatarUrl': random
         }
       }, {
         send: function (input) {
@@ -75,10 +92,15 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
       });
     });
 
-    it('should be able to find classes', function (done) {
-      dbHelpers.getClasses({
+    it('should be able to create a stream', function(done) {
+      console.log(userId);
+      dbHelpers.addStream({
         body: {
-          classname: random,
+          'title': random,
+          'online': random,
+          'creatorId': userId,
+          'subscriberCount': 0,
+
         }
       }, {
         send: function (input) {
@@ -88,9 +110,53 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
       });
     });
 
-    it('should be able to delete users', function (done) {
+    it('should be able to search streams', function (done) {
+      dbHelpers.searchStreams({
+        params: {
+          title: random,
+        }
+      }, {
+        send: function (input) {
+          expect(input).to.not.equal(404);
+          done();
+        }
+      });
+    });
+
+    it('should be able to get a stream', function (done) {
+      dbHelpers.getStream({
+        params: {
+          title: random,
+        }
+      }, {
+        send: function (input) {
+          expect(input).to.not.equal(404);
+          done();
+        }
+      });
+    });
+
+    it('should be able to update a stream', function (done) {
+      dbHelpers.updateStream({
+        params: {
+          title: random,
+        },
+        body: {
+          online: random,
+          description: random,
+          subscriberCount: 5
+        }
+      }, {
+        send: function (input) {
+          expect(input).to.not.equal(404);
+          done();
+        }
+      });
+    });
+
+    it('should be able to delete a user', function (done) {
       dbHelpers.deleteUser({
-        body: {
+        params: {
           'username': random,
         }
       }, {
@@ -101,10 +167,10 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
       });
     });
 
-    it('should be able to delete classes', function (done) {
-      dbHelpers.deleteClass({
-        body: {
-          classname: random,
+    it('should be able to delete a stream', function (done) {
+      dbHelpers.deleteStream({
+        params: {
+          title: random,
         }
       }, {
         send: function (input) {

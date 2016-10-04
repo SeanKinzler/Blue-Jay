@@ -9,7 +9,8 @@
     "rb": "git pull upstream master --rebase && git push origin master",
     "start": "nodemon server/index.js",
     "compile": "webpack -d --watch",
-    "compiledep": "webpack -d"
+    "compiledep": "webpack -d",
+    "deployRun": "forever server/index.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "express-static": "^1.0.3",
+    "forever": "^0.15.2",
     "fs": "0.0.1-security",
     "mysql": "^2.11.1",
     "node-mysql": "^0.4.2",
