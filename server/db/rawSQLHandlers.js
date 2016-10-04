@@ -66,10 +66,8 @@ module.exports = {
     if (changes.length > 2) {
       changes = changes.slice(0, -2);
     }
-    console.log('changes: ', changes)
     sql('UPDATE users SET ' + changes + ' WHERE username="' + req.params.username + '";', 
       function(error, rows, fields) {
-        console.log('error', error)
         if (error) {
           res.sendStatus(404);
         } else {
@@ -80,7 +78,7 @@ module.exports = {
 
   //must have classname, access T/F, keywords, 
   //schedule info
-  addClass: (req, res) => { 
+  addStream: (req, res) => { 
     var keys = [];
     var values = [];
 
@@ -90,10 +88,8 @@ module.exports = {
     }
 
     sql([
-
-      'INSERT INTO classes (' + keys.join(', ') + ')',
+      'INSERT INTO streams (' + keys.join(', ') + ')',
       'VALUES ("' + values.join('", "') + '")'
-
     ].join(' '), function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);
@@ -103,9 +99,42 @@ module.exports = {
     });
   },
 
+  searchStreams: (req, res) => {
+    sql('SELECT * FROM streams', function(error, rows, fields) {
+      if(error) {
+        res.sendStatus(404);
+      } else {
+        res.send(rows);
+      }
+    })
+  },
+
+  updateStream: (req, res) => {
+    var changes = '';
+    for (key in req.body) {
+      if (key === 'subscriberCount') {
+        changes = changes + key + ' = ' + req.body[key] + ', '
+      } else {
+        changes = changes + key + ' = "' + req.body[key] + '", '
+      }
+    }
+    if (changes.length > 2) {
+      changes = changes.slice(0, -2);
+    }
+    sql('UPDATE streams SET ' + changes + ' WHERE title="' + req.params.title + '";', 
+      function(error, rows, fields) {
+        console.log(error);
+        if (error) {
+          res.sendStatus(404);
+        } else {
+          res.send(rows);
+        }
+      })
+  },
+
   //must take obj with classname key
-  deleteClass: (req, res) => {
-    sql('DELETE FROM classes WHERE classname="' + req.body.classname + '"', 
+  deleteStream: (req, res) => {
+    sql('DELETE FROM streams WHERE title="' + req.params.title + '"', 
     function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);
@@ -117,8 +146,8 @@ module.exports = {
   },
 
 
-  getClasses: (req, res) => {
-    sql('SELECT * FROM classes WHERE classname="' + req.body.classname + '"',
+  getStream: (req, res) => {
+    sql('SELECT * FROM streams WHERE title="' + req.params.title + '"',
     function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);

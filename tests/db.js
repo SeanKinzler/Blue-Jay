@@ -72,19 +72,6 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
       });
     });
 
-    it('should be able to delete a user', function (done) {
-      dbHelpers.deleteUser({
-        params: {
-          'username': random,
-        }
-      }, {
-        send: function (input) {
-          expect(input).to.not.equal(404);
-          done();
-        }
-      });
-    });
-
     it('should be able to update a user', function (done) {
       dbHelpers.updateUser({
         params: {
@@ -106,12 +93,14 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
     });
 
     it('should be able to create a stream', function(done) {
+      console.log(userId);
       dbHelpers.addStream({
         body: {
-          'classname': random,
-          'access': random,
-          'keywords': random,
-          'instructorid': userId,
+          'title': random,
+          'online': random,
+          'creatorId': userId,
+          'subscriberCount': 0,
+
         }
       }, {
         send: function (input) {
@@ -151,6 +140,24 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
       dbHelpers.updateStream({
         params: {
           title: random,
+        },
+        body: {
+          online: random,
+          description: random,
+          subscriberCount: 5
+        }
+      }, {
+        send: function (input) {
+          expect(input).to.not.equal(404);
+          done();
+        }
+      });
+    });
+
+    it('should be able to delete a user', function (done) {
+      dbHelpers.deleteUser({
+        params: {
+          'username': random,
         }
       }, {
         send: function (input) {
@@ -161,7 +168,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
     });
 
     it('should be able to delete a stream', function (done) {
-      dbHelpers.deleteClass({
+      dbHelpers.deleteStream({
         params: {
           title: random,
         }
