@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import * as Actions from '../actions/index.jsx';
 import SearchBar from '../components/SearchBar.jsx';
 import SearchFilter from '../components/SearchFilter.jsx';
+import SearchResultsCompact from '../components/SearchResultsCompact.jsx';
+import SearchResultsExtended from '../components/SearchResultsExtended.jsx';
 
 class Search extends Component {
 
@@ -28,14 +30,28 @@ class Search extends Component {
 	}
 
 	renderFilterView() {
-		var compact = this.props.view.type === 'compact' ? 'blue' : '';
-		var extended = this.props.view.type === 'extended' ? 'blue' : '';
+		let compact = this.props.streams.view === 'compact' ? 'blue' : '';
+		let extended = this.props.streams.view === 'extended' ? 'blue' : '';
 		return (
 			<span className='align-center'>
 				<i onClick={ () => {this.changeViewHandler('compact')} } className={`material-icons ${compact}`}>view_module</i>
 				<i onClick={ () => {this.changeViewHandler('extended')} } className={`material-icons ${extended}`}>view_list</i>
 			</span>
 		)
+	}
+
+	renderSearchResults() {
+		let searchResults = this.props.streams.data;
+		if (this.props.streams.view === 'compact') {
+			return (
+				<SearchResultsCompact searchResults={searchResults} />
+			)
+		}
+		else if (this.props.streams.view === 'extended') {
+			return (
+				<SearchResultsExtended searchResults={searchResults}/>
+			)
+		}
 	}
 
 	render() {
@@ -62,6 +78,9 @@ class Search extends Component {
 						{ this.renderFilterView() }
 					</div>
 				</div>
+				<div className='row'>
+					{ this.renderSearchResults() }
+				</div>
 			</div>
 		)
 	}
@@ -69,9 +88,7 @@ class Search extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		view: {
-			type: state.streams.view
-		},
+		streams: state.streams,
 		categories: {
 			title: 'Categories', 
 			handler: 'filterStreamCategories',
