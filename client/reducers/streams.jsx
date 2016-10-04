@@ -1,11 +1,11 @@
-import { REQUEST_CHANNELS, 
+import { REQUEST_STREAMS, 
 		REQUEST_ERROR, 
-		SEARCH_CHANNELS, 
-		FILTER_CHANNEL_CATEGORIES, 
-		FILTER_CHANNEL_PRICES,
-		FILTER_CHANNEL_TYPES,
-		FILTER_CHANNEL_DAYS,
-		FILTER_CHANNEL_TIMES,
+		SEARCH_STREAMS, 
+		FILTER_STREAM_CATEGORIES, 
+		FILTER_STREAM_PRICES,
+		FILTER_STREAM_TYPES,
+		FILTER_STREAM_DAYS,
+		FILTER_STREAM_TIMES,
 		TOGGLE_SEARCH_RESULTS_VIEW } 
 from '../actions/index.jsx';
 
@@ -23,7 +23,7 @@ const initialState = {
 
 const Channel = (state = initialState, action) => {
 	switch (action.type) {
-		case REQUEST_CHANNELS:
+		case REQUEST_STREAMS:
 			return Object.assign({}, state, {
 			    data: action.payload.body.data
 			});
@@ -31,27 +31,27 @@ const Channel = (state = initialState, action) => {
 			return Object.assign({}, state, {
 				error: action.payload.message
 			})
-		case SEARCH_CHANNELS:
+		case SEARCH_STREAMS:
 			return Object.assign({}, state, {
 				term: action.term
 			})
-		case FILTER_CHANNEL_CATEGORIES:
+		case FILTER_STREAM_CATEGORIES:
 			return Object.assign({}, state, {
 				categories: action.categories
 			})
-		case FILTER_CHANNEL_PRICES:
+		case FILTER_STREAM_PRICES:
 			return Object.assign({}, state, {
 				prices: action.prices
 			})
-		case FILTER_CHANNEL_TYPES:
+		case FILTER_STREAM_TYPES:
 			return Object.assign({}, state, {
 				types: action.types
 			})
-		case FILTER_CHANNEL_DAYS:
+		case FILTER_STREAM_DAYS:
 			return Object.assign({}, state, {
 				days: action.days
 			})
-		case FILTER_CHANNEL_TIMES:
+		case FILTER_STREAM_TIMES:
 			return Object.assign({}, state, {
 				times: action.times
 			})
@@ -64,4 +64,4 @@ const Channel = (state = initialState, action) => {
 	}
 }
 
-export default Channel;
+export default Stream;

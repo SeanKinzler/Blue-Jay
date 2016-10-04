@@ -1,7 +1,7 @@
 import { OPEN_MODAL, CLOSE_MODAL } from '../actions/index.jsx';
 
 const initialState =  {
-  selectedChannel: null,
+  selectedStream: null,
   modalIsOpen: false
 };
 
@@ -10,12 +10,12 @@ const Modal = (state = initialState, action) => {
     case OPEN_MODAL:
     	return Object.assign({}, state, {
         modalIsOpen: true,
-        selectedChannel: action.gif.selectedChannel   		
+        selectedStream: action.stream.selectedStream  		
     	})
     case CLOSE_MODAL:
     	return Object.assign({}, state, {
         modalIsOpen: false,
-        selectedChannel: action.gif.selectedChannel   		
+        selectedStream: action.stream.selectedStream  		
     	})
     default:
       return state;

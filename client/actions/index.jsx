@@ -3,25 +3,25 @@ import axios from 'axios';
 
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
-export const REQUEST_CHANNELS = 'REQUEST_CHANNELS';
-export const SEARCH_CHANNELS = 'SEARCH_CHANNELS';
+export const REQUEST_STREAMS = 'REQUEST_STREAMS';
+export const SEARCH_STREAMS = 'SEARCH_STREAMS';
 export const REQUEST_ERROR = 'REQUEST_ERROR';
 export const SIGN_IN_USER = 'SIGN_IN_USER';
 export const SIGN_OUT_USER = 'SIGN_OUT_USER';
 export const SIGN_UP_USER = 'SIGN_UP_USER';
 export const AUTH_ERROR = 'AUTH_ERROR';
-export const JOIN_CHANNEL = 'JOIN_CHANNEL';
-export const FILTER_CHANNEL_CATEGORIES = 'FILTER_CHANNEL_CATEGORIES';
-export const FILTER_CHANNEL_PRICES = 'FILTER_CHANNEL_PRICES';
-export const FILTER_CHANNEL_TYPES = 'FILTER_CHANNEL_TYPES';
-export const FILTER_CHANNEL_DAYS = 'FILTER_CHANNEL_DAYS';
-export const FILTER_CHANNEL_TIMES = 'FILTER_CHANNEL_TIMES';
+export const JOIN_STREAM = 'JOIN_STREAM';
+export const FILTER_STREAM_CATEGORIES = 'FILTER_STREAM_CATEGORIES';
+export const FILTER_STREAM_PRICES = 'FILTER_STREAM_PRICES';
+export const FILTER_STREAM_TYPES = 'FILTER_STREAM_TYPES';
+export const FILTER_STREAM_DAYS = 'FILTER_STREAM_DAYS';
+export const FILTER_STREAM_TIMES = 'FILTER_STREAM_TIMES';
 export const TOGGLE_SEARCH_RESULTS_VIEW = 'TOGGLE_SEARCH_RESULTS_VIEW';
-export const JOIN_CHANNEL_ERROR = 'JOIN_CHANNEL_ERROR';
+export const JOIN_STREAM_ERROR = 'JOIN_STREAM_ERROR';
 
-export const joinChannel = (socket) => {
+export const joinStream = (socket) => {
 	return {
-		type: JOIN_CHANNEL,
+		type: JOIN_STREAM,
 		payload: socket
 	}
 }
@@ -73,19 +73,18 @@ export const requestError = (error) => {
 	}
 }
 
-export const requestChannels = (channels) => {
+export const requestStreams = (streams) => {
 	return {
-		type: REQUEST_CHANNELS,
-		data: channels
+		type: REQUEST_STREAMS,
+		data: streams
 	}
 }
 
-export const getChannels = () => {
-	console.log('requesting channels')
+export const getStreams = () => {
 	return (dispatch) => {
 		axios.get('https://localhost:8443/classes/all')
 		.then((res) => {
-			dispatch(requestChannels(res));
+			dispatch(requestStreams(res));
 		})
 		.catch((err) => {
 			dispatch(requestError(err));
@@ -93,44 +92,44 @@ export const getChannels = () => {
 	}
 }
 
-export const searchChannels = (term) => {
+export const searchStreams = (term) => {
 	return {
-		type: SEARCH_CHANNELS,
+		type: SEARCH_STREAMS,
 		term: term 
 	}
 }
 
-export const filterChannelCategories = (categories) => {
+export const filterStreamCategories = (categories) => {
 	return {
-		type: FILTER_CHANNEL_CATEGORIES,
+		type: FILTER_STREAM_CATEGORIES,
 		categories: categories,
 	}
 }
 
-export const filterChannelPrices = (prices) => {
+export const filterStreamPrices = (prices) => {
 	return {
-		type: FILTER_CHANNEL_PRICES,
+		type: FILTER_STREAM_PRICES,
 		prices: prices,
 	}
 }
 
-export const filterChannelTypes = (types) => {
+export const filterStreamTypes = (types) => {
 	return {
-		type: FILTER_CHANNEL_TYPES,
+		type: FILTER_STREAM_TYPES,
 		types: types,
 	}
 }
 
-export const filterChannelDays = (days) => {
+export const filterStreamDays = (days) => {
 	return {
-		type: FILTER_CHANNEL_DAYS,
+		type: FILTER_STREAM_DAYS,
 		days: days,
 	}
 }
 
-export const filterChannelTimes = (times) => {
+export const filterStreamTimes = (times) => {
 	return {
-		type: FILTER_CHANNEL_TIMES,
+		type: FILTER_STREAM_TIMES,
 		times: times,
 	}
 }
