@@ -27,19 +27,7 @@ io.sockets.on('connection', function(socket) {
 
   socket.on('check', function (data) {
     if (socket.adapter.rooms[data.roomName]) {
-      var userIds = [];
-      var yourId;
-
-      for (var key in socket.adapter.rooms[data.roomName].sockets) {
-        userIds.push(key);
-      }
-
-      socket.join(data.roomName);
-      for (var key in socket.adapter.rooms[data.roomName].sockets) {
-        if (userIds.indexOf(key) === -1) {
-          yourId = key;
-        }
-      }
+      var yourId = socket.id;
 
       socket.emit('joined', {
         message: 'You have joined the room: "' + data.roomName + '"',
@@ -63,12 +51,12 @@ io.sockets.on('connection', function(socket) {
     } else {
       socket.join(data.roomName);
 
-      for (var key in socket.adapter.rooms[data.roomName].sockets) {
-        rooms[data.roomName] = {
-          hostId: key,
-          lastJoined: key
-        };
-      }
+      console.log(socket.adapter.rooms);
+
+      rooms[data.roomName] = {
+        hostId: socket.id,
+        lastJoined: socket.id,
+      };
         
       socket.emit('created', 'You have created the room: "' + data.roomName + '"');
     }
@@ -76,6 +64,11 @@ io.sockets.on('connection', function(socket) {
 
   socket.on('chatMessage', function (data) {
     socket.broadcast.to(data.room).emit('chatMessage', data);
+  });
+
+  socket.on('disconnect', function () {
+    console.log(socket.adapter.rooms);
+    console.log(socket.id);
   });
 });
 

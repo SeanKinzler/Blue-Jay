@@ -74,7 +74,7 @@ module.exports = function (room, user, socket) {
   var sendOffer = function (targetUserId, yourUserId) {
     navigator.getUserMedia({
       video: true,
-      audio: true
+      audio: false
     }, function (mediaStream) {
       parent = new RTCPeerConnection(ICE);
 
@@ -137,7 +137,7 @@ module.exports = function (room, user, socket) {
     var id = receivedData.returnAddress;
     navigator.getUserMedia({
       video: true,
-      audio: true,
+      audio: false,
     }, function (mediaStream) {
       children[id] = new RTCPeerConnection(ICE);
       peers[id] = children[id];
