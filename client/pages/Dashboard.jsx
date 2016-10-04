@@ -7,7 +7,7 @@ import ChannelList from '../components/ChannelList.jsx';
 class Dashboard extends Component {
 
 	componentWillMount() {
-		this.props.getChannels()
+		this.props.getStreams()
 	}
 
 	render() {
@@ -27,9 +27,9 @@ class Dashboard extends Component {
 				    </ul>
 			    </div>
 			    <div className='col s12 l6'>
-			    	<h5 className='center-align'>My Channels</h5>
+			    	<h5 className='center-align'>My Streams</h5>
 			    	<ul>
-				    	<li>You don't have any channels. Sign up here!</li>
+				    	<li>You don't have any streams. Sign up here!</li>
 				    </ul>
 			    </div>
 			    <div className='col s12 l6'>
@@ -49,7 +49,7 @@ class Dashboard extends Component {
 const mapStateToProps = (state) => {
 	return {
 		user: state.auth.username,
-		channels: state.channels.data
+		streams: state.streams.data
 	};
 }
 
