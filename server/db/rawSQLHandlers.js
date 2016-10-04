@@ -1,8 +1,7 @@
 var sql = require('./sqlConnectionHelper.js');
 
 module.exports = {
-  //must have username, password, 
-  //firstname, lastname, email
+  //must have googleId, createdAt, avatarUrl
   addUser: (req, res) => {
     var keys = [];
     var values = [];
@@ -24,6 +23,16 @@ module.exports = {
         res.send(rows);
       }
     });
+  },
+
+  getUsers: (req, res) => {
+    sql('SELECT * FROM USERS', (error, rows, fields) => {
+      if(error) {
+        res.sendStatus(404);
+      } else {
+        res.send(rows);
+      }
+    })
   },
 
   //must take obj with username key
