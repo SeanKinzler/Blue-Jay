@@ -1,14 +1,6 @@
 module.exports = function (room, user, socket) {
-  var peers = { length: 0 };
-
-  while (!user) {
-    user = prompt('What is your username?');
-  }
-
-  while (!room) {
-    room = prompt('Which room do you want to join?');
-  }
-
+  var parent = null;
+  var children = [null, null];
 
   var STUN = {
     urls: 'stun:stun.l.google.com:19302'
@@ -78,21 +70,19 @@ module.exports = function (room, user, socket) {
   };
 
   var sendOffer = function (targetUserId, yourUserId) {
-    peers.length++;
-    var id = targetUserId;
     navigator.getUserMedia({
       video: true,
       audio: true
     }, function (mediaStream) {
-      peers[id] = new RTCPeerConnection(ICE);
+      parent = new RTCPeerConnection(ICE);
 
-      peers[id].addStream(mediaStream);
+      parent.addStream(mediaStream);
 
-      peers[id].onaddstream = function (media) {
+      parent.onaddstream = function (media) {
         addVideo(media.stream, targetUserId);
       };
 
-      peers[id].onicecandidate = function (event) {
+      parent.onicecandidate = function (event) {
         if (!!event.candidate) {
           socket.emit('ice-candidate', {
             recipient: targetUserId,
@@ -102,13 +92,13 @@ module.exports = function (room, user, socket) {
         } else {
           socket.emit('ice-merge', {
             recipient: targetUserId,
-            sdp: peers[id].localDescription,
+            sdp: parent.localDescription,
             returnAddress: yourUserId,
           });
         }
       };
 
-      peers[id].oniceconnectionstatechange = function(event) {
+      parent.oniceconnectionstatechange = function(event) {
         if (peers[id].iceConnectionState === 'completed') {
           socket.emit('ice-merge', {
             recipient: targetUserId,
@@ -120,7 +110,7 @@ module.exports = function (room, user, socket) {
         }
       };
 
-      peers[id].createOffer(function (offerObj) {
+      parent.createOffer(function (offerObj) {
         peers[id].setLocalDescription(offerObj);
         socket.emit('offer', {
           recipient: targetUserId,

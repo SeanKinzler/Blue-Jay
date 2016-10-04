@@ -3,10 +3,6 @@ var socketIO = require('socket.io')();
 
 var io = socketIO.listen(server);
 
-
-var rooms = {};
-
-
 io.sockets.on('connection', function(socket) {
 
   socket.on('offer', function (data) {
@@ -43,7 +39,7 @@ io.sockets.on('connection', function(socket) {
 
       socket.emit('joined', {
         message: 'You have joined the room: "' + data.roomName + '"',
-        userIds: [rooms[data.roomName].hostId],
+        userIds: userIds,
         yourId: yourId
       });
 
@@ -60,12 +56,6 @@ io.sockets.on('connection', function(socket) {
     } else {
       socket.join(data.roomName);
 
-      for (var key in socket.adapter.rooms[data.roomName].sockets) {
-        rooms[data.roomName] = {
-          hostId: key
-        };
-      }
-        
       socket.emit('created', 'You have created the room: "' + data.roomName + '"');
     }
   });
