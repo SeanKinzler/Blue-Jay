@@ -13,15 +13,15 @@ const SearchResultsModal = ({selectedStream, modalIsOpen, onRequestClose}) => {
 		  onRequestClose={ onRequestClose }
 		  style={SearchResultsModalStyling}
 		>
-		<div id="modal1" className="modal">
-		    <div className="modal-content">
-		      <h4>Modal Header</h4>
-		      <p>A bunch of text</p>
-		    </div>
-		    <div className="modal-footer">
-		    <button className='btn modal-action modal-close waves-effect waves-green btn-flat' onClick={ onRequestClose }>close</button>
-		    </div>
-		  </div>
+			<div>
+				<h1>{ selectedStream.title }</h1>
+				<p>{ selectedStream.description }</p>
+				<p>Subscriber count: { selectedStream.subscriberCount }</p>
+				<p>Online: { selectedStream.online }</p>
+				<p>CreatorId: { selectedStream.CreatorId }</p>
+				<p>Created: { selectedStream.createdAt }</p>
+			</div>
+			<a className='btn blue' onClick={ onRequestClose }>Close</a>
 		</Modal>
 	)
 }

@@ -70,7 +70,7 @@ class Search extends Component {
 			<div className='container'>
 				<SearchBar onTermChange={this.props.searchChannels} />
 				<SearchResultsModal 
-					selectedStream={this.props.streams.selectedStream} 
+					selectedStream={this.props.modal.selectedStream} 
 					modalIsOpen={this.props.modal.modalIsOpen}
 					onRequestClose={ () => { this.props.closeModal() } }
 				/>
