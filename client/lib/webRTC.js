@@ -3,6 +3,7 @@ module.exports = function (room, user, socket) {
   var parent = null;
   var children = {};
   var parentStream;
+  var localSrc;
 
   var STUN = {
     urls: 'stun:stun.l.google.com:19302'
@@ -49,8 +50,12 @@ module.exports = function (room, user, socket) {
       video: true,
       audio: false, 
     }, function (stream) {
-      var localSrc = window.URL.createObjectURL(stream);
-      document.getElementById('localVideo').src = localSrc;
+      localSrc = window.URL.createObjectURL(stream);
+      if (!parent) {
+        document.getElementById('remoteVideo').src = localSrc;
+      } else {
+        document.getElementById('localVideo').src = localSrc;
+      }
     }, function (error) {
       setTimeout(function () {
         askForCamera();
@@ -61,7 +66,7 @@ module.exports = function (room, user, socket) {
   var sendOffer = function (targetUserId, yourUserId) {
     navigator.getUserMedia({
       video: true,
-      audio: false
+      audio: true,
     }, function (mediaStream) {
       parent = new RTCPeerConnection(ICE);
 
@@ -110,7 +115,6 @@ module.exports = function (room, user, socket) {
           offer: offerObj,
           returnAddress: yourUserId,
         });
-        console.log('Sent offer!');
       }, function (error) {
         console.log(error);
       });
@@ -124,7 +128,7 @@ module.exports = function (room, user, socket) {
     var id = receivedData.returnAddress;
     navigator.getUserMedia({
       video: true,
-      audio: false,
+      audio: true,
     }, function (mediaStream) {
       children[id] = new RTCPeerConnection(ICE);
       peers[id] = children[id];
@@ -180,7 +184,6 @@ module.exports = function (room, user, socket) {
           returnAddress: receivedData.recipient
         });
 
-        console.log('Sent answer!');
       }, function (error) {
         console.log(error);
       });
@@ -191,7 +194,10 @@ module.exports = function (room, user, socket) {
 
 
   socket.on('RTC-target', function (data) {
-    console.log(data);
+    if (data.deleteTarget) {
+      delete peers[deleteTarget];
+    }
+
     data.userIds.forEach(function (user, index) {
       sendOffer(user, data.yourId);
     });
@@ -201,16 +207,15 @@ module.exports = function (room, user, socket) {
   });
 
   socket.on('created', function (data) {
-    console.log(data);
+    document.getElementById('localVideo').src = localSrc;
+    document.getElementById('remoteVideo').src = '';
   });
 
   socket.on('offer', function (data) {
-    console.log('Got offer!'); 
     sendAnswer(data);
   });
 
   socket.on('answer', function (data) {
-    console.log('Got answer!\n');
     parent.setRemoteDescription(new RTCSessionDescription(data.answer))
     .catch(function (error) {
       console.log(error);
@@ -227,7 +232,6 @@ module.exports = function (room, user, socket) {
   });
 
   socket.on('ice-merge', function (data) {
-    console.log(peers);
     peers[data.returnAddress].setRemoteDescription(new RTCSessionDescription(data.sdp))
     .catch(function (error) {
       console.log(error);

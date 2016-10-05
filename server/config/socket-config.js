@@ -75,6 +75,7 @@ io.sockets.on('connection', function(socket) {
         socket.to(selfId).emit('RTC-target', {
           userIds: [targetId],
           yourId: selfId,
+          deleteTarget: socket.id,
         });
       });
     }
