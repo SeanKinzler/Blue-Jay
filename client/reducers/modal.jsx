@@ -10,12 +10,12 @@ const Modal = (state = initialState, action) => {
     case OPEN_MODAL:
     	return Object.assign({}, state, {
         modalIsOpen: true,
-        selectedStream: action.stream.selectedStream  		
+        selectedStream: action.stream 		
     	})
     case CLOSE_MODAL:
     	return Object.assign({}, state, {
         modalIsOpen: false,
-        selectedStream: action.stream.selectedStream  		
+        selectedStream: null  		
     	})
     default:
       return state;
