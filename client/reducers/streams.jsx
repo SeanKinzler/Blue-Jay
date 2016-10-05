@@ -25,7 +25,7 @@ const Stream = (state = initialState, action) => {
 	switch (action.type) {
 		case REQUEST_STREAMS:
 			return Object.assign({}, state, {
-			    data: action.payload.body.data
+			    data: action.data
 			});
 		case REQUEST_ERROR:
 			return Object.assign({}, state, {
