@@ -1,10 +1,23 @@
 module.exports = function (room, user, socket) {
+
+
   peers = {};
   var parent = null;
   var children = {};
   var parentStream;
   var localSrc;
   var host = false;
+  var initial = true;
+
+  var myEvent = window.attachEvent || window.addEventListener;
+  var chkevent = window.attachEvent ? 'onbeforeunload' : 'beforeunload';
+
+  myEvent(chkevent, function(e) {
+    console.log('okay!')
+    for (var key in peers) {
+      peers[key].close();
+    }  
+  });
 
   var STUN = {
     urls: 'stun:stun.l.google.com:19302'
@@ -244,9 +257,9 @@ module.exports = function (room, user, socket) {
   });
 
   socket.on('ice-merge', function (data) {
+    initial = false;
     peers[data.returnAddress].setRemoteDescription(new RTCSessionDescription(data.sdp))
     .catch(function (error) {
-      console.log(error);
     });
   });
 
@@ -257,6 +270,13 @@ module.exports = function (room, user, socket) {
       time: data,
     });
   });
+
+  window.checkForHelp = setInterval(function () {
+    if (!initial && !host && document.getElementById('remoteVideo').src.slice(0, 4) !== 'blob') {
+      socket.emit('ready');
+      parent = null;
+    }
+  }, 200);
 
   socket.emit('ready');
 };
