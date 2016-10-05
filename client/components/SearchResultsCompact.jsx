@@ -1,20 +1,30 @@
 import React from 'react';
 
 const SearchResultsCompact = ({searchResults, openModal}) => {
+	const isOnline = (stream) => {
+		if (stream.online) {
+			return <span className="badge red">{ stream.online }</span>
+		} else {
+			return <span></span>;
+		}
+	}
 	return (
 		<div>
 			{ searchResults.map((stream) => {
 				return (
 					<div key={stream.id} className='col s6 m4'>
 						<div className="card blue">
+						<a onClick={ () => { openModal(stream); } } >
 							<div className="card-content white-text">
-								<span className="card-title">Card Title</span>
-								<p>I am a very simple card. I am good at containing small bits of information.
-									I am convenient because I require little markup to use effectively.</p>
+								<span className="card-title">{ stream.title }</span>
+								<p>{ stream.description }</p>
 							</div>
 							<div className="card-action">
-								<a onClick={ () => { openModal(stream); } } >This is a link</a>
+								<span>{ stream.creatorId }</span>
+								{ isOnline(stream) }
+								<span className="badge green">{ stream.subscriberCount }</span>
 							</div>
+						</a>
 						</div>
 					</div>
 				)
