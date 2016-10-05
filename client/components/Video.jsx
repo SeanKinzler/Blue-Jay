@@ -35,6 +35,8 @@ class Video extends Component {
           <div className='col s12 m9'>
             <div className='row' id='putVidsHere'>
               <video
+                controls
+                volume='0'
                 className='col s9 m12' 
                 id='remoteVideo'
                 poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png" 

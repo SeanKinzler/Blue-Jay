@@ -37,6 +37,7 @@ io.sockets.on('connection', function(socket) {
         user: '',
         text: data.user + ' has joined the room.',
       });  
+      console.log(rooms['one']);
 
     } else {
       socket.join(data.roomName);
