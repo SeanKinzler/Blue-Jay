@@ -114,6 +114,9 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
       dbHelpers.searchStreams({
         params: {
           title: random,
+        },
+        body: {
+          categories: '0',
         }
       }, {
         send: function (input) {

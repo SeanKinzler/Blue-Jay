@@ -100,13 +100,35 @@ module.exports = {
   },
 
   searchStreams: (req, res) => {
-    sql('SELECT * FROM streams', function(error, rows, fields) {
-      if(error) {
-        res.sendStatus(404);
-      } else {
-        res.send(rows);
-      }
-    })
+    var categories = req.body.categories;
+    var keywords = req.body.keywords;
+    var req = 'SELECT * FROM streams \
+        INNER JOIN streams_categories ON (streams.id=streamId) \
+        INNER JOIN categories ON (categories.id=categoryId) \
+        WHERE'
+    if (categories === undefined && keywords === undefined) {
+      sql('SELECT * FROM streams', function(error, rows, fields) {
+        if(error) {
+          res.sendStatus(404);
+        } else {
+          res.send(rows);
+        }
+      })
+
+    } else if (keywords === undefined){
+      sql('SELECT * FROM streams \
+        INNER JOIN streams_categories ON (streams.id=streamId) \
+        INNER JOIN categories ON (categories.id=categoryId) \
+        WHERE categories.text=' categories, function(error, rows, fields) {
+          console.log(error);
+          console.log(rows);
+          if (error) {
+            res.sendStatus(404);
+          } else {
+            res.send(rows);
+          }
+        })
+    }
   },
 
   updateStream: (req, res) => {
