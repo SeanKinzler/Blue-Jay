@@ -72,7 +72,7 @@ class Search extends Component {
 				<SearchResultsModal 
 					selectedStream={this.props.streams.selectedStream} 
 					modalIsOpen={this.props.modal.modalIsOpen}
-					closeModal={ () => { this.props.modal.closeModal() } }
+					onRequestClose={ () => { this.props.closeModal() } }
 				/>
 				<div className='row'>
 					<div className='col s4 m2'>

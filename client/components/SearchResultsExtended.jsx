@@ -13,7 +13,7 @@ const SearchResultsExtended = ({searchResults, openModal}) => {
 									I am convenient because I require little markup to use effectively.</p>
 							</div>
 							<div className="card-action">
-								<a onClick={ () => { openModal(stream); $('#search-results-modal').openModal(); } } >This is a link</a>
+								<a onClick={ () => { openModal(stream); } } >This is a link</a>
 							</div>
 						</div>
 					</div>
