@@ -7,4 +7,5 @@ RUN npm install -g forever
 COPY . /usr/src/app/
 RUN npm run compiledep
 EXPOSE 8443
+EXPOSE 80
 CMD [ "npm", "run", "deploy" ]
