@@ -13,7 +13,7 @@ app.get('*', function (req, res) {
   res.redirect('https://localhost:8443' + req.url);
 });
 
-app.listen(80);
+app.listen(8080);
 
 
 
