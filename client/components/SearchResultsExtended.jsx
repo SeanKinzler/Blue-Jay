@@ -1,11 +1,11 @@
 import React from 'react';
 
-const SearchResultsExtended = ({searchResults}) => {
+const SearchResultsExtended = ({searchResults, openModal}) => {
 	return (
 		<div>
-			{ searchResults.map((s) => {
+			{ searchResults.map((stream) => {
 				return (
-					<div key={s.id} className='col s12'>
+					<div key={stream.id} className='col s12'>
 						<div className="card blue">
 							<div className="card-content white-text">
 								<span className="card-title">Card Title</span>
@@ -13,8 +13,7 @@ const SearchResultsExtended = ({searchResults}) => {
 									I am convenient because I require little markup to use effectively.</p>
 							</div>
 							<div className="card-action">
-								<a href="#">This is a link</a>
-								<a href="#">This is a link</a>
+								<a onClick={ () => { openModal(stream); $('#search-results-modal').openModal(); } } >This is a link</a>
 							</div>
 						</div>
 					</div>
