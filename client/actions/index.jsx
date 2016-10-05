@@ -95,48 +95,61 @@ export const getStreams = () => {
 export const searchStreams = (term) => {
 	return {
 		type: SEARCH_STREAMS,
-		term: term 
+		term 
 	}
 }
 
 export const filterStreamCategories = (categories) => {
 	return {
 		type: FILTER_STREAM_CATEGORIES,
-		categories: categories,
+		categories,
 	}
 }
 
 export const filterStreamPrices = (prices) => {
 	return {
 		type: FILTER_STREAM_PRICES,
-		prices: prices,
+		prices,
 	}
 }
 
 export const filterStreamTypes = (types) => {
 	return {
 		type: FILTER_STREAM_TYPES,
-		types: types,
+		types,
 	}
 }
 
 export const filterStreamDays = (days) => {
 	return {
 		type: FILTER_STREAM_DAYS,
-		days: days,
+		days,
 	}
 }
 
 export const filterStreamTimes = (times) => {
 	return {
 		type: FILTER_STREAM_TIMES,
-		times: times,
+		times,
 	}
 }
 
 export const toggleSearchResultsView = (view) => {
 	return {
 		type: TOGGLE_SEARCH_RESULTS_VIEW,
-		view: view,
+		view,
+	}
+}
+
+export const openModal = (stream) => {
+	return {
+		type: OPEN_MODAL,
+		stream
+	}
+}
+
+export const closeModal = () => {
+	return {
+		type: CLOSE_MODAL
 	}
 }
