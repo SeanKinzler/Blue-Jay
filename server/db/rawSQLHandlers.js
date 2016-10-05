@@ -81,16 +81,24 @@ module.exports = {
   addStream: (req, res) => { 
     var keys = [];
     var values = [];
-
-    for (var key in req.body) {
-      keys.push(key);
-      values.push(req.body[key]);
+    req.body.categories = req.body.categories || [];
+    for (var key in req.body.vals) {
+      if (key !== 'username') {
+        keys.push(key);
+        values.push(req.body.vals[key]);
+      } 
     }
-
-    sql([
-      'INSERT INTO streams (' + keys.join(', ') + ')',
-      'VALUES ("' + values.join('", "') + '")'
-    ].join(' '), function (error, rows, fields) {
+    var query = 'INSERT INTO streams (' + keys.join(', ') + ', creatorId) \
+      VALUES ("' + values.join('", "') + '", \
+      (SELECT id FROM users WHERE username="' + req.body.vals.username + '));\n\
+      SET @newStream = LAST_INSERT_ID();\n'
+    for (var i = 0; i < req.body.categories.length; i++) {
+      query = query + ('INSERT IGNORE INTO categories (text) VALUES (' + req.body.categores[i] + ');\n' +  
+      'SET @newCategory = (SELECT id FROM categories WHERE text="' + req.body.categories[i] +  '");\n' + 
+      'INSERT INTO streams_categories (streamId, categoryId) VALUES (@newStream, @newCategory);')
+    }
+    sql(
+      query, function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);
       } else {
@@ -119,7 +127,7 @@ module.exports = {
       sql('SELECT * FROM streams \
         INNER JOIN streams_categories ON (streams.id=streamId) \
         INNER JOIN categories ON (categories.id=categoryId) \
-        WHERE categories.text=' categories, function(error, rows, fields) {
+        WHERE categories.text=' + categories, function(error, rows, fields) {
           console.log(error);
           console.log(rows);
           if (error) {

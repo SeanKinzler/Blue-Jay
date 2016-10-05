@@ -9,7 +9,7 @@ describe('Server:', function () {
 
   describe('Endpoints', function () {
 
-    it('should have a "POST => /users/login" endpoint', function (done) {
+    xit('should have a "POST => /users/login" endpoint', function (done) {
       request(app)
         .post('/users/login')
         .send({})
@@ -19,9 +19,67 @@ describe('Server:', function () {
         });
     });
 
-    it('should have a "POST => /users/signup" endpoint', function (done) {
+    it('should have a "POST => /api/users" endpoint', function (done) {
       request(app)
-        .post('/users/signup')
+        .post('/api/users')
+        .send({
+          'username': 'test1',
+          'password': 'testpass',
+          'firstName': 'Sean',
+          'lastName': 'K',
+          'email': 'test1@test1.com'
+        })
+        .end(function (err, resp, body) {
+          console.log('resp: ', err);
+          expect(!!resp).to.equal(true);
+          done();
+        });
+    });
+
+    it('should have a "GET => /api/users" endpoint', function (done) {
+      request(app)
+        .get('/api/users')
+        .send({})
+        .end(function (err, resp, body) {
+          console.log('resp: ', err);
+          expect(!!resp).to.equal(true);
+          done();
+        });
+    });
+
+    it('should have a "POST => /api/streams" endpoint', function (done) {
+      request(app)
+        .post('/api/streams')
+        .send({
+          'title': 'testclass',
+          'online': 'true',
+          'subscriberCount': 0,
+          'creatorId': 1,
+        })
+        .end(function (err, resp, body) {
+          expect(!!resp).to.equal(true);
+          done();
+        });
+    });
+
+    it('should have a "DELETE => /api/streams/" endpoint', function (done) {
+      request(app)
+        .delete('/api/streams')
+        .send({
+          'title': 'testclass',
+          'online': 'true',
+          'subscriberCount': 0,
+          'creatorId': 1,
+        })
+        .end(function (err, resp, body) {
+          expect(!!resp).to.equal(true);
+          done();
+        });
+    });
+
+    it('should have a "DELETE => /api/users" endpoint', function (done) {
+      request(app)
+        .delete('/api/users')
         .send({
           'username': 'test1',
           'password': 'testpass',
@@ -35,56 +93,9 @@ describe('Server:', function () {
         });
     });
 
-    it('should have a "POST => /classes/create" endpoint', function (done) {
+    xit('should have a "POST => /api/users" endpoint', function (done) {
       request(app)
-        .post('/classes/create')
-        .send({
-          'classname': 'testclass',
-          'access': 'true',
-          'keywords': '[one,two,three]',
-          'instructorid': 1,
-        })
-        .end(function (err, resp, body) {
-          expect(!!resp).to.equal(true);
-          done();
-        });
-    });
-
-    it('should have a "DELETE => /classes/remove" endpoint', function (done) {
-      request(app)
-        .delete('/classes/remove')
-        .send({
-          'classname': 'testclass',
-          'access': true,
-          'keywords': '[one,two,three]',
-          'scheduleDays': 'MTuWThFSaSu',
-          'scheduleTime': '1800'
-        })
-        .end(function (err, resp, body) {
-          expect(!!resp).to.equal(true);
-          done();
-        });
-    });
-
-    it('should have a "DELETE => /users/remove" endpoint', function (done) {
-      request(app)
-        .delete('/users/remove')
-        .send({
-          'username': 'test1',
-          'password': 'testpass',
-          'firstName': 'Sean',
-          'lastName': 'K',
-          'email': 'test1@test1.com'
-        })
-        .end(function (err, resp, body) {
-          expect(!!resp).to.equal(true);
-          done();
-        });
-    });
-
-    xit('should have a "POST => /users/signup" endpoint', function (done) {
-      request(app)
-        .post('/users/signup')
+        .post('/api/users')
         .send({
           'username': 'test1',
           'password': 'testpass',
