@@ -5,7 +5,7 @@ const SearchResultsCompact = ({searchResults, openModal}) => {
 		<div>
 			{ searchResults.map((stream) => {
 				return (
-					<div key={stream.id} className='col s4'>
+					<div key={stream.id} className='col s6 m4'>
 						<div className="card blue">
 							<div className="card-content white-text">
 								<span className="card-title">Card Title</span>
