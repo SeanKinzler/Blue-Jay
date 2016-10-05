@@ -11,6 +11,7 @@ import Login from './pages/Login.jsx'
 import configureStore from './store/storeConfig.jsx';
 import { persistStore } from 'redux-persist';
 import Search from './pages/Search.jsx';
+import RequireAuth from './components/RequireAuth.jsx';
 
 const store = configureStore();
 persistStore(store);
@@ -20,9 +21,9 @@ render((
 	  <Router history={browserHistory}> 
 	    <Route path='/' component={App}>
 	      <IndexRoute component={Home} />
-	      <Route path='dashboard' component={Dashboard} />
+	      <Route path='dashboard' component={RequireAuth(Dashboard)} />
 	      <Route path='search' component={Search} />
-	      <Route path='channel/:channelId' component={Channel} />
+	      <Route path='channel/:channelId' component={RequireAuth(Channel)} />
 	      <Route path='login' component={Login} />
 	      <Route path='signup' component={UserSignUp} />
 	    </Route>
