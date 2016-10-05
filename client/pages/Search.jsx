@@ -5,6 +5,7 @@ import SearchBar from '../components/SearchBar.jsx';
 import SearchFilter from '../components/SearchFilter.jsx';
 import SearchResultsCompact from '../components/SearchResultsCompact.jsx';
 import SearchResultsExtended from '../components/SearchResultsExtended.jsx';
+import SearchResultsModal from '../components/SearchResultsModal.jsx';
 
 class Search extends Component {
 
@@ -48,12 +49,18 @@ class Search extends Component {
 		let searchResults = this.props.streams.data;
 		if (this.props.streams.view === 'compact') {
 			return (
-				<SearchResultsCompact searchResults={searchResults} />
+				<SearchResultsCompact 
+					searchResults={searchResults} 
+					openModal={this.props.openModal}
+				/>
 			)
 		}
 		else if (this.props.streams.view === 'extended') {
 			return (
-				<SearchResultsExtended searchResults={searchResults}/>
+				<SearchResultsExtended 
+					searchResults={searchResults}
+					openModal={this.props.openModal}
+				/>
 			)
 		}
 	}
@@ -62,6 +69,11 @@ class Search extends Component {
 		return (
 			<div className='container'>
 				<SearchBar onTermChange={this.props.searchChannels} />
+				<SearchResultsModal 
+					selectedStream={this.props.streams.selectedStream} 
+					modalIsOpen={this.props.modal.modalIsOpen}
+					closeModal={ () => { this.props.modal.closeModal() } }
+				/>
 				<div className='row'>
 					<div className='col s4 m2'>
 						<SearchFilter filterOptions={this.props.categories} />
@@ -92,6 +104,7 @@ class Search extends Component {
 
 const mapStateToProps = (state) => {
 	return {
+		modal: state.modal,
 		streams: state.streams,
 		categories: {
 			title: 'Categories', 
