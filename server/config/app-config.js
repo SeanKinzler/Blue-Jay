@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser').json;
 var path = require('path');
 var dbHandler = require('../db/rawSQLHandlers');
+var fs = require('fs');
 
 var app = express();
 app.use(bodyParser());
@@ -37,4 +38,9 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../../client', 'index.html'));
 });
 
-module.exports = app;
+var serverConfig = {
+  key: fs.readFileSync(path.join(__dirname, './key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, './cert.pem'))
+};
+
+module.exports = require('https').createServer(serverConfig, app);

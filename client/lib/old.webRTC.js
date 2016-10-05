@@ -1,10 +1,14 @@
 module.exports = function (room, user, socket) {
-  peers = {};
-  var parent = null;
-  var children = {};
-  var parentStream;
-  var localSrc;
-  var host = false;
+  var peers = { length: 0 };
+
+  while (!user) {
+    user = prompt('What is your username?');
+  }
+
+  while (!room) {
+    room = prompt('Which room do you want to join?');
+  }
+
 
   var STUN = {
     urls: 'stun:stun.l.google.com:19302'
@@ -24,8 +28,21 @@ module.exports = function (room, user, socket) {
 
   var addVideo = function (source, elementId) {
 
-    document.getElementById('remoteVideo').src = window.URL.createObjectURL(source);
+    var remoteVideo = document.getElementById('remoteVideo');
 
+    if (!remoteVideo.src) {
+
+      remoteVideo.src = window.URL.createObjectURL(source);
+
+    } else {
+
+      var newVideo = document.createElement('video');
+      newVideo.className = 'col s3';
+      newVideo.id = elementId;
+      newVideo.src = window.URL.createObjectURL(source);
+
+      document.getElementById('putVidsHere').appendChild(newVideo);
+    }
   };
 
   var removeVideo = function (id) {
@@ -51,14 +68,8 @@ module.exports = function (room, user, socket) {
       video: true,
       audio: false, 
     }, function (stream) {
-      localSrc = window.URL.createObjectURL(stream);
-
-      var localVideoPort = document.getElementById('localVideo');
-      if (localVideoPort) {
-        localVideoPort.src = localSrc;
-      } else {
-        document.getElementById('remoteVideo').src = localSrc;
-      }
+      var localSrc = window.URL.createObjectURL(stream);
+      document.getElementById('localVideo').src = localSrc;
     }, function (error) {
       setTimeout(function () {
         askForCamera();
@@ -66,25 +77,22 @@ module.exports = function (room, user, socket) {
     });
   };
 
-  askForCamera();
-
   var sendOffer = function (targetUserId, yourUserId) {
+    peers.length++;
+    var id = targetUserId;
     navigator.getUserMedia({
       video: true,
-      audio: true,
+      audio: true
     }, function (mediaStream) {
-      parent = new RTCPeerConnection(ICE);
+      peers[id] = new RTCPeerConnection(ICE);
 
-      peers[targetUserId] = parent;
+      peers[id].addStream(mediaStream);
 
-      parent.addStream(mediaStream);
-
-      parent.onaddstream = function (media) {
-        parentStream = media.stream;
+      peers[id].onaddstream = function (media) {
         addVideo(media.stream, targetUserId);
       };
 
-      parent.onicecandidate = function (event) {
+      peers[id].onicecandidate = function (event) {
         if (!!event.candidate) {
           socket.emit('ice-candidate', {
             recipient: targetUserId,
@@ -94,34 +102,32 @@ module.exports = function (room, user, socket) {
         } else {
           socket.emit('ice-merge', {
             recipient: targetUserId,
-            sdp: parent.localDescription,
+            sdp: peers[id].localDescription,
             returnAddress: yourUserId,
           });
         }
       };
 
-      parent.oniceconnectionstatechange = function(event) {
-        if (parent.iceConnectionState === 'completed') {
+      peers[id].oniceconnectionstatechange = function(event) {
+        if (peers[id].iceConnectionState === 'completed') {
           socket.emit('ice-merge', {
             recipient: targetUserId,
-            sdp: parent.localDescription,
+            sdp: peers[id].localDescription,
             returnAddress: yourUserId,
           });
-        } else if (parent.iceConnectionState === 'disconnected') {
-          delete peers[targetUserId];
-          if (!host) {
-            removeVideo(targetUserId);
-          }
+        } else if (peers[id].iceConnectionState === 'disconnected') {
+          removeVideo(targetUserId);
         }
       };
 
-      parent.createOffer(function (offerObj) {
-        parent.setLocalDescription(offerObj);
+      peers[id].createOffer(function (offerObj) {
+        peers[id].setLocalDescription(offerObj);
         socket.emit('offer', {
           recipient: targetUserId,
           offer: offerObj,
           returnAddress: yourUserId,
         });
+        console.log('Sent offer!');
       }, function (error) {
         console.log(error);
       });
@@ -131,26 +137,21 @@ module.exports = function (room, user, socket) {
   };
 
   var sendAnswer = function (receivedData) {
-    children.length++;
+    peers.length++;
     var id = receivedData.returnAddress;
     navigator.getUserMedia({
       video: true,
       audio: true,
     }, function (mediaStream) {
-      children[id] = new RTCPeerConnection(ICE);
-      peers[id] = children[id];
+      peers[id] = new RTCPeerConnection(ICE);
 
-      if (!parent) {
-        children[id].addStream(mediaStream);
-      } else {
-        children[id].addStream(parentStream);
-      }
+      peers[id].addStream(mediaStream);
 
-      children[id].onaddstream = function (media) {
-        // addVideo(media.stream, receivedData.returnAddress);
+      peers[id].onaddstream = function (media) {
+        addVideo(media.stream, receivedData.returnAddress);
       };
 
-      children[id].onicecandidate = function (event) {
+      peers[id].onicecandidate = function (event) {
         if (!!event.candidate) {
           socket.emit('ice-candidate', {
             recipient: receivedData.returnAddress,
@@ -160,39 +161,38 @@ module.exports = function (room, user, socket) {
         } else {
           socket.emit('ice-merge', {
             recipient: receivedData.returnAddress,
-            sdp: children[id].localDescription,
+            sdp: peers[id].localDescription,
             returnAddress: receivedData.recipient,
           });
         }
       };
 
-      children[id].oniceconnectionstatechange = function(event) {
-        if (children[id].iceConnectionState === 'completed') {
+      peers[id].oniceconnectionstatechange = function(event) {
+        if (peers[id].iceConnectionState === 'completed') {
           socket.emit('ice-merge', {
             recipient: receivedData.returnAddress,
-            sdp: children[id].localDescription,
+            sdp: peers[id].localDescription,
             returnAddress: receivedData.recipient,
           });
-        } else if (children[id].iceConnectionState === 'disconnected') {
-          if (!host) {
-            removeVideo(receivedData.returnAddress);
-          }
+        } else if (peers[id].iceConnectionState === 'disconnected') {
+          removeVideo(receivedData.returnAddress);
         }
       };
 
-      children[id].setRemoteDescription(new RTCSessionDescription(receivedData.offer))
+      peers[id].setRemoteDescription(new RTCSessionDescription(receivedData.offer))
       .catch(function (error) {
         console.log(error);
       });
 
-      children[id].createAnswer(function (answerObj) {
-        children[id].setLocalDescription(answerObj);
+      peers[id].createAnswer(function (answerObj) {
+        peers[id].setLocalDescription(answerObj);
         socket.emit('answer', {
           answer: answerObj,
           recipient: receivedData.returnAddress,
           returnAddress: receivedData.recipient
         });
 
+        console.log('Sent answer!');
       }, function (error) {
         console.log(error);
       });
@@ -201,12 +201,8 @@ module.exports = function (room, user, socket) {
     });
   };
 
-
-  socket.on('RTC-target', function (data) {
-    if (peers[data.deleteTarget]) {
-      delete peers[data.deleteTarget];
-    }
-
+  socket.on('joined', function (data) {
+    console.log(data.message);
     data.userIds.forEach(function (user, index) {
       sendOffer(user, data.yourId);
     });
@@ -216,19 +212,17 @@ module.exports = function (room, user, socket) {
   });
 
   socket.on('created', function (data) {
-    host = true;
-    document.getElementById('remoteVideo').src = localSrc;
-
-    var ownVideo = document.getElementById('localVideo');
-    ownVideo.parentNode.removeChild(ownVideo);
+    console.log(data);
   });
 
   socket.on('offer', function (data) {
+    console.log('Got offer!'); 
     sendAnswer(data);
   });
 
   socket.on('answer', function (data) {
-    parent.setRemoteDescription(new RTCSessionDescription(data.answer))
+    console.log('Got answer!\n');
+    peers[data.returnAddress].setRemoteDescription(new RTCSessionDescription(data.answer))
     .catch(function (error) {
       console.log(error);
     });
@@ -244,21 +238,21 @@ module.exports = function (room, user, socket) {
   });
 
   socket.on('ice-merge', function (data) {
+    console.log(peers);
     peers[data.returnAddress].setRemoteDescription(new RTCSessionDescription(data.sdp))
     .catch(function (error) {
       console.log(error);
     });
   });
 
-  socket.on('start', function (data) {
-    socket.emit('stop', {
-      roomName: room,
-      user: user,
-      time: data,
-    });
+
+  askForCamera();
+
+  socket.emit('check', {
+    roomName: room,
+    user: user
   });
 
-  socket.emit('ready');
 };
 
 
