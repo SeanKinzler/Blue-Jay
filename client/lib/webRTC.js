@@ -174,7 +174,9 @@ module.exports = function (room, user, socket) {
             returnAddress: receivedData.recipient,
           });
         } else if (children[id].iceConnectionState === 'disconnected') {
-          removeVideo(receivedData.returnAddress);
+          if (!host) {
+            removeVideo(receivedData.returnAddress);
+          }
         }
       };
 
