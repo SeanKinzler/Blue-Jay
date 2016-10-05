@@ -4,6 +4,7 @@ module.exports = function (room, user, socket) {
   var children = {};
   var parentStream;
   var localSrc;
+  var host = false;
 
   var STUN = {
     urls: 'stun:stun.l.google.com:19302'
@@ -51,10 +52,12 @@ module.exports = function (room, user, socket) {
       audio: false, 
     }, function (stream) {
       localSrc = window.URL.createObjectURL(stream);
-      if (!parent) {
-        document.getElementById('remoteVideo').src = localSrc;
+
+      var localVideoPort = document.getElementById('localVideo');
+      if (localVideoPort) {
+        localVideoPort.src = localSrc;
       } else {
-        document.getElementById('localVideo').src = localSrc;
+        document.getElementById('remoteVideo').src = localSrc;
       }
     }, function (error) {
       setTimeout(function () {
@@ -62,6 +65,8 @@ module.exports = function (room, user, socket) {
       }, 500);
     });
   };
+
+  askForCamera();
 
   var sendOffer = function (targetUserId, yourUserId) {
     navigator.getUserMedia({
@@ -104,7 +109,9 @@ module.exports = function (room, user, socket) {
           });
         } else if (parent.iceConnectionState === 'disconnected') {
           delete peers[targetUserId];
-          removeVideo(targetUserId);
+          if (!host) {
+            removeVideo(targetUserId);
+          }
         }
       };
 
@@ -194,8 +201,8 @@ module.exports = function (room, user, socket) {
 
 
   socket.on('RTC-target', function (data) {
-    if (data.deleteTarget) {
-      delete peers[deleteTarget];
+    if (peers[data.deleteTarget]) {
+      delete peers[data.deleteTarget];
     }
 
     data.userIds.forEach(function (user, index) {
@@ -207,8 +214,11 @@ module.exports = function (room, user, socket) {
   });
 
   socket.on('created', function (data) {
-    document.getElementById('localVideo').src = localSrc;
-    document.getElementById('remoteVideo').src = '';
+    host = true;
+    document.getElementById('remoteVideo').src = localSrc;
+
+    var ownVideo = document.getElementById('localVideo');
+    ownVideo.parentNode.removeChild(ownVideo);
   });
 
   socket.on('offer', function (data) {
@@ -245,10 +255,6 @@ module.exports = function (room, user, socket) {
       time: data,
     });
   });
-
-
-  askForCamera();
-
 
   socket.emit('ready');
 };
