@@ -4,6 +4,7 @@ module.exports = function (room, user, socket) {
   peers = {};
   var parent = null;
   var parentStream;
+  var parentAnswer;
   var localSrc;
   var host = false;
   var initial = true;
@@ -103,23 +104,11 @@ module.exports = function (room, user, socket) {
             candidate: event.candidate,
             returnAddress: yourUserId,
           });
-        } else {
-          socket.emit('ice-merge', {
-            recipient: targetUserId,
-            sdp: parent.localDescription,
-            returnAddress: yourUserId,
-          });
         }
       };
 
       parent.oniceconnectionstatechange = function(event) {
-        if (parent.iceConnectionState === 'completed') {
-          socket.emit('ice-merge', {
-            recipient: targetUserId,
-            sdp: parent.localDescription,
-            returnAddress: yourUserId,
-          });
-        } else if (parent.iceConnectionState === 'disconnected') {
+        if (parent.iceConnectionState === 'disconnected') {
           peers[targetUserId].close();
           delete peers[targetUserId];
           if (!host) {
@@ -129,6 +118,7 @@ module.exports = function (room, user, socket) {
       };
 
       parent.createOffer(function (offerObj) {
+        console.log(offerObj);
         parent.setLocalDescription(offerObj);
         socket.emit('offer', {
           recipient: targetUserId,
@@ -158,10 +148,6 @@ module.exports = function (room, user, socket) {
         peers[id].addStream(parentStream);
       }
 
-      peers[id].onaddstream = function (media) {
-        // addVideo(media.stream, receivedData.returnAddress);
-      };
-
       peers[id].onicecandidate = function (event) {
         if (!!event.candidate) {
           socket.emit('ice-candidate', {
@@ -169,23 +155,11 @@ module.exports = function (room, user, socket) {
             candidate: event.candidate,
             returnAddress: receivedData.recipient,
           });
-        } else {
-          socket.emit('ice-merge', {
-            recipient: receivedData.returnAddress,
-            sdp: peers[id].localDescription,
-            returnAddress: receivedData.recipient,
-          });
         }
       };
 
       peers[id].oniceconnectionstatechange = function(event) {
-        if (peers[id].iceConnectionState === 'completed') {
-          socket.emit('ice-merge', {
-            recipient: receivedData.returnAddress,
-            sdp: peers[id].localDescription,
-            returnAddress: receivedData.recipient,
-          });
-        } else if (peers[id].iceConnectionState === 'disconnected') {
+        if (peers[id].iceConnectionState === 'disconnected') {
           peers[id].close();
           delete peers[id];
           if (!host) {
@@ -244,6 +218,7 @@ module.exports = function (room, user, socket) {
   });
 
   socket.on('answer', function (data) {
+    console.log(new RTCSessionDescription((data.answer)));
     parent.setRemoteDescription(new RTCSessionDescription(data.answer))
     .catch(function (error) {
       console.log(error);
@@ -257,13 +232,6 @@ module.exports = function (room, user, socket) {
         console.error(error);
       });
     }
-  });
-
-  socket.on('ice-merge', function (data) {
-    initial = false;
-    peers[data.returnAddress].setRemoteDescription(new RTCSessionDescription(data.sdp))
-    .catch(function (error) {
-    });
   });
 
   socket.on('start', function (data) {
