@@ -4,6 +4,9 @@ import {Link} from 'react-router';
 export default () => {
 	return (
 		<ul className="collection with-header">
+		  <li className='collection-header'>
+		  	<h5>Subscriptions</h5>
+		  </li>
 		  <li className="collection-item avatar">
 		    <i className="material-icons circle blue">loop</i>
 		    <span className="title">Kazoo Masters</span>
@@ -32,6 +35,11 @@ export default () => {
 		    </p>
 			<Link to='channel/four' className="secondary-content"><i className="material-icons">contact_phone</i></Link>
 		  </li>
+		  <li className="collection-header">
+			<Link to='subscriptions'>
+				<strong>All My Subscriptions</strong>
+			</Link>
+		  </li>		  
 		</ul>
 	)
 }
