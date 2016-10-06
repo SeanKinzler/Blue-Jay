@@ -1,10 +1,11 @@
 import {
 	REQUEST_STREAMS,
 	REQUEST_ERROR,
+	ADD_STREAM,
 	EDIT_STREAM,
 	DELETE_STREAM,
-	MODAL_OPEN,
-	MODAL_CLOSE
+	OPEN_MODAL,
+	CLOSE_MODAL
 } from '../actions/index.jsx';
 
 const initialState = {
@@ -24,6 +25,10 @@ const UserStreams = (state = initialState, action) => {
 			return Object.assign({}, state, {
 				error: action.payload.message
 			})
+		case ADD_STREAM:
+			return Object.assign({}, state, {
+				data: action.data
+			})
 		case EDIT_STREAM:
 			return Object.assign({}, state, {
 				data: action.data
@@ -32,12 +37,12 @@ const UserStreams = (state = initialState, action) => {
 			return Object.assign({}, state, {
 				data: action.data
 			})
-		case MODAL_OPEN:
+		case OPEN_MODAL:
 			return Object.assign({}, state, {
 				modalOpen: true,
 				selectedStream: action.stream
 			});
-		case MODAL_CLOSE:
+		case CLOSE_MODAL:
 			return Object.assign({}, state, {
 				modalOpen: false,
 				selectedStream: null
