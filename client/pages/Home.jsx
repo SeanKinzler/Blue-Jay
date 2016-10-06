@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../actions/index.jsx';
 import Carousel from '../components/Carousel.jsx';
-import ChannelList from '../components/ChannelList.jsx';
 import LiveNow from '../components/LiveNow.jsx';
 import Categories from '../components/Categories.jsx';
 

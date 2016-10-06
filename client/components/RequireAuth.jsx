@@ -7,7 +7,7 @@ const RequireAuth = (WrappedComponent) => {
   class Auth extends React.Component {
     componentWillMount() {
       if (!this.props.authenticated) {
-        browserHistory.push('/login');
+        // browserHistory.push('/login');
       }
     }
 
