@@ -24,4 +24,4 @@ const UserStreams = ({streams, deleteStream, onStreamSelect}) => {
 	)
 }
 
-export UserStreams;
+export default UserStreams;
