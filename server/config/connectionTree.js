@@ -72,6 +72,18 @@ Tree.prototype.remove = function (key, callback) {
   }
 };
 
+Tree.prototype._remove = function (key) {
+  for (var i = 0; i < this.children.length; i++) {
+    if (this.children[i].key === key) {
+
+      this.children.splice(i, 1);
+
+    } else {
+      this.children[i]._remove(key);
+    }
+  }
+};
+
 Tree.prototype.map = function (callback) {
   this.value = callback(this.key, this.value);
 

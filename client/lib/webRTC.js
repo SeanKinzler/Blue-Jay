@@ -13,7 +13,7 @@ module.exports = function (room, user, socket) {
   var chkevent = window.attachEvent ? 'onbeforeunload' : 'beforeunload';
 
   myEvent(chkevent, function(e) {
-    console.log('okay!')
+    console.log('okay!');
     for (var key in peers) {
       peers[key].close();
     }  
@@ -273,9 +273,9 @@ module.exports = function (room, user, socket) {
 
   window.checkForHelp = setInterval(function () {
     if (!initial && !host && document.getElementById('remoteVideo').src.slice(0, 4) !== 'blob') {
-      socket.emit('ready');
-      parent = null;
       initial = true;
+      parent = null;
+      socket.emit('ready');
     }
   }, 200);
 
