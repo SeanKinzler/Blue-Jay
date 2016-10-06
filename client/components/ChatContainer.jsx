@@ -39,6 +39,7 @@ export default class ChatContainer extends Component {
     e.preventDefault();
 
     var submission = document.getElementById('messageText');
+      console.log(window.__context.state.socket);
 
     window.__context.state.socket.emit('chatMessage', {
       room: window.__context.state.room,
