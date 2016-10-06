@@ -144,15 +144,22 @@ module.exports = {
     for (key in req.body) {
       if (key === 'subscriberCount') {
         changes = changes + key + ' = ' + req.body[key] + ', '
-      } else {
+      } else if (key !== categories) {
         changes = changes + key + ' = "' + req.body[key] + '", '
       }
     }
     if (changes.length > 2) {
       changes = changes.slice(0, -2);
     }
-    sql('UPDATE streams SET ' + changes + ' WHERE title="' + req.params.title + '";', 
-      function(error, rows, fields) {
+    var query = 'UPDATE streams SET ' + changes + ' WHERE title="' + req.params.title + '";\
+      SET @stream = (SELECT id FROM streams WHERE title="' + req.params.title + '));\n \
+      DELETE FROM streams_categories WHERE streamID=@stream; \n'
+    for (var i = 0; i < req.body.categories.length; i++) {
+      query = query + ('INSERT IGNORE INTO categories (text) VALUES (' + req.body.categores[i] + ');\n' +  
+      'SET @newCategory = (SELECT id FROM categories WHERE text="' + req.body.categories[i] +  '");\n' + 
+      'INSERT INTO streams_categories (streamId, categoryId) VALUES (@stream, @newCategory);') 
+    }
+    sql(query, function(error, rows, fields) {
         console.log(error);
         if (error) {
           res.sendStatus(404);
@@ -177,11 +184,20 @@ module.exports = {
 
 
   getStream: (req, res) => {
-    sql('SELECT * FROM streams WHERE title="' + req.params.title + '"',
+    sql('SELECT s.*, c.text FROM streams s LEFT JOIN (streams_categories sc, categories c) \
+      ON (s.title="' + req.params.title + '" AND s.id = sc.streamId AND c.id = sc.categoryId)',
     function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);
       } else {
+        var toRet = {};
+        for(var key in rows[0]) {
+          toRet[key] = rows[0][key];
+        }
+        toRet.categories = [];
+        for (var i = 0; i < rows.length; i++) {
+          toRet.categories.push(rows[i].text);
+        }
         res.send(rows);
       }
     });

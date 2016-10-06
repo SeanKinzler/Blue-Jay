@@ -7,6 +7,9 @@ build/
 dist/
 .dockercfg
 .dockercfg.json
+sever/config/key.pem
+server/config/cert.pem
+server/config/chain.pem
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
