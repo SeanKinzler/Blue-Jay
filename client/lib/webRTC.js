@@ -275,6 +275,7 @@ module.exports = function (room, user, socket) {
     if (!initial && !host && document.getElementById('remoteVideo').src.slice(0, 4) !== 'blob') {
       socket.emit('ready');
       parent = null;
+      initial = true;
     }
   }, 200);
 

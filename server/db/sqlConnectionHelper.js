@@ -11,13 +11,10 @@ var db = mysql.createConnection({
 
 var execute = function (query, callback) {
 
-  db.connect();
-
   db.query(query, function () {
 
     callback.apply(null, arguments);
 
-    db.end();
   });
 
 };
