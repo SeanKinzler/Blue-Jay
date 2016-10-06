@@ -34,7 +34,7 @@ export const signInUser = (credentials) => {
 	browserHistory.push('/');
 	return {
 		type: SIGN_IN_USER,
-		payload: credentials.username
+		username: credentials.username
 	}
 }
 
