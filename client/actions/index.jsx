@@ -54,7 +54,7 @@ export const signUpUser = (credentials) => {
 			data: credentials
 		})
 		.then((res) => {
-			dispatch(signInUser());
+			dispatch(signInUser(res));
 			browserHistory.push('/');
 		})
 		.catch((err) => {
@@ -211,10 +211,10 @@ export const addSubscription = (stream, username) => {
 	}
 }
 
-export const removeSubscription = (stream, username) => {
+export const removeSubscription = (streamId, username) => {
 	return (dispatch) => {
 		axios.put(`https://localhost:8443/api/users/${username}/subscriptions`,
-			{ body: stream }
+			{ body: streamId }
 		)
 		.then((res) => {
 			dispatch(subscriptionAdded(res));

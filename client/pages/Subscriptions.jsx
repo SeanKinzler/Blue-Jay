@@ -2,11 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import * as Actions from '../actions/index.jsx';
-// import UserSubscriptions from '../components/UserSubscriptions.jsx';
+import UserSubscriptions from '../components/UserSubscriptions.jsx';
 
 class Subscriptions extends Component {
-	getSubscriptions() {
-		// this.props.requestSubscriptions(this.props.auth.username)
+	
+	componentWillMount() {
+		// need to load subscriptions when api endpoint is ready 
+		// this.props.requestSubscriptions(this.props.username)
+	}
+
+	removeSubscriptionHandler(stream) {
+		this.props.removeSubscription(stream.id, this.props.username)
 	}
 
 	renderSubscriptions() {
@@ -18,7 +24,10 @@ class Subscriptions extends Component {
 			)
 		}
 		return (
-			<UserSubscriptions subscriptions={this.props.subscriptions} />
+			<UserSubscriptions 
+				subscriptions={this.props.subscriptions} 
+				removeSubscription={this.props.removeSubscriptionHandler}
+			/>
 		)
 	}
 
@@ -35,6 +44,7 @@ class Subscriptions extends Component {
 
 const mapStateToProps = (state) => {
 	return {
+		username: state.auth.username,
 		subscriptions: state.subscriptions.data
 	}
 }
