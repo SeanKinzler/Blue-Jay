@@ -22,6 +22,9 @@ export const ADD_SUBSCRIPTION = 'ADD_SUBSCRIPTION';
 export const REMOVE_SUBSCRIPTION = 'REMOVE_SUBSCRIPTION';
 export const REQUEST_SUBSCRIPTIONS = 'REQUEST_SUBSCRIPTIONS';
 export const SUBSCRIPTIONS_ERROR = 'SUBSCRIPTIONS_ERROR';
+export const ADD_STREAM = 'ADD_STREAM';
+export const EDIT_STREAM = 'EDIT_STREAM';
+export const DELETE_STREAM = 'DELETE_STREAM';
 
 export const joinStream = (socket) => {
 	return {
@@ -221,6 +224,63 @@ export const removeSubscription = (streamId, username) => {
 		})
 		.catch((err) => {
 			dispatch(requestError(err));
+		})
+	}
+}
+
+const streamAdded = (streams) => {
+	return {
+		type: ADD_STREAM,
+		data: streams
+	}
+}
+
+export const addStream = (stream) => {
+	return (dispatch) => {
+		axios.post(`https://localhost:8443/api/streams/${stream.title}`)
+		.then((res) => {
+			dispatch(streamAdded(res))
+		})
+		.catch((err) => {
+			dispatch(requestError(err))
+		})
+	}
+}
+
+const streamEdited = (streams) => {
+	return {
+		type: EDIT_STREAM,
+		data: streams
+	}
+}
+
+export const editStream = (stream) => {
+	return (dispatch) => {
+		axios.put(`https://localhost:8443/api/streams/${stream.title}`)
+		.then((res) => {
+			dispatch(streamEdited(res));
+		})
+		.catch((err) => {
+			dispatch(requestError(err));
+		})
+	}
+}
+
+const streamDeleted = (streams) => {
+	return {
+		type: DELETE_STREAM,
+		data: streams
+	}
+}
+
+export const deleteStream = (stream) => {
+	return (dispatch) => {
+		axios.delete(`https://localhost:8443/api/streams/${stream.title}`)
+		.then((res) => {
+			dispatch(streamDeleted(res))
+		})
+		.catch((err) => {
+			dispatch(requestError(err))
 		})
 	}
 }
