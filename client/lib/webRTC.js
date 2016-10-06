@@ -216,7 +216,9 @@ module.exports = function (room, user, socket) {
 
 
   socket.on('RTC-target', function (data) {
+    host = false;
     if (peers[data.deleteTarget]) {
+      peers[data.deleteTarget].close();
       delete peers[data.deleteTarget];
     }
 
