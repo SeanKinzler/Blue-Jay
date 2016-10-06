@@ -3,23 +3,19 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import * as Actions from '../actions/index.jsx';
 import UserStreams from '../components/UserS.jsx';
+import UserStreamsModal from '../components/UserStreamsModal.jsx';
 
 class Steams extends Component {
 	
 	deleteStreamHandler(stream) {
 		const prompt = prompt('Are you sure you want to delete this stream?')
 		if (prompt) {
-			this.props.deleteStream({
-				streamId: stream.id, 
-				username: this.props.username
-			})
+			this.props.actions.deleteStream({ stream });
 		}
 	}
 
 	editStreamHandler(stream) {
-		this.props.editStream({
-			stream
-		})
+		this.props.actions.editStream({ stream });
 	}
 
 	renderStreams() {
@@ -31,9 +27,15 @@ class Steams extends Component {
 			)
 		}
 		return (
+			<UserStreamsModal 
+				selectedStream={ this.props.streams.selectedStream }
+				modalIsOpen={ this.props.streams.modalIsOpen }
+				onRequestClose={ () => { this.props.actions.closeModal() } }
+				editStream={ this.editStreamHandler } 
+			/>
 			<UserStreams 
 				streams={ this.props.streams }
-				editStream={ this.editStreamHandler } 
+				onStreamSelect={ (stream) => { this.props.actions.openModal(stream) } }
 				deleteStream={this.deleteStreamHandler }
 			/>
 		)
