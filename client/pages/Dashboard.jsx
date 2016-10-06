@@ -15,7 +15,6 @@ class Dashboard extends Component {
 	    <div className='container'>
 	    	<div className='row'>
 	    		<div className='col s12 l6'>
-			    	<h5 className='center-align'>Upcoming</h5>
 			    	<ChannelList />
 			    </div>
 			    <div className='col s12 l6'>		    
