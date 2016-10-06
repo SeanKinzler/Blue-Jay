@@ -1,7 +1,7 @@
 import { ADD_SUBSCRIPTION, 
 		REMOVE_SUBSCRIPTION,
 		REQUEST_SUBSCRIPTIONS,
-		SUBSCRIPTION_ERRORS } 
+		SUBSCRIPTIONS_ERROR } 
 from '../actions/index.jsx';
 
 const initialState = {
@@ -27,5 +27,9 @@ const Subscriptions = (state = initialState, action) => {
 			return Object.assign({}, state, {
 				error: action.error
 			})
+		default:
+			return state;
 	}
 }
+
+export default Subscriptions;
