@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UserStreams = ({streams, deleteStream, editStream}) => {
+const UserStreams = ({streams, deleteStream, onStreamSelect}) => {
 	return (
 		<div>
 			{ streams.map((stream) => {
@@ -13,7 +13,7 @@ const UserStreams = ({streams, deleteStream, editStream}) => {
 								</div>
 								<div className="card-action">
 									<span className="badge green">{ stream.subscriberCount }</span>
-									<span onClick={ () => { editStream(stream) } }>Edit Stream</span>
+									<span onClick={ () => { onStreamSelect(stream) } }>Edit Stream</span>
 									<span onClick={ () => { deleteStream(stream) } }>Delete Stream</span>
 								</div>
 							</div>
