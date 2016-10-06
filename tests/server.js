@@ -19,7 +19,7 @@ describe('Server:', function () {
         });
     });
 
-    it('should have a "POST => /api/users" endpoint', function (done) {
+    xit('should have a "POST => /api/users" endpoint', function (done) {
       request(app)
         .post('/api/users')
         .send({
@@ -36,7 +36,7 @@ describe('Server:', function () {
         });
     });
 
-    it('should have a "GET => /api/users" endpoint', function (done) {
+    xit('should have a "GET => /api/users" endpoint', function (done) {
       request(app)
         .get('/api/users')
         .send({})
@@ -47,7 +47,7 @@ describe('Server:', function () {
         });
     });
 
-    it('should have a "POST => /api/streams" endpoint', function (done) {
+    xit('should have a "POST => /api/streams" endpoint', function (done) {
       request(app)
         .post('/api/streams')
         .send({
@@ -62,7 +62,7 @@ describe('Server:', function () {
         });
     });
 
-    it('should have a "DELETE => /api/streams/" endpoint', function (done) {
+    xit('should have a "DELETE => /api/streams/" endpoint', function (done) {
       request(app)
         .delete('/api/streams')
         .send({
@@ -77,7 +77,7 @@ describe('Server:', function () {
         });
     });
 
-    it('should have a "DELETE => /api/users" endpoint', function (done) {
+    xit('should have a "DELETE => /api/users" endpoint', function (done) {
       request(app)
         .delete('/api/users')
         .send({

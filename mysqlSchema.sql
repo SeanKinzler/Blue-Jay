@@ -153,14 +153,14 @@ CREATE TABLE `categories` (
 -- Foreign Keys 
 -- ---
 
-ALTER TABLE `streams` ADD FOREIGN KEY (creatorId) REFERENCES `users` (`id`);
-ALTER TABLE `subscriptions` ADD FOREIGN KEY (streamId) REFERENCES `streams` (`id`);
-ALTER TABLE `subscriptions` ADD FOREIGN KEY (userId) REFERENCES `users` (`id`);
-ALTER TABLE `schedules` ADD FOREIGN KEY (streamId) REFERENCES `streams` (`id`);
-ALTER TABLE `streams_keywords` ADD FOREIGN KEY (streamId) REFERENCES `streams` (`id`);
-ALTER TABLE `streams_keywords` ADD FOREIGN KEY (keywordId) REFERENCES `keywords` (`id`);
-ALTER TABLE `streams_categories` ADD FOREIGN KEY (streamId) REFERENCES `streams` (`id`);
-ALTER TABLE `streams_categories` ADD FOREIGN KEY (categoryId) REFERENCES `categories` (`id`);
+ALTER TABLE `streams` ADD FOREIGN KEY (creatorId) REFERENCES `users` (`id`) ON DELETE CASCADE;
+ALTER TABLE `subscriptions` ADD FOREIGN KEY (streamId) REFERENCES `streams` (`id`) ON DELETE CASCADE;
+ALTER TABLE `subscriptions` ADD FOREIGN KEY (userId) REFERENCES `users` (`id`) ON DELETE CASCADE;
+ALTER TABLE `schedules` ADD FOREIGN KEY (streamId) REFERENCES `streams` (`id`) ON DELETE CASCADE;
+ALTER TABLE `streams_keywords` ADD FOREIGN KEY (streamId) REFERENCES `streams` (`id`) ON DELETE CASCADE;
+ALTER TABLE `streams_keywords` ADD FOREIGN KEY (keywordId) REFERENCES `keywords` (`id`) ON DELETE CASCADE;
+ALTER TABLE `streams_categories` ADD FOREIGN KEY (streamId) REFERENCES `streams` (`id`) ON DELETE CASCADE;
+ALTER TABLE `streams_categories` ADD FOREIGN KEY (categoryId) REFERENCES `categories` (`id`) ON DELETE CASCADE;
 
 -- ---
 -- Table Properties
