@@ -10,7 +10,7 @@ console.log('Listening on port: ' + port);
 var app = require('express')();
 
 app.get('*', function (req, res) {
-  res.redirect('https://localhost:8443' + req.url);
+  res.redirect('https://www.chadroulette.com' + req.url);
 });
 
 app.listen(8080);
