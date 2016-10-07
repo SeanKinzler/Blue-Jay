@@ -51,6 +51,8 @@ module.exports = function (room, user, socket) {
     audio: true,
   }, function (stream) {
     parentStream = stream;
+  }, function (error) {
+    console.log(error);
   });
 
   var askForCamera = function () {
