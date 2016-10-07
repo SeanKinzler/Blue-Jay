@@ -9,7 +9,7 @@ var authenticate = function (req, res, next) {
 
   } else {
 
-    jwt(req.body.jwt, key, function (error, decoded) {
+    jwt.verify(req.body.jwt, key, function (error, decoded) {
 
       if (error) {
 
@@ -18,7 +18,7 @@ var authenticate = function (req, res, next) {
       } else {
 
         next();
-        
+
       }
     });
   }
