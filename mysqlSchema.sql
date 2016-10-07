@@ -179,12 +179,9 @@ ALTER TABLE `streams_categories` ADD FOREIGN KEY (categoryId) REFERENCES `catego
 -- Test Data
 -- ---
 
--- INSERT INTO `users` (`id`,`username`,`firstName`,`lastName`,`email`,`avatarUrl`,`mobileNumber`,`avatarThumbUrl`,`createdAt`,`updatedAt`,`googleId`) VALUES
--- ('','','','','','','','','','','');
--- INSERT INTO `streams` (`id`,`title`,`online`,`creatorId`,`description`,`subscriberCount`,`createdAt`,`updatedAt`) VALUES
--- ('','','','','','','','');
--- INSERT INTO `subscriptions` (`id`,`streamId`,`userId`,`phoneNotifications`,`emailNotifications`,`createdAt`,`updatedAt`) VALUES
--- ('','','','','','','');
+-- INSERT INTO `users` (`id`,`username`,`firstName`,`lastName`,`email`,`avatarUrl`,`mobileNumber`,`avatarThumbUrl`) VALUES ('1337','seank','sean','k','test@gmail.com','x','888','x');
+-- INSERT INTO `streams` (`id`,`title`,`online`,`creatorId`,`description`,`subscriberCount`) VALUES ('1337','test1','true','1337','none',0);
+-- INSERT INTO `subscriptions` (`id`,`streamId`,`userId`,`phoneNotifications`,`emailNotifications`,`createdAt`,`updatedAt`) VALUES (1,1337,1337,'true','true');
 -- INSERT INTO `schedules` (`id`,`dayOfWeek`,`startTime`,`endTime`,`streamId`,`createdAt`,`updatedAt`) VALUES
 -- ('','','','','','','');
 -- INSERT INTO `streams_keywords` (`id`,`streamId`,`keywordId`,`createdAt`,`updatedAt`) VALUES

@@ -64,7 +64,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
         }
       }, {
         send: function (input) {
-          userId = input[0].id;
+          userId = input.id;
           expect(input).to.not.equal(404);
           done();
         }
@@ -155,6 +155,38 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
           done();
         }
       });
+    });
+
+    it('should be able to add a subscription', function (done) {
+      dbHelpers.addSubscription({
+        params: {
+          username: random2
+        }, 
+        body: {
+          title: random
+        }
+      }, {
+        send: function (input) {
+          expect(input).to.not.equal(404);
+          done();
+        }
+      })
+    });
+
+    it('should be able to remove a subscription', function (done) {
+      dbHelpers.addSubscription({
+        params: {
+          username: random2
+        }, 
+        body: {
+          title: random
+        }
+      }, {
+        send: function (input) {
+          expect(input).to.not.equal(404);
+          done();
+        }
+      })
     });
 
     it('should be able to delete a user', function (done) {

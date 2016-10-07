@@ -34,14 +34,56 @@ module.exports = {
       }
     })
   },
-
+  //return owned streams aswell
   getUser: (req, res) => {
-    sql('SELECT * FROM users WHERE username="' + req.params.username + '"',
+    var query1 = 'SELECT u.id, u.username, sub.phoneNotifications, sub.emailNotifications, s.* FROM users u ' + 
+      'LEFT JOIN (subscriptions sub, streams s) ' + 
+      'ON (u.username="' + req.params.username + '" AND u.id = sub.userId AND s.id = sub.streamId) WHERE u.username="' + req.params.username + '";\n'
+      query2 = 'SELECT * FROM streams WHERE creatorId=1337;\n' //+ req.session.userId +';\n'
+    sql(query1,
     function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);
       } else {
-        res.send(rows);
+        sql(query2, function(error2, rows2, fields2) {
+          if (error2) {
+            res.sendStatus(404);
+          } else {
+            if(rows[0] !== undefined) {
+              rows[0].subscriptions = [];
+              rows[0].ownedStreams = rows2;
+              for (var i = 0; i < rows.length; i++) {
+                if (rows[i].creatorId !== null) {
+                  rows[0].subscriptions.push({
+                    phoneNotifications: rows[i].phoneNotifications,
+                    emailNotifications: rows[i].emailNotifications,
+                    title: rows[i].title,
+                    online: rows[i].online,
+                    descriptions: rows[i].description
+                  });
+                }
+              }
+            } else {
+              if (rows.title !== undefined) {
+                rows.subscriptions = [];
+                rows.ownedStreams = rows2;
+                rows.subscriptions.push({
+                    phoneNotifications: rows.phoneNotifications,
+                    emailNotifications: rows.emailNotifications,
+                    title: rows.title,
+                    online: rows.online,
+                    descriptions: rows.description
+                  });
+                res.send(rows);
+              } else {
+                rows.ownedStreams = rows2;
+                rows.subscriptions = [];
+                res.send(rows);
+              }
+            }
+            res.send(rows[0]); 
+          }
+        })
       }
     });
   },
@@ -175,8 +217,8 @@ module.exports = {
 
 
   getStream: (req, res) => {
-    sql('SELECT s.*, c.text FROM streams s LEFT JOIN (streams_categories sc, categories c) \
-      ON (s.title="' + req.params.title + '" AND s.id = sc.streamId AND c.id = sc.categoryId)',
+    sql('SELECT s.*, c.text FROM streams s LEFT JOIN (streams_categories sc, categories c) ' + 
+      'ON (s.title="' + req.params.title + '" AND s.id = sc.streamId AND c.id = sc.categoryId)',
     function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);
@@ -185,25 +227,26 @@ module.exports = {
         for (var i = 0; i < rows.length; i++) {
           rows[0].categories.push(rows[i].text);
         }
-        console.log('rows: ', rows[0])
         res.send(rows[0]);
       }
     });
   },
 
-  addStudent: (req, res) => {
-    Classroom.find({where: {
-      classname: req.body.classname}
-    }).then((classroom) => {
-      User.find({where: {
-        username: req.body.username
-      }}).then((user) => {
-        classroom.addUser(user).then((data) => {
-          res.sendStatus(201);
-        }).catch((err) => {res.sendStatus(403)}) 
-      });
-    })
-    res.send({ 'data': 'Student added to class.' });
+  addSubscription: (req, res) => {
+    var query  = 'SET @user = (SELECT id FROM users WHERE username="' + req.params.username + '");\n' + 
+    'SET @stream = (SELECT id FROM streams WHERE title="' + req.body.title + '");\n' +
+    'INSERT INTO subscriptions (streamId, userId, phoneNotifications, emailNotifications) VALUES ' + 
+    '(@stream, @user, "false", "false");\n';
+    queries = query.split('\n');
+    executeQueries(queries, res);
+  },
+
+  updateSubscription: (req, res) => {
+    var query  = 'SET @user = (SELECT id FROM users WHERE username="' + req.params.username + '");\n' +
+    'SET @stream = (SELECT id FROM streams WHERE title="' + req.body.title + '");\n' +
+    'DELETE FROM subscriptions WHERE (userId=@user AND streamId=@stream);\n';
+    queries = query.split('\n');
+    executeQueries(queries, res);
   },
   
   removeStudent: (req, res) => {
