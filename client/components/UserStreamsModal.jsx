@@ -11,12 +11,12 @@ const UserStreamsModal = ({selectedStream, modalIsOpen, onRequestClose, editStre
 		<Modal
 		  isOpen={ modalIsOpen }
 		  onRequestClose={ onRequestClose }
-		  style={UserStreamsModalStyling}
+		  style={ SearchResultsModalStyling }
 		>
 			<div>
 				<form onSubmit={ editStream }>
-					<input type='text' value={selectedStream.title} name='title' />
-					<input type='text' value={selectedStream.description} name='description' />
+					<input type='text' defaultValue={ selectedStream.title } name='title' />
+					<input type='text' defaultValue={ selectedStream.description } name='description' />
 					<input type='submit' value='Submit' className='btn' />
 				</form>
 			</div>

@@ -25,6 +25,8 @@ export const SUBSCRIPTIONS_ERROR = 'SUBSCRIPTIONS_ERROR';
 export const ADD_STREAM = 'ADD_STREAM';
 export const EDIT_STREAM = 'EDIT_STREAM';
 export const DELETE_STREAM = 'DELETE_STREAM';
+export const OPEN_STREAM_MODAL = 'OPEN_STREAM_MODAL';
+export const CLOSE_STREAM_MODAL = 'CLOSE_STREAM_MODAL';
 
 export const joinStream = (socket) => {
 	return {
@@ -225,6 +227,19 @@ export const removeSubscription = (streamId, username) => {
 		.catch((err) => {
 			dispatch(requestError(err));
 		})
+	}
+}
+
+export const openStreamModal = (stream) => {
+	return {
+		type: OPEN_STREAM_MODAL,
+		stream
+	}
+}
+
+export const closeStreamModal = (stream) => {
+	return {
+		type: CLOSE_STREAM_MODAL
 	}
 }
 
