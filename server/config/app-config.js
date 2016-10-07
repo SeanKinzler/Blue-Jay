@@ -32,6 +32,9 @@ app.get('/api/streams/:title', (req, res) => { dbHandler.getStream(req, res); })
 app.put('/api/streams/:title', (req, res) => { dbHandler.updateStream(req, res); });
 app.delete('/api/streams/:title', (req, res) => { dbHandler.deleteStream(req, res); });
 
+app.post('/authenticated', (req, res) => {
+	
+});
 
 // Catch-all will redirect to react app then re-routed by react-router
 app.get('*', (req, res) => {
