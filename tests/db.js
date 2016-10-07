@@ -1,5 +1,4 @@
 if (!process.env.TRAVIS_PULL_REQUEST) {
-  var bcrypt = require('bcrypt');
   var chai = require('chai');
   var sinon = require('sinon');
 
@@ -11,8 +10,8 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
   var dbHelpers = require('../server/db/rawSQLHandlers.js');
 
   describe('Database', function () {
-    var random = bcrypt.hashSync('asdf', 5);
-    var random2 = bcrypt.hashSync('asdf', 5);
+    var random = Math.random() + '';
+    var random2 = Math.random() + '';
     var userId = 1;
 
     it('should have access to the environment variables', function () {
