@@ -4,14 +4,14 @@ import {
 	ADD_STREAM,
 	EDIT_STREAM,
 	DELETE_STREAM,
-	OPEN_MODAL,
-	CLOSE_MODAL
+	OPEN_STREAM_MODAL,
+	CLOSE_STREAM_MODAL
 } from '../actions/index.jsx';
 
 const initialState = {
 	data: [],
 	selectedStream: null,
-	modalOpen: false,
+	modalIsOpen: false,
 	error: null
 }
 
@@ -37,17 +37,19 @@ const UserStreams = (state = initialState, action) => {
 			return Object.assign({}, state, {
 				data: action.data
 			})
-		case OPEN_MODAL:
+		case OPEN_STREAM_MODAL:
 			return Object.assign({}, state, {
-				modalOpen: true,
+				modalIsOpen: true,
 				selectedStream: action.stream
 			});
-		case CLOSE_MODAL:
+		case CLOSE_STREAM_MODAL:
 			return Object.assign({}, state, {
-				modalOpen: false,
+				modalIsOpen: false,
 				selectedStream: null
 			});
 		default:
 			return state;
 	}
 }
+
+export default UserStreams;

@@ -13,8 +13,8 @@ const UserStreams = ({streams, deleteStream, onStreamSelect}) => {
 								</div>
 								<div className="card-action">
 									<span className="badge green">{ stream.subscriberCount }</span>
-									<span onClick={ () => { onStreamSelect(stream) } }>Edit Stream</span>
-									<span onClick={ () => { deleteStream(stream) } }>Delete Stream</span>
+									<a onClick={ () => { onStreamSelect(stream) } }>Edit Stream</a>
+									<a onClick={ () => { deleteStream(stream) } }>Delete Stream</a>
 								</div>
 							</div>
 					</div>

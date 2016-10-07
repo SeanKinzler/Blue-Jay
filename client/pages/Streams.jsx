@@ -10,16 +10,16 @@ class Streams extends Component {
 	deleteStreamHandler(stream) {
 		const prompt = prompt('Are you sure you want to delete this stream?')
 		if (prompt) {
-			this.props.actions.deleteStream({ stream });
+			this.props.deleteStream({ stream });
 		}
 	}
 
 	editStreamHandler(stream) {
-		this.props.actions.editStream({ stream });
+		this.props.editStream({ stream });
 	}
 
 	renderStreams() {
-		if (!this.props.streams.length) {
+		if (!this.props.userStreams.data.length) {
 			return (
 				<p>You currently don't have any streams.
 					<Link to='/create'>Create a stream here.</Link>
@@ -27,23 +27,25 @@ class Streams extends Component {
 			)
 		}
 		return (
-			<UserStreams 
-				streams={ this.props.streams }
-				onStreamSelect={ (stream) => { this.props.actions.openModal(stream) } }
-				deleteStream={this.deleteStreamHandler }
-			/>
+			<div className='container'>
+				<UserStreams 
+					streams={ this.props.userStreams.data }
+					onStreamSelect={ (stream) => { this.props.openStreamModal(stream) } }
+					deleteStream={this.deleteStreamHandler }
+				/>
+				<UserStreamsModal 
+					selectedStream={ this.props.userStreams.selectedStream }
+					modalIsOpen={ this.props.userStreams.modalIsOpen }
+					onRequestClose={ () => { this.props.closeStreamModal() } }
+					editStream={ this.editStreamHandler } 
+				/>
+			</div>
 		)
 	}
 
 	render() {
 		return (
 			<div className='container'>
-				<UserStreamsModal 
-					selectedStream={ this.props.streams.selectedStream }
-					modalIsOpen={ this.props.streams.modalIsOpen }
-					onRequestClose={ () => { this.props.actions.closeModal() } }
-					editStream={ this.editStreamHandler } 
-				/>
 				{ this.renderStreams() }
 			</div>
 		)
@@ -53,7 +55,7 @@ class Streams extends Component {
 const mapStateToProps = (state) => {
 	return {
 		username: state.auth.username,
-		streams: state.streams.data
+		userStreams: state.userStreams
 	}
 }
 
