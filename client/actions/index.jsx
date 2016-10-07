@@ -35,11 +35,11 @@ export const joinStream = (socket) => {
 	}
 }
 
-export const userSignedIn = (username, token) => {
+export const userSignedIn = (data) => {
 	return {
 		type: SIGN_IN_USER,
-		username,
-		token
+		username: data.username,
+		token: data.token
 	}
 }
 
