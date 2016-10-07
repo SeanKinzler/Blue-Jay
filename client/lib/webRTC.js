@@ -230,7 +230,7 @@ module.exports = function (room, user, socket) {
         parent = null;
         socket.emit('ready');
       }
-    }, 1000);
+    }, 2000);
 
     socket.emit('ready');
 
