@@ -20,6 +20,7 @@ io.sockets.on('connection', function(socket) {
     if (socket.adapter.rooms[data.roomName]) {
       var yourId = socket.id;
 
+      rooms[data.roomName]._remove(socket.id);
       rooms[data.roomName].add(yourId, Date.now() - data.time, function (targetId, selfId) {
 
         socket.emit('RTC-target', {
@@ -31,12 +32,12 @@ io.sockets.on('connection', function(socket) {
           user: 'You have joined the room: ' + data.roomName,
           text: '',
         });
-      });
 
-      socket.broadcast.to(data.roomName).emit('chatMessage', {
-        user: '',
-        text: data.user + ' has joined the room.',
-      });  
+        socket.broadcast.to(data.roomName).emit('chatMessage', {
+          user: '',
+          text: data.user + ' has joined the room.',
+        });  
+      });
 
     } else {
       socket.join(data.roomName);

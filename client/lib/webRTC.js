@@ -3,7 +3,6 @@ module.exports = function (room, user, socket) {
 
   peers = {};
   var parent = null;
-  var children = {};
   var parentStream;
   var localSrc;
   var host = false;
@@ -13,7 +12,7 @@ module.exports = function (room, user, socket) {
   var chkevent = window.attachEvent ? 'onbeforeunload' : 'beforeunload';
 
   myEvent(chkevent, function(e) {
-    console.log('okay!')
+    console.log('okay!');
     for (var key in peers) {
       peers[key].close();
     }  
@@ -42,55 +41,45 @@ module.exports = function (room, user, socket) {
   };
 
   var removeVideo = function (id) {
-
-    var addedVideo = document.getElementById(id);
-
-    if (!addedVideo) {
-
-      document.getElementById('remoteVideo').src = '';
-
-    } else {
-
-      addedVideo.parentNode.removeChild(addedVideo);
-
-    }
-
+    document.getElementById('remoteVideo').src = '';
   };
 
   //////////////////////////////////////////////////////////////////////////////////////////////
 
-  var askForCamera = function () {
-    navigator.getUserMedia({
-      video: true,
-      audio: false, 
-    }, function (stream) {
-      localSrc = window.URL.createObjectURL(stream);
+  navigator.getUserMedia({
+    video: true,
+    audio: true,
+  }, function (stream) {
+    parentStream = stream;
 
-      var localVideoPort = document.getElementById('localVideo');
-      if (localVideoPort) {
-        localVideoPort.src = localSrc;
-      } else {
-        document.getElementById('remoteVideo').src = localSrc;
-      }
-    }, function (error) {
-      setTimeout(function () {
-        askForCamera();
-      }, 500);
-    });
-  };
+    var askForCamera = function () {
+      navigator.getUserMedia({
+        video: true,
+        audio: false, 
+      }, function (stream) {
+        localSrc = window.URL.createObjectURL(stream);
 
-  askForCamera();
+        var localVideoPort = document.getElementById('localVideo');
+        if (localVideoPort) {
+          localVideoPort.src = localSrc;
+        } else {
+          document.getElementById('remoteVideo').src = localSrc;
+        }
+      }, function (error) {
+        setTimeout(function () {
+          askForCamera();
+        }, 500);
+      });
+    };
 
-  var sendOffer = function (targetUserId, yourUserId) {
-    navigator.getUserMedia({
-      video: true,
-      audio: true,
-    }, function (mediaStream) {
+    askForCamera();
+
+    var sendOffer = function (targetUserId, yourUserId) {
       parent = new RTCPeerConnection(ICE);
 
       peers[targetUserId] = parent;
 
-      parent.addStream(mediaStream);
+      parent.addStream(parentStream);
 
       parent.onaddstream = function (media) {
         parentStream = media.stream;
@@ -104,27 +93,19 @@ module.exports = function (room, user, socket) {
             candidate: event.candidate,
             returnAddress: yourUserId,
           });
-        } else {
-          socket.emit('ice-merge', {
-            recipient: targetUserId,
-            sdp: parent.localDescription,
-            returnAddress: yourUserId,
-          });
         }
       };
 
       parent.oniceconnectionstatechange = function(event) {
-        if (parent.iceConnectionState === 'completed') {
-          socket.emit('ice-merge', {
-            recipient: targetUserId,
-            sdp: parent.localDescription,
-            returnAddress: yourUserId,
-          });
-        } else if (parent.iceConnectionState === 'disconnected') {
+        if (parent.iceConnectionState === 'disconnected') {
+          peers[targetUserId].close();
           delete peers[targetUserId];
           if (!host) {
             removeVideo(targetUserId);
           }
+        } else if (parent.iceConnectionState === 'completed') {
+          var localStream = peers[targetUserId].getLocalStreams()[0];
+          localStream.removeTrack(localStream.getAudioTracks()[0]);
         }
       };
 
@@ -138,68 +119,46 @@ module.exports = function (room, user, socket) {
       }, function (error) {
         console.log(error);
       });
-    }, function (error) {
-      console.log(error);
-    });
-  };
+    };
 
-  var sendAnswer = function (receivedData) {
-    children.length++;
-    var id = receivedData.returnAddress;
-    navigator.getUserMedia({
-      video: true,
-      audio: true,
-    }, function (mediaStream) {
-      children[id] = new RTCPeerConnection(ICE);
-      peers[id] = children[id];
+    var sendAnswer = function (receivedData) {
+      peers.length++;
+      var id = receivedData.returnAddress;
 
-      if (!parent) {
-        children[id].addStream(mediaStream);
-      } else {
-        children[id].addStream(parentStream);
-      }
+      peers[id] = new RTCPeerConnection(ICE);
 
-      children[id].onaddstream = function (media) {
-        // addVideo(media.stream, receivedData.returnAddress);
-      };
+      peers[id].addStream(parentStream);
 
-      children[id].onicecandidate = function (event) {
+      peers[id].onicecandidate = function (event) {
         if (!!event.candidate) {
           socket.emit('ice-candidate', {
             recipient: receivedData.returnAddress,
             candidate: event.candidate,
             returnAddress: receivedData.recipient,
           });
-        } else {
-          socket.emit('ice-merge', {
-            recipient: receivedData.returnAddress,
-            sdp: children[id].localDescription,
-            returnAddress: receivedData.recipient,
-          });
         }
       };
 
-      children[id].oniceconnectionstatechange = function(event) {
-        if (children[id].iceConnectionState === 'completed') {
-          socket.emit('ice-merge', {
-            recipient: receivedData.returnAddress,
-            sdp: children[id].localDescription,
-            returnAddress: receivedData.recipient,
-          });
-        } else if (children[id].iceConnectionState === 'disconnected') {
+      peers[id].oniceconnectionstatechange = function(event) {
+        if (peers[id].iceConnectionState === 'disconnected') {
+          if (peers[id]) { 
+            peers[id].close(); 
+            delete peers[id];
+          }
+
           if (!host) {
             removeVideo(receivedData.returnAddress);
           }
         }
       };
 
-      children[id].setRemoteDescription(new RTCSessionDescription(receivedData.offer))
+      peers[id].setRemoteDescription(new RTCSessionDescription(receivedData.offer))
       .catch(function (error) {
         console.log(error);
       });
 
-      children[id].createAnswer(function (answerObj) {
-        children[id].setLocalDescription(answerObj);
+      peers[id].createAnswer(function (answerObj) {
+        peers[id].setLocalDescription(answerObj);
         socket.emit('answer', {
           answer: answerObj,
           recipient: receivedData.returnAddress,
@@ -209,77 +168,75 @@ module.exports = function (room, user, socket) {
       }, function (error) {
         console.log(error);
       });
+    };
+
+
+    socket.on('RTC-target', function (data) {
+      host = false;
+      if (peers[data.deleteTarget]) {
+        peers[data.deleteTarget].close();
+        delete peers[data.deleteTarget];
+      }
+
+      data.userIds.forEach(function (user, index) {
+        sendOffer(user, data.yourId);
+      });
+
     }, function (error) {
       console.log(error);
     });
-  };
 
+    socket.on('created', function (data) {
+      host = true;
+      document.getElementById('remoteVideo').src = localSrc;
 
-  socket.on('RTC-target', function (data) {
-    if (peers[data.deleteTarget]) {
-      delete peers[data.deleteTarget];
-    }
-
-    data.userIds.forEach(function (user, index) {
-      sendOffer(user, data.yourId);
+      var ownVideo = document.getElementById('localVideo');
+      ownVideo.parentNode.removeChild(ownVideo);
     });
+
+    socket.on('offer', function (data) {
+      sendAnswer(data);
+    });
+
+    socket.on('answer', function (data) {
+      peers[data.returnAddress].setRemoteDescription(new RTCSessionDescription(data.answer))
+      .then(function () {
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    });
+
+    socket.on('ice-candidate', function (data) {
+      if (!!peers[data.returnAddress]) {
+        peers[data.returnAddress].addIceCandidate(new RTCIceCandidate(data.candidate))
+        .catch(function (error) {
+          console.error(error);
+        });
+      }
+    });
+
+    socket.on('start', function (data) {
+      socket.emit('stop', {
+        roomName: room,
+        user: user,
+        time: data,
+      });
+    });
+
+    window.checkForHelp = setInterval(function () {
+      if (!host && document.getElementById('remoteVideo').src.slice(0, 4) !== 'blob') {
+        parent = null;
+        socket.emit('ready');
+      }
+    }, 2000);
+
+    socket.emit('ready');
 
   }, function (error) {
     console.log(error);
   });
-
-  socket.on('created', function (data) {
-    host = true;
-    document.getElementById('remoteVideo').src = localSrc;
-
-    var ownVideo = document.getElementById('localVideo');
-    ownVideo.parentNode.removeChild(ownVideo);
-  });
-
-  socket.on('offer', function (data) {
-    sendAnswer(data);
-  });
-
-  socket.on('answer', function (data) {
-    parent.setRemoteDescription(new RTCSessionDescription(data.answer))
-    .catch(function (error) {
-      console.log(error);
-    });
-  });
-
-  socket.on('ice-candidate', function (data) {
-    if (!!peers[data.returnAddress]) {
-      peers[data.returnAddress].addIceCandidate(new RTCIceCandidate(data.candidate))
-      .catch(function (error) {
-        console.error(error);
-      });
-    }
-  });
-
-  socket.on('ice-merge', function (data) {
-    initial = false;
-    peers[data.returnAddress].setRemoteDescription(new RTCSessionDescription(data.sdp))
-    .catch(function (error) {
-    });
-  });
-
-  socket.on('start', function (data) {
-    socket.emit('stop', {
-      roomName: room,
-      user: user,
-      time: data,
-    });
-  });
-
-  window.checkForHelp = setInterval(function () {
-    if (!initial && !host && document.getElementById('remoteVideo').src.slice(0, 4) !== 'blob') {
-      socket.emit('ready');
-      parent = null;
-      initial = true;
-    }
-  }, 200);
-
-  socket.emit('ready');
 };
 
 
