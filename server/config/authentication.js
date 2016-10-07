@@ -1,7 +1,13 @@
 var jwt = require('jsonwebtoken');
 var key = require('./keys.js');
 
-var authenticate = function (req, res, next) {
+var giveToken = function (req, res) {
+
+  res.send(jwt.encode('hello!', key));
+
+};
+
+var checkToken = function (req, res, next) {
   
   if (!req.body.jwt) {
 
@@ -22,4 +28,9 @@ var authenticate = function (req, res, next) {
       }
     });
   }
+};
+
+module.exports = {
+  giveToken: giveToken,
+  checkToken: checkToken,
 };
