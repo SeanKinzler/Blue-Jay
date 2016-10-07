@@ -3,6 +3,7 @@ var bodyParser = require('body-parser').json;
 var path = require('path');
 var dbHandler = require('../db/rawSQLHandlers');
 var fs = require('fs');
+var checkAuthentication = require('./authentication.js');
 
 var app = express();
 app.use(bodyParser());
@@ -32,8 +33,8 @@ app.get('/api/streams/:title', (req, res) => { dbHandler.getStream(req, res); })
 app.put('/api/streams/:title', (req, res) => { dbHandler.updateStream(req, res); });
 app.delete('/api/streams/:title', (req, res) => { dbHandler.deleteStream(req, res); });
 
-app.post('/authenticated', (req, res) => {
-	
+app.post('/api/authenticated', (req, res) => {
+  checkAuthentication(req, res);
 });
 
 // Catch-all will redirect to react app then re-routed by react-router

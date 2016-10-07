@@ -1,5 +1,5 @@
 var jwt = require('jsonwebtoken');
-var key = require('keys.js');
+var key = require('./keys.js');
 
 var authenticate = function (req, res, next) {
   
@@ -9,15 +9,15 @@ var authenticate = function (req, res, next) {
 
   } else {
 
-    jwt.verify(req.body.jwt, key, function (error, decoded) {
+    jwt.verify(req.headers.jwt, key, function (error, decoded) {
 
       if (error) {
 
-        res.send(401);
+        res.sendStatus(401);
 
       } else {
 
-        next();
+        res.sendStatus(200);
 
       }
     });
