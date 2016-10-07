@@ -3,6 +3,7 @@ import { SIGN_IN_USER, SIGN_OUT_USER, SIGN_UP_USER, AUTH_ERROR } from '../action
 const initialState = {
 	authenticated: false,
 	username: '',
+	token: '',
 	error: null
 }
 
@@ -12,6 +13,7 @@ const Auth = (state = initialState, action) => {
 			return Object.assign({}, state, {
 				authenticated: true,
 				username: action.username,
+				token: action.token,
 				error: false
 			});
 		case SIGN_OUT_USER:

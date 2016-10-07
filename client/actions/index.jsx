@@ -35,11 +35,29 @@ export const joinStream = (socket) => {
 	}
 }
 
-export const signInUser = (credentials) => {
-	browserHistory.push('/');
+export const userSignedIn = (username, token) => {
 	return {
 		type: SIGN_IN_USER,
-		username: credentials.username
+		username,
+		token
+	}
+}
+
+export const signInUser = (credentials) => {
+	return (dispatch) => {
+		axios({
+			url: 'https://localhost:8443/users/login',
+			method: 'POST',
+			dataType: 'json',
+			data: credentials
+		})
+		.then((res) => {
+			dispatch(userSignedIn(res));
+			browserHistory.push('/');
+		})
+		.catch((err) => {
+			dispatch(authError(err));					
+		})
 	}
 }
 
