@@ -36,6 +36,7 @@ export const joinStream = (socket) => {
 }
 
 export const userSignedIn = (data) => {
+	console.log(data)
 	return {
 		type: SIGN_IN_USER,
 		username: data.username,
