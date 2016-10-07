@@ -3,6 +3,7 @@ var bodyParser = require('body-parser').json;
 var path = require('path');
 var dbHandler = require('../db/rawSQLHandlers');
 var fs = require('fs');
+var jwtAuth = require('./authentication.js');
 
 var app = express();
 app.use(bodyParser());
@@ -10,7 +11,7 @@ app.use(bodyParser());
 app.use(express.static(path.join(__dirname, '../../client')));
 
 app.post('/users/login', (req, res) => {
-  res.send({'data': 'Login recieved!'});
+  jwtAuth.giveToken(req, res);
 });
 
 
@@ -32,6 +33,9 @@ app.get('/api/streams/:title', (req, res) => { dbHandler.getStream(req, res); })
 app.put('/api/streams/:title', (req, res) => { dbHandler.updateStream(req, res); });
 app.delete('/api/streams/:title', (req, res) => { dbHandler.deleteStream(req, res); });
 
+app.post('/api/authenticated', (req, res) => {
+  jwtAuth.checkToken(req, res);
+});
 
 // Catch-all will redirect to react app then re-routed by react-router
 app.get('*', (req, res) => {
