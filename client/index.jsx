@@ -14,6 +14,7 @@ import Search from './pages/Search.jsx';
 import RequireAuth from './components/RequireAuth.jsx';
 import Subscriptions from './pages/Subscriptions.jsx';
 import Streams from './pages/Streams.jsx';
+import requireAuth from './utils/auth.jsx';
 
 const store = configureStore();
 persistStore(store);
@@ -23,11 +24,11 @@ render((
 	  <Router history={browserHistory}> 
 	    <Route path='/' component={App}>
 	      <IndexRoute component={Home} />
-	      <Route path='dashboard' component={RequireAuth(Dashboard)} />
+	      <Route path='dashboard' component={Dashboard} onEnter={requireAuth} />
 	      <Route path='search' component={Search} />
-	      <Route path='channel/:channelId' component={RequireAuth(Channel)} />
-	      <Route path='subscriptions' component={RequireAuth(Subscriptions)} />
-	      <Route path='streams' component={RequireAuth(Streams)} />
+	      <Route path='channel/:channelId' component={Channel} onEnter={requireAuth} />
+	      <Route path='subscriptions' component={Subscriptions} onEnter={requireAuth} />
+	      <Route path='streams' component={Streams} onEnter={requireAuth} />
 	      <Route path='login' component={Login} />
 	      <Route path='signup' component={UserSignUp} />
 	    </Route>
