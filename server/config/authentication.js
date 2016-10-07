@@ -3,7 +3,7 @@ var key = require('./keys.js');
 
 var giveToken = function (req, res) {
 
-  res.send(jwt.encode('hello!', key));
+  res.send(jwt.sign('hello!', key));
 
 };
 
