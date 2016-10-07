@@ -20,6 +20,7 @@ const Auth = (state = initialState, action) => {
 			return Object.assign({}, state, {
 				authenticated: false,
 				username: '',
+				token: '',
 				error: false
 			});
 		case SIGN_UP_USER:

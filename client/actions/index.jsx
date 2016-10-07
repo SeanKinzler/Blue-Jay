@@ -36,7 +36,7 @@ export const joinStream = (socket) => {
 }
 
 export const userSignedIn = (data) => {
-	console.log(data)
+	localStorage.token = data.token;
 	return {
 		type: SIGN_IN_USER,
 		username: data.username,
@@ -53,7 +53,7 @@ export const signInUser = (credentials) => {
 			data: credentials
 		})
 		.then((res) => {
-			dispatch(userSignedIn(res));
+			dispatch(userSignedIn(res.data));
 			browserHistory.push('/');
 		})
 		.catch((err) => {
@@ -64,6 +64,7 @@ export const signInUser = (credentials) => {
 
 export const signOutUser = () => {
 	browserHistory.push('/');
+	localStorage.removeItem('token');
 	return {
 		type: SIGN_OUT_USER
 	}
