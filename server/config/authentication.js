@@ -2,9 +2,9 @@ var jwt = require('jsonwebtoken');
 var key = require('./keys.js');
 
 var giveToken = function (req, res) {
-
-  res.send(jwt.sign('hello!', key));
-
+  var newBody = JSON.parse(JSON.stringify(req.body));
+  newBody.token = jwt.sign(req.body, key);
+  res.send(newBody);
 };
 
 var checkToken = function (req, res, next) {
