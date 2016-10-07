@@ -5,6 +5,7 @@ import StreamsReducer from './streams.jsx';
 import ModalReducer from './modal.jsx';
 import VideoReducer from './video.jsx';
 import SubscriptionReducer from './subscriptions.jsx';
+import UserStreamsReducer from './userStreams.jsx';
 
 const rootReducer = combineReducers({
   auth: AuthReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   streams: StreamsReducer,
   modal: ModalReducer,
   video: VideoReducer,
-  subscriptions: SubscriptionReducer
+  subscriptions: SubscriptionReducer,
+  userStreams: UserStreamsReducer
 });
 
 export default rootReducer;
