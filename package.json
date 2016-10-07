@@ -10,7 +10,7 @@
     "start": "nodemon server/index.js",
     "compile": "webpack -d --watch",
     "compiledep": "webpack -d",
-    "deployRun": "forever server/index.js"
+    "deploy": "forever server/index.js"
   },
   "repository": {
     "type": "git",

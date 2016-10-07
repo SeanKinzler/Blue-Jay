@@ -28,20 +28,6 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
       });
     });
 
- it('should be able to find all users', function (done) {
-      dbHelpers.getUsers({
-        params: {
-          'username': random
-        }
-      }, {
-        send: function (input) {
-          userId = input[0].id;
-          expect(input).to.not.equal(404);
-          done();
-        }
-      });
-    });
-
     it('should be able to create a user', function (done) {
       dbHelpers.addUser({
         body: {
@@ -52,6 +38,20 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
         }
       }, {
         send: function (input) {
+          expect(input).to.not.equal(404);
+          done();
+        }
+      });
+    });
+
+    it('should be able to find all users', function (done) {
+      dbHelpers.getUsers({
+        params: {
+          'username': random
+        }
+      }, {
+        send: function (input) {
+          userId = input[0].id;
           expect(input).to.not.equal(404);
           done();
         }
@@ -93,15 +93,16 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
     });
 
     it('should be able to create a stream', function(done) {
-      console.log(userId);
       dbHelpers.addStream({
-        body: {
-          'title': random,
-          'online': random,
-          'creatorId': userId,
-          'subscriberCount': 0,
-
-        }
+        body: { 
+          vals : {
+            'title': random,
+            'online': 'false',
+            'username': random2,
+            'subscriberCount': 0
+          },
+          categories: ['test', 'test1']
+        }, 
       }, {
         send: function (input) {
           expect(input).to.not.equal(404);
@@ -114,6 +115,9 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
       dbHelpers.searchStreams({
         params: {
           title: random,
+        },
+        body: {
+          categories: '0',
         }
       }, {
         send: function (input) {
@@ -142,7 +146,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
           title: random,
         },
         body: {
-          online: random,
+          online: 'true',
           description: random,
           subscriberCount: 5
         }
@@ -157,7 +161,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
     it('should be able to delete a user', function (done) {
       dbHelpers.deleteUser({
         params: {
-          'username': random,
+          'username': random2,
         }
       }, {
         send: function (input) {
