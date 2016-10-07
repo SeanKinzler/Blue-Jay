@@ -1,5 +1,6 @@
 import { browserHistory } from 'react-router';
 import axios from 'axios';
+axios.defaults.headers.common['jwt'] = localStorage.token;
 
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
