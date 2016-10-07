@@ -9,7 +9,7 @@ var giveToken = function (req, res) {
 
 var checkToken = function (req, res, next) {
   
-  if (!req.body.jwt) {
+  if (!req.headers.jwt) {
 
     res.sendStatus(401);
 
