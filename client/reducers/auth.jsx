@@ -11,7 +11,7 @@ const Auth = (state = initialState, action) => {
 		case SIGN_IN_USER:
 			return Object.assign({}, state, {
 				authenticated: true,
-				username: action.payload,
+				username: action.username,
 				error: false
 			});
 		case SIGN_OUT_USER:
