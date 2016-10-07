@@ -1,6 +1,13 @@
-var server = require('./app-config.js');
 var socketIO = require('socket.io')();
 var Tree = require('./connectionTree.js');
+
+var serverConfig = {
+  key: fs.readFileSync(path.join(__dirname, './key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, './cert.pem')),
+  // ca: fs.readFileSync(path.join(__dirname, './chain.pem'))
+};
+
+var server = require('https').createServer(serverConfig, require('./app-config.js'));
 
 var io = socketIO.listen(server);
 

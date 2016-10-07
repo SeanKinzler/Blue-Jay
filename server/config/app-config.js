@@ -38,11 +38,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../../client', 'index.html'));
 });
 
-var serverConfig = {
-  key: fs.readFileSync(path.join(__dirname, './key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, './cert.pem')),
-  ca: fs.readFileSync(path.join(__dirname, './chain.pem'))
-  
-};
 
-module.exports = require('https').createServer(serverConfig, app);
+
+module.exports = app;
