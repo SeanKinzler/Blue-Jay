@@ -27,19 +27,18 @@ class CreateStream extends Component {
       categories.push(category_selections[i].text)
     }
 		const newStream = {
-			title: form.title,
-			description: form.description,
+			title: form.title.value,
+			description: form.description.value,
 			keywords,
 			categories
 		}
-		// this.props.createStream(newStream)
-
+		this.props.createStream(newStream)
 	}
 	render() {
 		return (
       <div className='container'>
   			<StreamForm 
-  				submitHandler={this.formSubmitHandler}
+  				submitHandler={this.formSubmitHandler.bind(this)}
   				categories={this.props.categories}
   			/>
       </div>
