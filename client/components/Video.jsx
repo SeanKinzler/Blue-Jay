@@ -11,22 +11,26 @@ class Video extends Component {
 
   constructor(props) {
     super(props);
+
+
     this.state = {
       socket: io.connect(),
       user: localStorage.user || 'DudeClown McDoogle',
+      roomId: window.location.pathname.slice(1),
       room: window.location.pathname.slice(window.location.pathname.lastIndexOf('/') + 1),
+      host: window.location.pathname.slice(1, window.location.pathname.lastIndexOf('/')),
     };
   }
 
   componentWillMount() {
     localStorage.username = this.props.username || localStorage.username;
-    EZRTC(this.state.room, localStorage.username, this.state.socket);
+    EZRTC(this.state.roomId, localStorage.username, this.state.socket);
   }
 
   componentWillUnmount() {
     this.state.socket.disconnect();
     clearInterval(window.checkForHelp);
-    
+
     parentStream.getTracks().forEach(function (track) {
       track.stop();
     });

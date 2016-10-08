@@ -51,15 +51,26 @@ export default class LiveNow extends Component {
           <ul className='collection'>
             { 
               this.state.streams.map(function (streamObj, index) {
+
+                var title = streamObj.title.slice(streamObj.title.lastIndexOf('/') + 1);
+                var host = streamObj.title.slice(0, streamObj.title.indexOf('/'));
+
                 return ( 
                   <li className="collection-item avatar" key={ index }>
-                    <a className="valign" href={ '/channel/' + streamObj.title }>
+                    <a className="valign" href={ '/' + streamObj.title }>
                       <i className={ 'valign material-icons circle ' + context.randomColor() }>{ context.randomIcon() }</i>
                     </a>
-                    <a href={ '/channel/' + streamObj.title }>
-                      <h6 className="title">{ streamObj.title }</h6>
-                    </a>
-                    <h6>Viewers: { streamObj.size }</h6>
+                    <h6 className="title">
+                      Title: <a href={ '/' + streamObj.title }>{ title }</a>
+                    </h6>
+                    
+                    <h6>
+                      Host: <a href={ '/' + host }>{ host }</a>
+                    </h6>
+                    
+                    <h7>
+                      Viewers: { streamObj.size }
+                    </h7>
                   </li>
                 );
               })
