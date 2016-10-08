@@ -1,5 +1,5 @@
 var jwt = require('jsonwebtoken');
-var key = require('./keys.example.js');
+var key = require('./keys.js');
 
 var giveToken = function (req, res) {
   var newBody = JSON.parse(JSON.stringify(req.body));
@@ -11,7 +11,7 @@ var checkToken = function (req, res, next) {
   
   if (!req.headers.jwt) {
 
-    res.sendStatus(302);
+    res.send(302);
 
   } else {
 
@@ -19,11 +19,37 @@ var checkToken = function (req, res, next) {
 
       if (error) {
 
-        res.sendStatus(302);
+        res.send(302);
 
       } else {
 
-        res.sendStatus(200);
+        console.log(decoded);
+
+        res.send(200);
+
+      }
+    });
+  }
+};
+
+var authMiddleware = function (req, res, next) {
+  if (!req.headers.jwt) {
+
+    res.send(302);
+
+  } else {
+
+    jwt.verify(req.headers.jwt, key, function (error, decoded) {
+
+      if (error) {
+
+        res.send(302);
+
+      } else {
+
+        
+
+        next();
 
       }
     });
@@ -33,4 +59,5 @@ var checkToken = function (req, res, next) {
 module.exports = {
   giveToken: giveToken,
   checkToken: checkToken,
+  middleware: authMiddleware,
 };
