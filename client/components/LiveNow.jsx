@@ -41,7 +41,7 @@ export default class LiveNow extends Component {
     if (this.state.streams.length) {
 
       return (
-        
+
         <div>
           <ul className="collection with-header">
             <li className="collection-header">
@@ -81,7 +81,9 @@ export default class LiveNow extends Component {
           <ul className="collection with-header">
             <li className="collection-header">
               <h5>The are no streams right now.</h5>
-              <h6>Be the first to start!</h6>
+              <a href='/channel/StreamOne'>
+                <h6>Be the first to start streaming!</h6>
+              </a>
             </li>
           </ul>
         </div>
