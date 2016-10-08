@@ -11,16 +11,11 @@ app.use(bodyParser());
 
 app.use(express.static(path.join(__dirname, '../../client')));
 
-app.get('/google/login', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
-
+app.get('/google/login', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'] }));
 app.get('/google/success', passport.authenticate('google', { 
-  
   failureRedirect: '/login' 
-
 }), function(req, res) {
-
   res.redirect('/');
-
 });
 
 app.post('/users/login', (req, res) => { jwtAuth.giveToken(req, res); });

@@ -27,12 +27,12 @@ module.exports = {
 
   getUsers: (req, res) => {
     sql('SELECT * FROM users', (error, rows, fields) => {
-      if(error) {
+      if (error) {
         res.sendStatus(404);
       } else {
         res.send(rows);
       }
-    })
+    });
   },
   //return owned streams aswell
   getUser: (req, res) => {
