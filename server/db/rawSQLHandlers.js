@@ -38,8 +38,8 @@ module.exports = {
   getUser: (req, res) => {
     var query1 = 'SELECT u.id, u.username, sub.phoneNotifications, sub.emailNotifications, s.title, s.subscriberCount, s.description FROM users u ' + 
       'LEFT JOIN (subscriptions sub, streams s) ' + 
-      'ON (u.id="' + req.body.id + '" AND u.id = sub.userId AND s.id = sub.streamId) WHERE u.id=' + req.body.id + ';\n'
-      query2 = 'SELECT * FROM streams WHERE creatorId=' + req.body.id +';\n'
+      'ON (u.username="' + req.username + '" AND u.id = sub.userId AND s.id = sub.streamId) WHERE u.username="' + req.username + '";\n'
+      query2 = 'SELECT * FROM streams WHERE creatorId=(SELECT id FROM users WHERE username="' + req.username +'");\n'
     sql(query1,
     function (error, rows, fields) {
       if (error) {
@@ -90,7 +90,7 @@ module.exports = {
 
   //must take obj with username key
   deleteUser: (req, res) => {
-    sql('DELETE FROM users WHERE username="' + req.params.username + '"', 
+    sql('DELETE FROM users WHERE username="' + req.username + '"', 
     function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);
@@ -125,6 +125,7 @@ module.exports = {
   addStream: (req, res) => { 
     var keys = [];
     var values = [];
+    req.body.online = false;
     req.body.categories = req.body.categories || [];
     req.body.keywords = req.body.keywords || [];
     for (var key in req.body) {
@@ -134,7 +135,7 @@ module.exports = {
       } 
     }
     var query = 'INSERT INTO streams (' + keys.join(', ') + ', subscriberCount, creatorId) ' + 
-      'VALUES ("' + values.join('", "') + '", '  + req.body.subscriberCount + ', ' + req.body.id + ');\n' + 
+      'VALUES ("' + values.join('", "') + '", '  + 0 + ', ' + req.userId + ');\n' + 
       'SET @newStream = LAST_INSERT_ID();\n';
     if (req.body.categories !== undefined) {
       for (var i = 0; i < req.body.categories.length; i++) {
@@ -197,9 +198,10 @@ module.exports = {
     if (changes.length > 2) {
       changes = changes.slice(0, -2);
     }
-    var query = 'UPDATE streams SET ' + changes + ' WHERE id=' + req.body.id + ';\n' 
-      'DELETE FROM streams_categories WHERE streamID=' + req.body.id + '; \n';
-      'DELETE FROM streams_keywords WHERE streamID=' + req.body.id + '; \n';
+    var query = 'UPDATE streams SET ' + changes + ' WHERE title="' + req.title + '";\n' +
+      'SET @stream = (SELECT id FROM streams WHERE title="' + req.title + '");\n' +
+      'DELETE FROM streams_categories WHERE streamID=@stream; \n' +
+      'DELETE FROM streams_keywords WHERE streamID=@stream; \n';
     if (req.body.categories !== undefined) {
       for (var i = 0; i < req.body.categories.length; i++) {
         query = query + ('INSERT IGNORE INTO categories (text) VALUES ("' + req.body.categores[i] + '");\n' +  
@@ -218,27 +220,14 @@ module.exports = {
     executeQueries(queries, res);
   },
 
-  //must take obj with classname key
-  deleteStream: (req, res) => {
-    sql('DELETE FROM streams WHERE title="' + req.params.title + '"', 
-    function (error, rows, fields) {
-      if (error) {
-        res.sendStatus(404);
-      } else {
-        res.send(rows);
-      }
-    });    
-
-  },
-
   getStream: (req, res) => {
-    var query = 'SELECT * FROM streams WHERE id=' + req.body.id + ';\n' + 
+    var query = 'SELECT * FROM streams WHERE title="' + req.title + '";\n' + 
       'SELECT c.* FROM streams s LEFT JOIN (streams_categories sc, categories c) ' + 
-      'ON (s.id=' + req.body.id + ' AND s.id = sc.streamId AND c.id = sc.categoryId) ' + 
-      'WHERE s.id = ' + req.body.id + ';\n' +
+      'ON (s.title="' + req.title + '" AND s.id = sc.streamId AND c.id = sc.categoryId) ' + 
+      'WHERE s.title = "' + req.title + '";\n' +
       'SELECT k.* FROM streams s LEFT JOIN (streams_keywords sk, keywords k) ' + 
-      'ON (s.id=' + req.body.id + ' AND s.id = sk.streamId AND k.id = sk.keywordId) ' + 
-      'WHERE s.id = ' + req.body.id + ';\n';
+      'ON (s.title="' + req.title + '" AND s.id = sk.streamId AND k.id = sk.keywordId) ' + 
+      'WHERE s.title = "' + req.title + '";\n';
     queries = query.split('\n');
     returnQueries(queries, res, function(toRet) {
       toRet[0].categories = [];
@@ -259,12 +248,24 @@ module.exports = {
       }
       res.send(toRet[0]);
     });
-    
+  },
+
+  //must take obj with classname key
+  deleteStream: (req, res) => {
+    sql('DELETE FROM streams WHERE title="' + req.title + '"', 
+    function (error, rows, fields) {
+      if (error) {
+        res.sendStatus(404);
+      } else {
+        res.send(rows);
+      }
+    });    
+
   },
 
   addSubscription: (req, res) => {
     var query  = 'INSERT INTO subscriptions (streamId, userId, phoneNotifications, emailNotifications) VALUES (' + 
-    req.body.streamId + ', ' + req.body.userId + ', "false", "false");\n';
+    '(SELECT id FROM streams WHERE title="' + req.title + '"), ' + req.userId + ', "false", "false");\n';
     sql(query, function(error, rows, fields) {
       if (error) {
         res.sendStatus(404);
@@ -275,7 +276,8 @@ module.exports = {
   },
 
   updateSubscription: (req, res) => {
-    var query  = 'DELETE FROM subscriptions WHERE (userId=' + req.body.userId + ' AND streamId=' + req.body.streamId + ');\n';
+    var query  = 'DELETE FROM subscriptions WHERE (userId=' + req.userId + 
+    ' AND streamId=(SELECT id FROM streams WHERE title="' + req.title + '));\n';
     sql(query, function(error, rows, fields) {
       if (error) {
         res.sendStatus(404);

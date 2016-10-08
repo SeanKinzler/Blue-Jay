@@ -56,9 +56,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
 
     it('should be able to find a user', function (done) {
       dbHelpers.getUser({
-        body: {
-          'id': userId
-        }
+        username: random
       }, {
         send: function (input) {
           userId = input.id;
@@ -88,11 +86,9 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
 
     it('should be able to create a stream', function(done) {
       dbHelpers.addStream({
+        'userId': userId,
         body: { 
           'title': random,
-          'online': 'false',
-          'id': userId,
-          'subscriberCount': 0,
           'categories': ['testCat'],
           'keywords': ['testKey']
         }
@@ -122,9 +118,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
 
     it('should be able to get a stream', function (done) {
       dbHelpers.getStream({
-        body: {
-          id: streamId,
-        }
+        title: random
       }, {
         send: function (input) {
           expect(input).to.not.equal(404);
@@ -136,8 +130,8 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
 
     it('should be able to update a stream', function (done) {
       dbHelpers.updateStream({
+        title: random,
         body: {
-          id: streamId,
           online: 'true',
           description: random,
           subscriberCount: 5
@@ -154,10 +148,8 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
 
     it('should be able to add a subscription', function (done) {
       dbHelpers.addSubscription({
-        body: {
-          streamId: streamId,
-          userId: userId
-        }
+        userId: userId,
+        title: random
       }, {
         send: function (input) {
           expect(input).to.not.equal(404);
@@ -168,10 +160,8 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
 
     it('should be able to remove a subscription', function (done) {
       dbHelpers.addSubscription({ 
-        body: {
-          userId: userId,
-          streamId: streamId
-        }
+        userId: userId,
+        title: random
       }, {
         send: function (input) {
           expect(input).to.not.equal(404);
@@ -182,9 +172,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
 
     it('should be able to delete a user', function (done) {
       dbHelpers.deleteUser({
-        params: {
-          'username': random2,
-        }
+        'username': random2,
       }, {
         send: function (input) {
           expect(input).to.not.equal(404);
@@ -195,9 +183,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
 
     it('should be able to delete a stream', function (done) {
       dbHelpers.deleteStream({
-        params: {
-          title: random,
-        }
+        title: random
       }, {
         send: function (input) {
           expect(input).to.not.equal(404);
