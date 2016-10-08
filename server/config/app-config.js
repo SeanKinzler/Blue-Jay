@@ -10,11 +10,14 @@ app.use(bodyParser());
 
 app.use(express.static(path.join(__dirname, '../../client')));
 
+
+
 app.post('/users/login', (req, res) => { jwtAuth.giveToken(req, res); });
 app.post('/api/authenticated', (req, res) => { jwtAuth.checkToken(req, res); });
 app.post('/api/users', (req, res) => { dbHandler.addUser(req, res); });
 
 app.use(jwtAuth.middleware);
+
 
 // app.get('/api/users', (req, res) => { dbHandler.getUsers(req, res); });
 app.put('/api/users', (req, res) => { dbHandler.updateUser(req, res); });
