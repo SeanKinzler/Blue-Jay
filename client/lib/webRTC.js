@@ -3,7 +3,8 @@ module.exports = function (room, user, socket) {
 
   peers = {};
   var parent = null;
-  var parentStream;
+  window.parentStream;
+  window.ownStream;
   var localSrc;
   var host = false;
   var initial = true;
@@ -57,6 +58,7 @@ module.exports = function (room, user, socket) {
         video: true,
         audio: false, 
       }, function (stream) {
+        ownStream = stream;
         localSrc = window.URL.createObjectURL(stream);
 
         var localVideoPort = document.getElementById('localVideo');
