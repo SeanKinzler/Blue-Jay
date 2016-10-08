@@ -9,7 +9,7 @@ import SearchResultsModal from '../components/SearchResultsModal.jsx';
 
 class Search extends Component {
 
-  makeStreamQuery() {
+  componentWillMount() {
     this.props.getStreams();
   }
 
