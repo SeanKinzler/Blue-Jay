@@ -105,7 +105,7 @@ module.exports = function (room, user, socket) {
             removeVideo(targetUserId);
           }
         } else if (parent.iceConnectionState === 'completed') {
-          var localStream = peers[targetUserId].getLocalStreams();
+          var localStream = peers[targetUserId].getLocalStreams()[0];
           var audioTracks = localStream.getAudioTracks();
           audioTracks.forEach(function (track) {
             localStream.removeTrack(track);
@@ -153,6 +153,12 @@ module.exports = function (room, user, socket) {
           if (!host) {
             removeVideo(receivedData.returnAddress);
           }
+        } else if (peers[id].iceConnectionState === 'completed') {
+          var localStream = peers[targetUserId].getLocalStreams()[0];
+          var audioTracks = localStream.getAudioTracks();
+          audioTracks.forEach(function (track) {
+            localStream.removeTrack(track);
+          });
         }
       };
 
@@ -231,7 +237,6 @@ module.exports = function (room, user, socket) {
 
     window.checkForHelp = setInterval(function () {
       if (!host && document.getElementById('remoteVideo').src.slice(0, 4) !== 'blob') {
-        parent = null;
         socket.emit('ready');
       }
     }, 2000);
