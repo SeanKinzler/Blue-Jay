@@ -11,7 +11,7 @@ var checkToken = function (req, res, next) {
   
   if (!req.headers.jwt) {
 
-    res.send(302);
+    res.sendStatus(302);
 
   } else {
 
@@ -19,13 +19,11 @@ var checkToken = function (req, res, next) {
 
       if (error) {
 
-        res.send(302);
+        res.sendStatus(302);
 
       } else {
 
-        console.log(decoded);
-
-        res.send(200);
+        res.sendStatus(200);
 
       }
     });
@@ -33,21 +31,25 @@ var checkToken = function (req, res, next) {
 };
 
 var authMiddleware = function (req, res, next) {
-  if (!req.headers.jwt) {
 
-    res.send(302);
+  if (req.path.slice(0, 4) !== '/api') {
+    
+    next();
+
+  } else if (!req.headers.jwt) {
+
+    res.sendStatus(401);
 
   } else {
 
     jwt.verify(req.headers.jwt, key, function (error, decoded) {
 
       if (error) {
-
-        res.send(302);
+        res.sendStatus(401);
 
       } else {
 
-        
+        req.username = decoded.username;
 
         next();
 
