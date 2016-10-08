@@ -13,7 +13,6 @@ class CreateStream extends Component {
        placeholder: 'Enter another keyword',
        secondaryPlaceholder: 'Enter a keyword',
      });
-    console.log('props:', this.props)
 	}
 
 	formSubmitHandler(e) {
@@ -32,7 +31,7 @@ class CreateStream extends Component {
 			keywords,
 			categories
 		}
-		this.props.createStream(newStream)
+		this.props.createStream(newStream);
 	}
 	render() {
 		return (
@@ -48,7 +47,8 @@ class CreateStream extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		categories: ['Astronomy', 'History']
+		categories: ['Art', 'Music', 'Sports', 'History', 'Politics', 
+      'News', 'Education']
 	};
 }
 
