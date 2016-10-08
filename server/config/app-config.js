@@ -22,12 +22,12 @@ app.get('/api/users/subscriptions', (req, res) => { dbHandler.getSchedule(req, r
 app.post('/api/users/subscriptions', (req, res) => { dbHandler.addSubscription(req, res); });
 app.put('/api/users/subscriptions', (req, res) => { dbHandler.updateSubscription(req, res); });
 
-app.post('/api/streams', (req, res) => { dbHandler.addStream(req, res); });
 app.get('/api/streams', (req, res) => { dbHandler.searchStreams(req, res); });
-
-app.get('/api/streams/:title', (req, res) => { dbHandler.getStream(req, res); });
+app.post('/api/streams', (req, res) => { dbHandler.addStream(req, res); });
 app.put('/api/streams', (req, res) => { dbHandler.updateStream(req, res); });
-app.delete('/api/streams', (req, res) => { dbHandler.deleteStream(req, res); });
+
+app.get('/api/streams/extra', (req, res) => { dbHandler.getStream(req, res); });
+app.put('/api/streams/extra', (req, res) => { dbHandler.deleteStream(req, res); });
 
 app.post('/api/authenticated', (req, res) => { jwtAuth.checkToken(req, res); });
 
