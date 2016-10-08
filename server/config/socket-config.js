@@ -45,6 +45,7 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('stop', function (data) {
+    
     currentRoom[socket.id] = data.roomName;
     if (socket.adapter.rooms[data.roomName]) {
       var yourId = socket.id;
