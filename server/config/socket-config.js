@@ -20,6 +20,26 @@ var currentRoom = {};
 
 io.sockets.on('connection', function(socket) {
 
+
+  /////// LiveNow Component Code /////////////////////////////////////
+
+  socket.on('getStreams', function () {
+    var results = [];
+
+    for (var key in socket.adapter.rooms) {
+      if (key[0] !== '/') {
+        results.push({ 
+          title: key,
+          size: socket.adapter.rooms[key].length,
+        });
+      }
+    }
+
+    socket.emit('allStreams', results);
+  });
+
+
+  /////// WebRTC Code ////////////////////////////////////////////////
   socket.on('ready', function () {
     socket.emit('start', Date.now());
   });
@@ -28,6 +48,8 @@ io.sockets.on('connection', function(socket) {
     currentRoom[socket.id] = data.roomName;
     if (socket.adapter.rooms[data.roomName]) {
       var yourId = socket.id;
+
+      socket.join(data.roomName);
 
       rooms[data.roomName]._remove(socket.id);
       rooms[data.roomName].add(yourId, Date.now() - data.time, function (targetId, selfId) {
@@ -90,6 +112,7 @@ io.sockets.on('connection', function(socket) {
       });
     }
   });
+
 });
 
 

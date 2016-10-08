@@ -3,7 +3,8 @@ module.exports = function (room, user, socket) {
 
   peers = {};
   var parent = null;
-  var parentStream;
+  window.parentStream;
+  window.ownStream;
   var localSrc;
   var host = false;
   var initial = true;
@@ -12,7 +13,6 @@ module.exports = function (room, user, socket) {
   var chkevent = window.attachEvent ? 'onbeforeunload' : 'beforeunload';
 
   myEvent(chkevent, function(e) {
-    console.log('okay!');
     for (var key in peers) {
       peers[key].close();
     }  
@@ -50,13 +50,14 @@ module.exports = function (room, user, socket) {
     video: true,
     audio: true,
   }, function (stream) {
-    parentStream = stream;
+    window.parentStream = stream;
 
     var askForCamera = function () {
       navigator.getUserMedia({
         video: true,
         audio: false, 
       }, function (stream) {
+        window.ownStream = stream;
         localSrc = window.URL.createObjectURL(stream);
 
         var localVideoPort = document.getElementById('localVideo');
@@ -82,7 +83,7 @@ module.exports = function (room, user, socket) {
       parent.addStream(parentStream);
 
       parent.onaddstream = function (media) {
-        parentStream = media.stream;
+        window.parentStream = media.stream;
         addVideo(media.stream, targetUserId);
       };
 
@@ -104,8 +105,11 @@ module.exports = function (room, user, socket) {
             removeVideo(targetUserId);
           }
         } else if (parent.iceConnectionState === 'completed') {
-          var localStream = peers[targetUserId].getLocalStreams()[0];
-          localStream.removeTrack(localStream.getAudioTracks()[0]);
+          var localStream = peers[targetUserId].getLocalStreams();
+          var audioTracks = localStream.getAudioTracks();
+          audioTracks.forEach(function (track) {
+            localStream.removeTrack(track);
+          });
         }
       };
 
