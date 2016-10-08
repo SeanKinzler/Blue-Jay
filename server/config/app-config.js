@@ -4,13 +4,24 @@ var path = require('path');
 var dbHandler = require('../db/rawSQLHandlers');
 var fs = require('fs');
 var jwtAuth = require('./authentication.js');
+var passport = require('./googleOAuth.js');
 
 var app = express();
 app.use(bodyParser());
 
 app.use(express.static(path.join(__dirname, '../../client')));
 
+app.get('/google/login', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
 
+app.get('/google/success', passport.authenticate('google', { 
+  
+  failureRedirect: '/login' 
+
+}), function(req, res) {
+
+  res.redirect('/');
+
+});
 
 app.post('/users/login', (req, res) => { jwtAuth.giveToken(req, res); });
 app.post('/api/authenticated', (req, res) => { jwtAuth.checkToken(req, res); });
