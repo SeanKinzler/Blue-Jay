@@ -1,5 +1,6 @@
 import { browserHistory } from 'react-router';
 import axios from 'axios';
+axios.defaults.headers.common['jwt'] = localStorage.token;
 
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
@@ -35,16 +36,36 @@ export const joinStream = (socket) => {
 	}
 }
 
-export const signInUser = (credentials) => {
-	browserHistory.push('/');
+export const userSignedIn = (data) => {
+	localStorage.token = data.token;
 	return {
 		type: SIGN_IN_USER,
-		username: credentials.username
+		username: data.username,
+		token: data.token
+	}
+}
+
+export const signInUser = (credentials) => {
+	return (dispatch) => {
+		axios({
+			url: 'https://localhost:8443/users/login',
+			method: 'POST',
+			dataType: 'json',
+			data: credentials
+		})
+		.then((res) => {
+			dispatch(userSignedIn(res.data));
+			browserHistory.push('/');
+		})
+		.catch((err) => {
+			dispatch(authError(err));					
+		})
 	}
 }
 
 export const signOutUser = () => {
 	browserHistory.push('/');
+	localStorage.removeItem('token');
 	return {
 		type: SIGN_OUT_USER
 	}
