@@ -10,15 +10,21 @@ export default class Carousel extends Component {
   }
   
   carouselSlide() {
+
     return setInterval(function() {
+
       $('.carousel').carousel('next');
-    }, 3000);
+
+    }, 5000);
   }
 
   componentDidMount() {
     var timeoutId = this.carouselSlide();
     this.setState({timeoutId: timeoutId});
-    $('.carousel.carousel-slider').carousel({full_width: true});
+    $('.carousel.carousel-slider').carousel({
+      full_width: true,
+      time_constant: 400
+    });
   }
 
   componentWillUnmount() {

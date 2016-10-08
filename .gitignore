@@ -6,8 +6,7 @@ bower_components/
 build/
 dist/
 .dockercfg
-.dockercfg.json
-server/config/keys.js
+.dockercfg.jsonw
 server/config/key.pem
 server/config/cert.pem
 server/config/chain.pem

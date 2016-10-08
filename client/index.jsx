@@ -16,24 +16,26 @@ import Search from './pages/Search.jsx';
 import RequireAuth from './components/RequireAuth.jsx';
 import Subscriptions from './pages/Subscriptions.jsx';
 import Streams from './pages/Streams.jsx';
+import Profile from './pages/Profile.jsx';
 
 const store = configureStore();
 persistStore(store);
 
 render((
-	<Provider store={store}>
-	  <Router history={browserHistory}> 
-	    <Route path='/' component={App}>
-	      <IndexRoute component={Home} />
-	      <Route path='dashboard' component={Dashboard} onEnter={requireAuth} />
-	      <Route path='search' component={Search} />
-	      <Route path='channel/:channelId' component={Channel} onEnter={requireAuth} />
-	      <Route path='subscriptions' component={Subscriptions} onEnter={requireAuth} />
-	      <Route path='streams' component={Streams} onEnter={requireAuth} />
-	      <Route path='create' component={CreateStream} onEnter={requireAuth} />
-	      <Route path='login' component={Login} />
-	      <Route path='signup' component={UserSignUp} />
-	    </Route>
-	  </Router>
-	</Provider>
+  <Provider store={store}>
+    <Router history={browserHistory}> 
+      <Route path='/' component={App}>
+        <IndexRoute component={Home} />
+        <Route path='dashboard' component={Dashboard} onEnter={requireAuth} />
+        <Route path='search' component={Search} />
+        <Route path='subscriptions' component={Subscriptions} onEnter={requireAuth} />
+        <Route path='streams' component={Streams} onEnter={requireAuth} />
+        <Route path='create' component={CreateStream} onEnter={requireAuth} />
+        <Route path='login' component={Login} />
+        <Route path='signup' component={UserSignUp} />
+        <Route path=':channel' component={ Profile } onEnter={requireAuth} />
+        <Route path=':channel/:channelId' component={Channel} onEnter={requireAuth} />
+      </Route>
+    </Router>
+  </Provider>
   ), document.getElementById('App'));
