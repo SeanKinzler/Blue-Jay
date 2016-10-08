@@ -225,7 +225,7 @@ export const requestSubscriptions = (username) => {
 export const addSubscription = (stream, username) => {
 	return (dispatch) => {
 		axios.post('https://localhost:8443/api/users/subscriptions',
-			{ body: stream }
+			stream
 		)
 		.then((res) => {
 			dispatch(subscriptionAdded(res));
@@ -239,7 +239,7 @@ export const addSubscription = (stream, username) => {
 export const removeSubscription = (stream, username) => {
 	return (dispatch) => {
 		axios.put('https://localhost:8443/api/users/subscriptions',
-			{ body: stream }
+			stream
 		)
 		.then((res) => {
 			dispatch(subscriptionAdded(res));
@@ -272,11 +272,11 @@ const streamCreated = () => {
 export const createStream = (stream) => {
 	return (dispatch) => {
 		axios.post('https://localhost:8443/api/streams',
-			{ body: stream }
+			stream
 		)
 		.then((res) => {
 			browserHistory.push('/streams')
-			dispatch(streamAdded())
+			dispatch(streamCreated())
 		})
 		.catch((err) => {
 			dispatch(requestError(err))
@@ -293,7 +293,7 @@ const streamEdited = () => {
 export const editStream = (stream) => {
 	return (dispatch) => {
 		axios.put('https://localhost:8443/api/streams', 
-			{	body: stream }
+			stream
 		)
 		.then((res) => {
 			dispatch(streamEdited());
@@ -313,7 +313,7 @@ const streamDeleted = () => {
 export const deleteStream = (stream) => {
 	return (dispatch) => {
 		axios.put('https://localhost:8443/api/streams/extra',
-			{ body: stream }
+			stream
 		)
 		.then((res) => {
 			dispatch(streamDeleted())
