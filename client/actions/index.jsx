@@ -28,6 +28,7 @@ export const EDIT_STREAM = 'EDIT_STREAM';
 export const DELETE_STREAM = 'DELETE_STREAM';
 export const OPEN_STREAM_MODAL = 'OPEN_STREAM_MODAL';
 export const CLOSE_STREAM_MODAL = 'CLOSE_STREAM_MODAL';
+export const CREATE_STREAM = 'CREATE_STREAM';
 
 export const joinStream = (socket) => {
 	return {
@@ -264,18 +265,19 @@ export const closeStreamModal = (stream) => {
 	}
 }
 
-const streamAdded = (streams) => {
+const streamCreated = () => {
 	return {
-		type: ADD_STREAM,
-		data: streams
+		type: CREATE_STREAM
 	}
 }
 
-export const addStream = (stream) => {
+export const createStream = (stream) => {
 	return (dispatch) => {
-		axios.post(`https://localhost:8443/api/streams/${stream.title}`)
+		axios.post('https://localhost:8443/api/streams',
+			{ body: stream }
+		)
 		.then((res) => {
-			dispatch(streamAdded(res))
+			dispatch(streamAdded())
 		})
 		.catch((err) => {
 			dispatch(requestError(err))
