@@ -11,7 +11,7 @@ var checkToken = function (req, res, next) {
   
   if (!req.headers.jwt) {
 
-    res.sendStatus(401);
+    res.sendStatus(302);
 
   } else {
 
@@ -19,7 +19,7 @@ var checkToken = function (req, res, next) {
 
       if (error) {
 
-        res.sendStatus(401);
+        res.sendStatus(302);
 
       } else {
 
