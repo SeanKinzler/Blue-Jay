@@ -25,7 +25,7 @@ class Video extends Component {
 
   componentWillUnmount() {
     this.state.socket.disconnect();
-    clearTimeout(window.checkForHelp);
+    clearInterval(window.checkForHelp);
   }
 
   render () {
