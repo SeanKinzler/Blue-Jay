@@ -26,8 +26,14 @@ class Video extends Component {
   componentWillUnmount() {
     this.state.socket.disconnect();
     clearInterval(window.checkForHelp);
-    window.parentStream.stop();
-    window.ownStream.stop();
+    
+    parentStream.getTracks().forEach(function (track) {
+      track.stop();
+    });
+
+    ownStream.getTracks().forEach(function (track) {
+      track.stop();
+    });
   }
 
   render () {
