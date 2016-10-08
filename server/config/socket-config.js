@@ -4,9 +4,9 @@ var fs = require('fs');
 var path = require('path');
 
 var serverConfig = {
-  key: fs.readFileSync(path.join(__dirname, './key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, './cert.pem')),
-  // ca: fs.readFileSync(path.join(__dirname, './chain.pem'))
+  key: fs.readFileSync(path.join(__dirname, './credentials/key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, './credentials/cert.pem')),
+  // ca: fs.readFileSync(path.join(__dirname, './credentials/chain.pem'))
 };
 
 var server = require('https').createServer(serverConfig, require('./app-config.js'));

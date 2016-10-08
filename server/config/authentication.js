@@ -1,5 +1,5 @@
 var jwt = require('jsonwebtoken');
-var key = require('./keys.js');
+var key = require('./credentials/keys.js');
 
 var giveToken = function (req, res) {
   var newBody = JSON.parse(JSON.stringify(req.body));

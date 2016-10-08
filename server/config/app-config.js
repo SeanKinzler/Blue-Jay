@@ -18,7 +18,6 @@ app.post('/api/users', (req, res) => { dbHandler.addUser(req, res); });
 
 app.use(jwtAuth.middleware);
 
-
 // app.get('/api/users', (req, res) => { dbHandler.getUsers(req, res); });
 app.put('/api/users', (req, res) => { dbHandler.updateUser(req, res); });
 app.get('/api/users/', (req, res) => { dbHandler.getUser(req, res); });
@@ -34,8 +33,6 @@ app.put('/api/streams', (req, res) => { dbHandler.updateStream(req, res); });
 
 app.get('/api/streams/extra', (req, res) => { dbHandler.getStream(req, res); });
 app.put('/api/streams/extra', (req, res) => { dbHandler.deleteStream(req, res); });
-
-
 
 // Catch-all will redirect to react app then re-routed by react-router
 app.get('*', (req, res) => {
