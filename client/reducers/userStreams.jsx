@@ -1,7 +1,7 @@
 import {
 	REQUEST_STREAMS,
 	REQUEST_ERROR,
-	ADD_STREAM,
+	CREATE_STREAM,
 	EDIT_STREAM,
 	DELETE_STREAM,
 	OPEN_STREAM_MODAL,
@@ -25,18 +25,12 @@ const UserStreams = (state = initialState, action) => {
 			return Object.assign({}, state, {
 				error: action.payload.message
 			})
-		case ADD_STREAM:
-			return Object.assign({}, state, {
-				data: action.data
-			})
+		case CREATE_STREAM:
+			return state;
 		case EDIT_STREAM:
-			return Object.assign({}, state, {
-				data: action.data
-			})
+			return state;
 		case DELETE_STREAM:
-			return Object.assign({}, state, {
-				data: action.data
-			})
+			return state;
 		case OPEN_STREAM_MODAL:
 			return Object.assign({}, state, {
 				modalIsOpen: true,
