@@ -57,15 +57,15 @@ export default class LiveNow extends Component {
 
                 return ( 
                   <li className="collection-item avatar" key={ index }>
-                    <a className="valign" href={ '/' + streamObj.title }>
+                    <Link className="valign" to={ '/' + streamObj.title }>
                       <i className={ 'valign material-icons circle ' + context.randomColor() }>{ context.randomIcon() }</i>
-                    </a>
+                    </Link>
                     <h6 className="title">
-                      Title: <a href={ '/' + streamObj.title }>{ title }</a>
+                      Title: <Link to={ '/' + streamObj.title }>{ title }</Link>
                     </h6>
                     
                     <h6>
-                      Host: <a href={ '/' + host }>{ host }</a>
+                      Host: <Link to={ '/' + host }>{ host }</Link>
                     </h6>
                     
                     <h7>
@@ -92,9 +92,9 @@ export default class LiveNow extends Component {
           <ul className="collection with-header">
             <li className="collection-header">
               <h5>The are no streams right now.</h5>
-              <a href='/channel/StreamOne'>
+              <Link href='/channel/StreamOne'>
                 <h6>Be the first to start streaming!</h6>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
