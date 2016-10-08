@@ -265,26 +265,18 @@ module.exports = {
 
   addSubscription: (req, res) => {
     var query  = 'INSERT INTO subscriptions (streamId, userId, phoneNotifications, emailNotifications) VALUES (' + 
-    '(SELECT id FROM streams WHERE title="' + req.title + '"), ' + req.userId + ', "false", "false");\n';
-    sql(query, function(error, rows, fields) {
-      if (error) {
-        res.sendStatus(404);
-      } else {
-        res.send(rows);
-      }
-    })
+    '(SELECT id FROM streams WHERE title="' + req.title + '"), ' + req.userId + ', "false", "false");\n' + 
+    'UPDATE streams SET subscriberCount = subscriberCount + 1;\n';
+    queries = query.split('\n');
+    executeQueries(queries, res);
   },
 
   updateSubscription: (req, res) => {
     var query  = 'DELETE FROM subscriptions WHERE (userId=' + req.userId + 
-    ' AND streamId=(SELECT id FROM streams WHERE title="' + req.title + '));\n';
-    sql(query, function(error, rows, fields) {
-      if (error) {
-        res.sendStatus(404);
-      } else {
-        res.send(rows);
-      }
-    })
+    ' AND streamId=(SELECT id FROM streams WHERE title="' + req.title + '));\n' + 
+    'UPDATE streams SET subscriberCount = subscriberCount + 1;\n';
+    queries = query.split('\n');
+    executeQueries(queries, res);
   },
 
 //   getSchedule: (req, res) => {
