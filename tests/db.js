@@ -13,6 +13,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
     var random = Math.random() + '';
     var random2 = Math.random() + '';
     var userId = 1;
+    var streamId = 1;
 
     it('should have access to the environment variables', function () {
       expect(process.env.DBHOST).to.not.equal(undefined);
@@ -44,13 +45,9 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
     });
 
     it('should be able to find all users', function (done) {
-      dbHelpers.getUsers({
-        params: {
-          'username': random
-        }
-      }, {
+      dbHelpers.getUsers({}, {
         send: function (input) {
-          userId = input[0].id;
+          userId = input[input.length - 1].id || input.id;
           expect(input).to.not.equal(404);
           done();
         }
@@ -59,12 +56,12 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
 
     it('should be able to find a user', function (done) {
       dbHelpers.getUser({
-        params: {
-          'username': random
+        body: {
+          'id': userId
         }
       }, {
         send: function (input) {
-          userId = input[0].id;
+          userId = input.id;
           expect(input).to.not.equal(404);
           done();
         }
@@ -73,10 +70,8 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
 
     it('should be able to update a user', function (done) {
       dbHelpers.updateUser({
-        params: {
-          'username': random,
-        },
         body: {
+          'id': userId,
           'username': random2,
           'firstname': random,
           'lastname': random,
@@ -94,14 +89,13 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
     it('should be able to create a stream', function(done) {
       dbHelpers.addStream({
         body: { 
-          vals : {
-            'title': random,
-            'online': 'false',
-            'username': random2,
-            'subscriberCount': 0
-          },
-          categories: ['test', 'test1']
-        }, 
+          'title': random,
+          'online': 'false',
+          'id': userId,
+          'subscriberCount': 0,
+          'categories': ['testCat'],
+          'keywords': ['testKey']
+        }
       }, {
         send: function (input) {
           expect(input).to.not.equal(404);
@@ -113,14 +107,14 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
     it('should be able to search streams', function (done) {
       dbHelpers.searchStreams({
         params: {
-          title: random,
+          
         },
         body: {
-          categories: '0',
         }
       }, {
         send: function (input) {
           expect(input).to.not.equal(404);
+          streamId = input[input.length - 1].id || input.id
           done();
         }
       });
@@ -128,9 +122,28 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
 
     it('should be able to get a stream', function (done) {
       dbHelpers.getStream({
-        params: {
-          title: random,
+        body: {
+          id: streamId,
         }
+      }, {
+        send: function (input) {
+          expect(input).to.not.equal(404);
+          var streamId = input[0].id || input.id;
+          done();
+        }
+      });
+    });
+
+    it('should be able to update a stream', function (done) {
+      dbHelpers.updateStream({
+        body: {
+          id: streamId,
+          online: 'true',
+          description: random,
+          subscriberCount: 5
+        },
+        categories: ['testCat2'],
+        keywords: ['testKey2']
       }, {
         send: function (input) {
           expect(input).to.not.equal(404);
@@ -139,22 +152,32 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
       });
     });
 
-    it('should be able to update a stream', function (done) {
-      dbHelpers.updateStream({
-        params: {
-          title: random,
-        },
+    it('should be able to add a subscription', function (done) {
+      dbHelpers.addSubscription({
         body: {
-          online: 'true',
-          description: random,
-          subscriberCount: 5
+          streamId: streamId,
+          userId: userId
         }
       }, {
         send: function (input) {
           expect(input).to.not.equal(404);
           done();
         }
-      });
+      })
+    });
+
+    it('should be able to remove a subscription', function (done) {
+      dbHelpers.addSubscription({ 
+        body: {
+          userId: userId,
+          streamId: streamId
+        }
+      }, {
+        send: function (input) {
+          expect(input).to.not.equal(404);
+          done();
+        }
+      })
     });
 
     it('should be able to delete a user', function (done) {
