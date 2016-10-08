@@ -13,23 +13,27 @@ class CreateStream extends Component {
        placeholder: 'Enter another keyword',
        secondaryPlaceholder: 'Enter a keyword',
      });
+    console.log('props:', this.props)
 	}
 
 	formSubmitHandler(e) {
     e.preventDefault();
     var form = e.target;
     var keywords = []
-    var keywords_chips = $('.chip') // map over chip text and push to keywords
-    var categories = []
-    var category_selections; // map over selections and push to categories
-    
+    var keywords_chips = $('.chip').each((e, c) => { keywords.push(c.firstChild.textContent)});
+    var categories = [];
+    var category_selections = form.categories.selectedOptions;
+    for (var i = 0; i < category_selections.length; i++) {
+      categories.push(category_selections[i].text)
+    }
 		const newStream = {
 			title: form.title,
 			description: form.description,
-			// keywords: values.keywords,
-			// categories: values.categories
+			keywords,
+			categories
 		}
 		// this.props.createStream(newStream)
+
 	}
 	render() {
 		return (
