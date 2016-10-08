@@ -156,34 +156,63 @@ module.exports = {
   },
 
   searchStreams: (req, res) => {
-    var categories = req.body.categories;
-    var keywords = req.body.keywords;
-    var req = 'SELECT streams.* FROM streams \
-        INNER JOIN streams_categories ON (streams.id=streamId) \
-        INNER JOIN categories ON (categories.id=categoryId) \
-        WHERE'
-    if (categories === undefined && keywords === undefined) {
-      sql('SELECT * FROM streams', function(error, rows, fields) {
-        if(error) {
-          res.sendStatus(404);
-        } else {
-          res.send(rows);
-        }
-      })
-
-    } else if (keywords === undefined){
-      sql('SELECT * FROM streams \
-        INNER JOIN streams_categories ON (streams.id=streamId) \
-        INNER JOIN categories ON (categories.id=categoryId) \
-        WHERE categories.text=' + categories, function(error, rows, fields) {
-
-          if (error) {
-            res.sendStatus(404);
-          } else {
-            res.send(rows);
-          }
-        })
+    var keys = [];
+    var values = [];
+    req.body = req.body || {};
+    var categories = req.body.categories || [];
+    var keywords = req.body.keywords || [];
+    for (var key in req.body) {
+      if (key !== 'categories' && key !== 'keywords' && key !== 'creatorName') {
+        keys.push(key);
+        values.push(req.body[key]);
+      } 
     }
+    var query = 'SELECT streams.* FROM streams ';
+    if (categories !== undefined) {
+      for(var i = 0; i < categories.length; i++) {
+        query = query + 'INNER JOIN (streams_categories sc, categories c) ON ' +
+        '(streams.id=sc.streamId AND sc.categoryId=c.id AND c.text="' + categories[i] + '") ';
+      }
+    }
+    if (keywords !== undefined) {
+      for(var i = 0; i < keywords.length; i++) {
+        query = query + 'INNER JOIN (streams_keywords sk, keywords k) ON ' +
+        '(streams.id=sk.streamId AND sk.keywordId=k.id AND k.text="' + keywords[i] + '") ';
+      }
+    }
+    if (req.body.creatorName !== undefined || (keys !== undefined && keys.length > 0)) {
+      query = query + 'WHERE (';
+    
+      if (req.body.creatorName !== undefined) {
+        query = query + 'creatorId=(SELECT id FROM users WHERE username="'  + req.body.creatorName + '")'
+        if (keys !== undefined && keys.length > 0) {
+          query = query + ' AND ';
+        }
+      }
+      if (keys !== undefined && keys.length > 0) {
+        for (var i = 0; i < keys.length; i++) {
+          if (i === 0) {
+            query = query + keys[i] + '="' + values[i] + '"';
+          } else {
+            query = query + ' AND ' + keys[i] + '="' + values[i] + '"';
+          }
+        }
+      }
+      query = query + ');\n';
+    } else {
+      query = query + ';\n';
+    }
+    console.log('query: ', query);
+    sql(query, function(error, rows, fields) {
+      if (error) {
+        console.log(error); 
+        res.sendStatus(404);
+      } else {
+        console.log(rows);
+        res.send(rows);
+      }
+    });
+
   },
 
   updateStream: (req, res) => {
@@ -222,10 +251,10 @@ module.exports = {
 
   getStream: (req, res) => {
     var query = 'SELECT * FROM streams WHERE title="' + req.title + '";\n' + 
-      'SELECT c.* FROM streams s LEFT JOIN (streams_categories sc, categories c) ' + 
+      'SELECT c.* FROM streams s INNER JOIN (streams_categories sc, categories c) ' + 
       'ON (s.title="' + req.title + '" AND s.id = sc.streamId AND c.id = sc.categoryId) ' + 
       'WHERE s.title = "' + req.title + '";\n' +
-      'SELECT k.* FROM streams s LEFT JOIN (streams_keywords sk, keywords k) ' + 
+      'SELECT k.* FROM streams s INNER JOIN (streams_keywords sk, keywords k) ' + 
       'ON (s.title="' + req.title + '" AND s.id = sk.streamId AND k.id = sk.keywordId) ' + 
       'WHERE s.title = "' + req.title + '";\n';
     queries = query.split('\n');
