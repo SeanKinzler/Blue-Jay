@@ -277,6 +277,7 @@ export const createStream = (stream) => {
 			{ body: stream }
 		)
 		.then((res) => {
+			browserHistory.push('/streams')
 			dispatch(streamAdded())
 		})
 		.catch((err) => {
