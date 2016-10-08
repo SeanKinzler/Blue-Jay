@@ -28,13 +28,13 @@ render((
         <IndexRoute component={Home} />
         <Route path='dashboard' component={Dashboard} onEnter={requireAuth} />
         <Route path='search' component={Search} />
-        <Route path=':channel' component={  } onEnter={requireAuth} />
-        <Route path=':channel/:channelId' component={Channel} onEnter={requireAuth} />
         <Route path='subscriptions' component={Subscriptions} onEnter={requireAuth} />
         <Route path='streams' component={Streams} onEnter={requireAuth} />
         <Route path='create' component={CreateStream} onEnter={requireAuth} />
         <Route path='login' component={Login} />
         <Route path='signup' component={UserSignUp} />
+        <Route path=':channel' component={ Profile } onEnter={requireAuth} />
+        <Route path=':channel/:channelId' component={Channel} onEnter={requireAuth} />
       </Route>
     </Router>
   </Provider>

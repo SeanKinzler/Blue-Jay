@@ -12,6 +12,15 @@ export default class Carousel extends Component {
   carouselSlide() {
     return setInterval(function() {
       $('.carousel').carousel('next');
+
+      $('a[href="/"]').on('shown', function () {
+        var $carousel = $('.carousel');
+
+        if ($carousel.data('carousel') && $carousel.data('carousel').sliding) {
+          $carousel.find('.active').trigger($.support.transition.end);
+        }
+      });
+
     }, 3000);
   }
 

@@ -24,7 +24,6 @@ app.put('/api/users/subscriptions', (req, res) => { dbHandler.updateSubscription
 
 app.post('/api/streams', (req, res) => { dbHandler.addStream(req, res); });
 app.get('/api/streams', (req, res) => { dbHandler.searchStreams(req, res); });
-app.get('/api/streams/:user', (req, res) => { dbHandler.getUsersStreams(req, res); });
 
 app.get('/api/streams/:title', (req, res) => { dbHandler.getStream(req, res); });
 app.put('/api/streams', (req, res) => { dbHandler.updateStream(req, res); });

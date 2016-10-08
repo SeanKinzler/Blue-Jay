@@ -9,7 +9,6 @@ import SubscriptionsList from '../components/SubscriptionsList.jsx';
 class Profile extends Component {
 
   componentWillMount() {
-    this.props.getStreams();
   }
 
   render() {
@@ -47,6 +46,7 @@ class Profile extends Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.username,
+    targetUser: window.location.pathname.slice(window.location.pathname.lastIndexOf('/') + 1),
     streams: state.streams.data,
     subscriptions: state.subscriptions.data
   };
@@ -58,4 +58,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, Actions)(Dashboard);
+export default connect(mapStateToProps, Actions)(Profile);
