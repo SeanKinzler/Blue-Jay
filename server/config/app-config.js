@@ -16,7 +16,7 @@ app.post('/users/login', (req, res) => { jwtAuth.giveToken(req, res); });
 app.get('/api/users/', (req, res) => { dbHandler.getUser(req, res); });
 app.post('/api/users', (req, res) => { dbHandler.addUser(req, res); });
 app.delete('/api/users', (req, res) => { dbHandler.deleteUser(req, res); });
-app.put('/api/users', (req, res) => { dbHandler.updateUser(req, res); })
+app.put('/api/users', (req, res) => { dbHandler.updateUser(req, res); });
 
 app.get('/api/users/subscriptions', (req, res) => { dbHandler.getSchedule(req, res); });
 app.post('/api/users/subscriptions', (req, res) => { dbHandler.addSubscription(req, res); });
@@ -24,6 +24,7 @@ app.put('/api/users/subscriptions', (req, res) => { dbHandler.updateSubscription
 
 app.post('/api/streams', (req, res) => { dbHandler.addStream(req, res); });
 app.get('/api/streams', (req, res) => { dbHandler.searchStreams(req, res); });
+app.get('/api/streams/:user', (req, res) => { dbHandler.getUsersStreams(req, res); });
 
 app.get('/api/streams/:title', (req, res) => { dbHandler.getStream(req, res); });
 app.put('/api/streams', (req, res) => { dbHandler.updateStream(req, res); });

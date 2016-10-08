@@ -6,7 +6,7 @@ import * as Actions from '../actions/index.jsx';
 import StreamsList from '../components/StreamsList.jsx';
 import SubscriptionsList from '../components/SubscriptionsList.jsx';
 
-class Dashboard extends Component {
+class Profile extends Component {
 
   componentWillMount() {
     this.props.getStreams();

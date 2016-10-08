@@ -16,6 +16,7 @@ import Search from './pages/Search.jsx';
 import RequireAuth from './components/RequireAuth.jsx';
 import Subscriptions from './pages/Subscriptions.jsx';
 import Streams from './pages/Streams.jsx';
+import Profile from './pages/Profile.jsx';
 
 const store = configureStore();
 persistStore(store);
