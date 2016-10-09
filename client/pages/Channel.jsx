@@ -1,33 +1,28 @@
 import React, { Component } from 'react';
 import Video from '../components/Video.jsx';
+import InfoBox from '../components/InfoBox.jsx';
+import ChatContainer from '../components/InfoBox.jsx';
 import {Link} from 'react-router';
+
 export default ({params}) => {
   return(
-    <div className=''>
-      <h4 className='center-align'>Channel: { `${params.channelId.split('_').join(' ')}` }</h4>
-      <Video />
-      <div id='infoPane'>
-        <div className='teal' id='infoBanner'>
-          <h3 className='center-align white-text'>Class Info Below</h3>
-        </div>
+    <div className='channel'>
+      <div>
+        <h4 className='center-align'>Channel: { `${params.channelId}` }</h4>
+        <Video />
       </div>
       <div className='row'>
-        <div className='col s4 center-align' id='class background'>
-          <h5>History and the Art of History Stuff</h5>
-        </div>
-        <div className='col s4 center-align' id='teacher background'>
-          <h5>Your instructor: Hans Zimmer</h5>
-        </div>
-        <div className='col s4 center-align' id='class links' >
-          <h5>Class Links and Relevent Pages</h5>
-          <a className='col s4' src='www.google.com'>Google seems important</a>
-          <a className='col s4' src='www.google.com'>Google seems important</a>
-          <a className='col s4' src='www.google.com'>Google seems important</a>
-          <a className='col s4' src='www.google.com'>Google seems important</a>
-          <a className='col s4' src='www.google.com'>Google seems important</a>
-        </div>
-
+        <button className="toggleInfoBox" onClick={('.infoBox').toggle();}></button>
+        <InfoBox />
+      </div>
+      <div>
+        <button className="toggleChat" onClick={$('.chat').toggle();}></button>
+        <ChatContainer />
+      </div>
+      <div>
+        <button className="toggleWhiteboard" onClick={$('.whiteboard').toggle();}></button>
+        <Whiteboard />
       </div>
     </div>
-  )  
-}
+  );
+};
