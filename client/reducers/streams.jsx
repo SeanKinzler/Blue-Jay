@@ -26,8 +26,12 @@ const Stream = (state = initialState, action) => {
 	switch (action.type) {
 		case SEARCH_STREAMS:
 			return Object.assign({}, state, {
-			    data: action.data
+			  data: action.data
 			});
+		case REQUEST_STREAMS:
+			return Object.assign({}, state, {
+				data: action.data
+			})
 		case REQUEST_ERROR:
 			return Object.assign({}, state, {
 				error: action.payload.message
