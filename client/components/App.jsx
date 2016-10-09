@@ -1,24 +1,46 @@
-import React, { Component } from 'react';
-import { render } from 'react-dom';
-import { Router, IndexRoute, Route, browserHistory, Link } from 'react-router';
-import Video from './Video.jsx';
-import Dashboard from '../pages/Dashboard.jsx';
-import NavBar from './NavBar.jsx';
+// import React, { Component } from 'react';
+import {React} from 'react';
+import {ReactDOM} from 'react-dom';
+import {LoginPage} from './login';
+import {VideoPage} from './video';
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      loggedIn: false
+    }
+
+    //Login Handlers:
+    this.loginHandlers = {
+      login: (event) => {
+        this.setState({loggedIn: true});
+      }
+    }
+
+    //Video Handlers:
+    this.videoHandlers = {
+      start: (event) => { console.log('Start Video') },
+      stop: (event) => { console.log('Stop Video') }
+    }
   }
 
   render() {
     return (
       <div>
-        <NavBar />
-        { this.props.children } 
+        <h1>Blue Jay</h1>
       </div>
     );
   }
+
+  // render() {
+  //   return (
+  //     <div>
+  //       <h1>Blue Jay</h1>
+  //       {this.state.loggedIn ? <Login /> : <Video />}
+  //     </div>
+  //   );
+  // }
 }
 
-
-
+ReactDOM.render(<App />, document.getElementById('app'));
