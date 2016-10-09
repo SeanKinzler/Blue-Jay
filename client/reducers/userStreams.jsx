@@ -26,7 +26,9 @@ const UserStreams = (state = initialState, action) => {
 				error: action.payload.message
 			})
 		case CREATE_STREAM:
-			return state;
+			return Object.assign({}, state, {
+				data: state.data.concat([action.stream])
+			})
 		case EDIT_STREAM:
 			return state;
 		case DELETE_STREAM:
