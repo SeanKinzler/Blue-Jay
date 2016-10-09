@@ -8,14 +8,20 @@ import UserStreamsModal from '../components/UserStreamsModal.jsx';
 class Streams extends Component {
 	
 	deleteStreamHandler(stream) {
-		const prompt = prompt('Are you sure you want to delete this stream?')
+		const prompt = window.confirm('Are you sure you want to delete this stream?')
 		if (prompt) {
-			this.props.deleteStream({ stream });
+			this.props.deleteStream(stream);
 		}
 	}
 
-	editStreamHandler(stream) {
-		this.props.editStream({ stream });
+	editStreamHandler(e) {
+		e.preventDefault();
+		const form = e.target;
+		const stream = {
+			title: form.title.value.trim(),
+			description: form.description.value.trim()
+		}
+		this.props.editStream(stream);
 	}
 
 	renderStreams() {
@@ -31,13 +37,13 @@ class Streams extends Component {
 				<UserStreams 
 					streams={ this.props.userStreams.data }
 					onStreamSelect={ (stream) => { this.props.openStreamModal(stream) } }
-					deleteStream={this.deleteStreamHandler }
+					deleteStream={this.deleteStreamHandler.bind(this) }
 				/>
 				<UserStreamsModal 
 					selectedStream={ this.props.userStreams.selectedStream }
 					modalIsOpen={ this.props.userStreams.modalIsOpen }
 					onRequestClose={ () => { this.props.closeStreamModal() } }
-					editStream={ this.editStreamHandler } 
+					editStream={ this.editStreamHandler.bind(this) } 
 				/>
 			</div>
 		)
