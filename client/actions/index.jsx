@@ -12,6 +12,7 @@ export const SIGN_OUT_USER = 'SIGN_OUT_USER';
 export const SIGN_UP_USER = 'SIGN_UP_USER';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const JOIN_STREAM = 'JOIN_STREAM';
+export const SEARCH_STREAM_TERM = 'SEARCH_STREAM_TERM';
 export const FILTER_STREAM_CATEGORIES = 'FILTER_STREAM_CATEGORIES';
 export const FILTER_STREAM_PRICES = 'FILTER_STREAM_PRICES';
 export const FILTER_STREAM_TYPES = 'FILTER_STREAM_TYPES';
@@ -104,6 +105,7 @@ export const requestError = (error) => {
 	}
 }
 
+// user requesting his/her own streams
 export const requestStreams = (streams) => {
 	return {
 		type: REQUEST_STREAMS,
@@ -111,6 +113,7 @@ export const requestStreams = (streams) => {
 	}
 }
 
+// user requesting his/her own streams
 export const getStreams = () => {
 	return (dispatch) => {
 		axios.get('https://localhost:8443/api/streams')
@@ -123,9 +126,31 @@ export const getStreams = () => {
 	}
 }
 
-export const searchStreams = (term) => {
+export const searchedStreams = (results) => {
 	return {
 		type: SEARCH_STREAMS,
+		data: results.data
+	}
+}
+
+export const searchStreams = (query) => {
+	return (dispatch) => {
+		axios.get('https://localhost:8443/api/streams',
+			{ params: query }
+		)
+		.then((res) => {
+			dispatch(searchedStreams(res));
+		})
+		.catch((err) => {
+			dispatch(requestError(err));
+		})
+	}
+}
+
+// should create seperate type
+export const searchStreamTerm = (term) => {
+	return {
+		type: SEARCH_STREAM_TERM,
 		term 
 	}
 }
