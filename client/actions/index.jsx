@@ -109,7 +109,7 @@ export const requestError = (error) => {
 export const requestStreams = (streams) => {
 	return {
 		type: REQUEST_STREAMS,
-		data: streams.data
+		data: streams.data.ownedStreams
 	}
 }
 
