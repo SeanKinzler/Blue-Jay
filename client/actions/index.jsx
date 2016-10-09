@@ -338,9 +338,10 @@ export const editStream = (stream) => {
 	}
 }
 
-const streamDeleted = () => {
+const streamDeleted = (stream) => {
 	return {
-		type: DELETE_STREAM
+		type: DELETE_STREAM,
+		stream
 	}
 }
 
@@ -350,7 +351,7 @@ export const deleteStream = (stream) => {
 			stream
 		)
 		.then((res) => {
-			dispatch(streamDeleted())
+			dispatch(streamDeleted(stream))
 		})
 		.catch((err) => {
 			dispatch(requestError(err))
