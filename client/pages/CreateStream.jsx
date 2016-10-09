@@ -13,6 +13,7 @@ class CreateStream extends Component {
        placeholder: 'Enter another keyword',
        secondaryPlaceholder: 'Enter a keyword',
      });
+    $('.chip').remove(); // remove any pre existing chips
 	}
 
 	formSubmitHandler(e) {
