@@ -59,7 +59,7 @@ export default class ChatContainer extends Component {
 
   render() {
     return (
-      <div>
+      <div className="chat">
         <div id='chats' style={ style.chatterbox }>
           { 
             this.state.messages.map(function (messageObject, index) {
