@@ -30,7 +30,13 @@ const UserStreams = (state = initialState, action) => {
 		case EDIT_STREAM:
 			return state;
 		case DELETE_STREAM:
-			return state;
+			var altered = state.data.reduce((a, c) => {
+					if (c.id === action.stream.id) return a;
+					return a.concat([c]);
+				}, [])
+			return Object.assign({}, state, {
+				data: altered
+			})
 		case OPEN_STREAM_MODAL:
 			return Object.assign({}, state, {
 				modalIsOpen: true,
