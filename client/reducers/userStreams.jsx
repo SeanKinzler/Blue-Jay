@@ -1,5 +1,5 @@
 import {
-	REQUEST_STREAMS,
+	REQUEST_USER_STREAMS,
 	REQUEST_ERROR,
 	CREATE_STREAM,
 	EDIT_STREAM,
@@ -17,7 +17,7 @@ const initialState = {
 
 const UserStreams = (state = initialState, action) => {
 	switch (action.type) {
-		case REQUEST_STREAMS:
+		case REQUEST_USER_STREAMS:
 			return Object.assign({}, state, {
 				data: action.data
 			})
