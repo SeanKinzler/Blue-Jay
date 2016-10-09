@@ -30,6 +30,7 @@ export const DELETE_STREAM = 'DELETE_STREAM';
 export const OPEN_STREAM_MODAL = 'OPEN_STREAM_MODAL';
 export const CLOSE_STREAM_MODAL = 'CLOSE_STREAM_MODAL';
 export const CREATE_STREAM = 'CREATE_STREAM';
+export const REQUEST_USER_STREAMS = 'REQUEST_USER_STREAMS';
 
 export const joinStream = (socket) => {
 	return {
@@ -105,10 +106,18 @@ export const requestError = (error) => {
 	}
 }
 
-// user requesting his/her own streams
+// user requesting all streams
 export const requestStreams = (streams) => {
 	return {
 		type: REQUEST_STREAMS,
+		data: streams.data
+	}
+}
+
+// user requesting his/her own streams
+export const requestUserStreams = (streams) => {
+	return {
+		type: REQUEST_USER_STREAMS,
 		data: streams.data.ownedStreams
 	}
 }
@@ -353,7 +362,7 @@ export const getUserStreams = () => {
 	return (dispatch) => {
 		axios.get('https://localhost:8443/api/users')
 		.then((res) => {
-			dispatch(requestStreams(res))
+			dispatch(requestUserStreams(res))
 		})
 		.catch((err) => {
 			dispatch(requestError(err))
