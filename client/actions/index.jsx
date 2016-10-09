@@ -297,9 +297,10 @@ export const closeStreamModal = (stream) => {
 	}
 }
 
-const streamCreated = () => {
+const streamCreated = (stream) => {
 	return {
-		type: CREATE_STREAM
+		type: CREATE_STREAM,
+		stream
 	}
 }
 
@@ -310,7 +311,7 @@ export const createStream = (stream) => {
 		)
 		.then((res) => {
 			browserHistory.push('/streams')
-			dispatch(streamCreated())
+			dispatch(streamCreated(stream))
 		})
 		.catch((err) => {
 			dispatch(requestError(err))
