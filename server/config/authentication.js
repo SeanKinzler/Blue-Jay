@@ -19,7 +19,6 @@ var checkToken = function (req, res, next) {
   
   if (!req.headers.jwt) {
 
-    console.log('No jwt token received!');
     res.sendStatus(302);
 
   } else {
@@ -27,11 +26,11 @@ var checkToken = function (req, res, next) {
     jwt.verify(req.headers.jwt, key, function (error, decoded) {
 
       if (error) {
-        console.log('There was an error decoding.');
+
         res.sendStatus(302);
 
       } else {
-        console.log('The token was decoded and is valid');
+
         res.sendStatus(200);
 
       }

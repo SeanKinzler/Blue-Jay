@@ -47,7 +47,6 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('stop', function (data) {
-    console.log(data);
     currentRoom[socket.id] = data.roomName;
     if (socket.adapter.rooms[data.roomName]) {
       var yourId = socket.id;
@@ -87,7 +86,6 @@ io.sockets.on('connection', function(socket) {
           db.getUser(userData, {
             send: function (row) {
               for (var i = 0; i < row.ownedStreams.length; i++) { 
-                console.log(data.roomName);
                 if ((row.username + '/' + row.ownedStreams[i].title).toLowerCase() === data.roomName.toLowerCase()) {
                   socket.join(data.roomName);
 
