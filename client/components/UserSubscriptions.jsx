@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const UserSubscriptions = ({subscriptions, removeSubscription}) => {
 	const isOnline = (stream) => {

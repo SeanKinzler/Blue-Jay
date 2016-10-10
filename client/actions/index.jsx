@@ -39,12 +39,12 @@ export const joinStream = (socket) => {
 	}
 }
 
-export const userSignedIn = (data) => {
-	localStorage.token = data.token;
+export const userSignedIn = (token) => {
+	localStorage.token = token;
 	return {
 		type: SIGN_IN_USER,
-		username: data.username,
-		token: data.token
+		// username: data.username,
+		token: token
 	}
 }
 

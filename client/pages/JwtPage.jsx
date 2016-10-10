@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import Video from '../components/Video.jsx';
-import {Link} from 'react-router';
+import { connect } from 'react-redux';
+import * as Actions from '../actions/index.jsx';
 import { browserHistory } from 'react-router';
 
-export default class JwtPage extends Component {
+class JwtPage extends Component {
   
 
   componentDidMount() {
     localStorage.token = window.location.pathname.slice(window.location.pathname.lastIndexOf('/') + 1);
+    this.props.userSignedIn(localStorage.token);
     browserHistory.push('/');
   }
 
@@ -21,3 +22,17 @@ export default class JwtPage extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    authenticated: state.auth.authenticated
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, Actions)(JwtPage);
