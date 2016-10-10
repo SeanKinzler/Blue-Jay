@@ -319,9 +319,10 @@ export const createStream = (stream) => {
 	}
 }
 
-const streamEdited = () => {
+const streamEdited = (stream) => {
 	return {
-		type: EDIT_STREAM
+		type: EDIT_STREAM,
+		stream
 	}
 }
 
@@ -331,7 +332,7 @@ export const editStream = (stream) => {
 			stream
 		)
 		.then((res) => {
-			dispatch(streamEdited());
+			dispatch(streamEdited(stream));
 		})
 		.catch((err) => {
 			dispatch(requestError(err));
