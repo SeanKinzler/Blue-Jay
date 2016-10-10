@@ -278,7 +278,7 @@ export const removeSubscription = (stream) => {
 			stream
 		)
 		.then((res) => {
-			dispatch(subscriptionAdded(stream));
+			dispatch(subscriptionRemoved(stream));
 		})
 		.catch((err) => {
 			dispatch(requestError(err));
