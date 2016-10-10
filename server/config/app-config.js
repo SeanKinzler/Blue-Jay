@@ -4,7 +4,9 @@ var path = require('path');
 var dbHandler = require('../db/rawSQLHandlers');
 var fs = require('fs');
 var jwtAuth = require('./authentication.js');
-var passport = require('./googleOAuth.js');
+var passport = require('./googleOAuth.js').passport;
+var getToken = require('./googleOAuth.js').getToken;
+var sql = require('../db/sqlConnectionHelper.js');
 
 var app = express();
 app.use(bodyParser());
@@ -12,10 +14,11 @@ app.use(bodyParser());
 app.use(express.static(path.join(__dirname, '../../client')));
 
 app.get('/google/login', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'] }));
-app.get('/google/success', passport.authenticate('google', { 
-  failureRedirect: '/login' 
-}), function(req, res) {
-  res.redirect('/');
+
+app.get('/google/success', (req, res) => {
+  passport.authenticate('google', (err, user, info) => {
+    res.redirect('/jwt/' + getToken());
+  })(req, res);
 });
 
 app.post('/users/login', (req, res) => { jwtAuth.giveToken(req, res); });

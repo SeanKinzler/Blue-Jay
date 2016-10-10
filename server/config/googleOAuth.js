@@ -1,6 +1,7 @@
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var sql = require('../db/sqlConnectionHelper.js');
+var jwt = require('./authentication.js');
 
 if (process.env.CI) {
   var keys = require('./credentials/apiKeys.example.js');
@@ -8,6 +9,7 @@ if (process.env.CI) {
   var keys = require('./credentials/apiKeys.js');
 }
 
+var token;
 // Use the GoogleStrategy within Passport.
 //   Strategies in Passport require a `verify` function, which accept
 //   credentials (in this case, an accessToken, refreshToken, and Google
@@ -17,11 +19,11 @@ passport.use(new GoogleStrategy({
   clientSecret: keys.googleClientSecret,
   callbackURL: 'https://localhost:8443/google/success'
 }, function(accessToken, refreshToken, profile, done) {
-
-  sql('select * from users where users.googleId = ' + profile.id, function (err, result) {
-
-    if (result.length) {
-      console.log(result);
+  sql('select * from users where users.googleId = ' + profile.id, function (error, rows) {
+    if (error) { console.log(error); }
+    if (rows.length) {
+      token = jwt.createToken(rows[0]);
+      done();
     } else {
 
       var newUser = { 
@@ -48,27 +50,30 @@ passport.use(new GoogleStrategy({
       sql([
         'INSERT INTO users (' + keys.join(', ') + ')',
         'VALUES ("' + values.join('", "') + '")'
-      ].join(' '), function (error, rows, fields) {
-        if (error) {
+      ].join(' '), function (error, rows) {
+        if (error) { console.log(error); }
+        sql('select * from users where users.googleId = ' + profile.id, function (error, rows) {
+          if (error) { console.log(error); }
+          token = jwt.createToken(rows[0]);
           done();
-        } else {
-          done();
-        }
+        });
       });
-      
-
-
     }
-
-    done();
   });
 }));
 
+var getToken = function () {
+  var temp = token;
+  token = 'invalid';
+  return temp;
+};
 
 
 
-
-module.exports = passport;
+module.exports = {
+  passport: passport,
+  getToken: getToken,
+};
 
 
 

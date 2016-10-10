@@ -47,13 +47,13 @@ class Login extends Component {
 const mapStateToProps = (state) => {
   return {
     authenticated: state.auth.authenticated
-  }
-}
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators(Actions, dispatch)
   };
-}
+};
 
 export default connect(mapStateToProps, Actions)(Login);
