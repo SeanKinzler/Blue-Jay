@@ -227,10 +227,10 @@ module.exports = {
     if (changes.length > 2) {
       changes = changes.slice(0, -2);
     }
-    var query = 'UPDATE streams SET ' + changes + ' WHERE title="' + req.title + '";\n' +
-      'SET @stream = (SELECT id FROM streams WHERE title="' + req.title + '");\n' +
-      'DELETE FROM streams_categories WHERE streamID=@stream; \n' +
-      'DELETE FROM streams_keywords WHERE streamID=@stream; \n';
+    var query = 'UPDATE streams SET ' + changes + ' WHERE id=' + req.body.id + ';\n' +
+      'SET @stream = (SELECT id FROM streams WHERE id=' + req.body.id + ');\n' +
+      'DELETE FROM streams_categories WHERE streamId=@stream; \n' +
+      'DELETE FROM streams_keywords WHERE streamId=@stream; \n';
     if (req.body.categories !== undefined) {
       for (var i = 0; i < req.body.categories.length; i++) {
         query = query + ('INSERT IGNORE INTO categories (text) VALUES ("' + req.body.categores[i] + '");\n' +  
