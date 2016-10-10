@@ -9,7 +9,7 @@ import SearchResultsModal from '../components/SearchResultsModal.jsx';
 
 class Search extends Component {
 
-  makeStreamQuery() {
+  componentWillMount() {
     this.props.getStreams();
   }
 
@@ -65,10 +65,19 @@ class Search extends Component {
     }
   }
 
+  submitHandler() {
+  	// consider adding title, description, keywords and days
+  	var query = {
+  		title: this.props.streams.term,
+  		categories: this.props.streams.categories 
+  	}
+  	this.props.searchStreams(query)
+  }
+
   render() {
     return (
       <div className='container'>
-        <SearchBar onTermChange={this.props.searchChannels} />
+        <SearchBar onTermChange={this.props.searchStreamTerm} />
         <SearchResultsModal 
           selectedStream={this.props.modal.selectedStream} 
           modalIsOpen={this.props.modal.modalIsOpen}
@@ -88,7 +97,7 @@ class Search extends Component {
             <SearchFilter filterOptions={this.props.days} />
           </div>
           <div className='col s4 m2'>
-            <SearchFilter filterOptions={this.props.times} />
+            <div className='btn blue' id='submit' onClick={this.submitHandler.bind(this)}>Search</div>
           </div>
           <div className='col s4 m2'>
             { this.renderFilterView() }

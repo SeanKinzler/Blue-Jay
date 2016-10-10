@@ -156,15 +156,16 @@ module.exports = {
   },
 
   searchStreams: (req, res) => {
+    // need to use req.query because query values sent in url
     var keys = [];
     var values = [];
-    req.body = req.body || {};
-    var categories = req.body.categories || [];
-    var keywords = req.body.keywords || [];
-    for (var key in req.body) {
+    req.query = req.query || {};
+    var categories = req.query.categories || [];
+    var keywords = req.query.keywords || [];
+    for (var key in req.query) {
       if (key !== 'categories' && key !== 'keywords' && key !== 'creatorName') {
         keys.push(key);
-        values.push(req.body[key]);
+        values.push(req.query[key]);
       } 
     }
     var query = 'SELECT streams.* FROM streams ';
@@ -180,11 +181,11 @@ module.exports = {
         '(streams.id=sk.streamId AND sk.keywordId=k.id AND k.text="' + keywords[i] + '") ';
       }
     }
-    if (req.body.creatorName !== undefined || (keys !== undefined && keys.length > 0)) {
+    if (req.query.creatorName !== undefined || (keys !== undefined && keys.length > 0)) {
       query = query + 'WHERE (';
     
-      if (req.body.creatorName !== undefined) {
-        query = query + 'creatorId=(SELECT id FROM users WHERE username="'  + req.body.creatorName + '")'
+      if (req.query.creatorName !== undefined) {
+        query = query + 'creatorId=(SELECT id FROM users WHERE username="'  + req.query.creatorName + '")'
         if (keys !== undefined && keys.length > 0) {
           query = query + ' AND ';
         }
@@ -202,7 +203,6 @@ module.exports = {
     } else {
       query = query + ';\n';
     }
-    console.log('query: ', query);
     sql(query, function(error, rows, fields) {
       if (error) {
         console.log(error); 

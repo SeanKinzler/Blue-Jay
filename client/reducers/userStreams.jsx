@@ -1,7 +1,7 @@
 import {
-	REQUEST_STREAMS,
+	REQUEST_USER_STREAMS,
 	REQUEST_ERROR,
-	ADD_STREAM,
+	CREATE_STREAM,
 	EDIT_STREAM,
 	DELETE_STREAM,
 	OPEN_STREAM_MODAL,
@@ -17,7 +17,7 @@ const initialState = {
 
 const UserStreams = (state = initialState, action) => {
 	switch (action.type) {
-		case REQUEST_STREAMS:
+		case REQUEST_USER_STREAMS:
 			return Object.assign({}, state, {
 				data: action.data
 			})
@@ -25,17 +25,25 @@ const UserStreams = (state = initialState, action) => {
 			return Object.assign({}, state, {
 				error: action.payload.message
 			})
-		case ADD_STREAM:
+		case CREATE_STREAM:
 			return Object.assign({}, state, {
-				data: action.data
+				data: state.data.concat([action.stream])
 			})
 		case EDIT_STREAM:
+			var altered = state.data.reduce((a, c) => {
+					if (c.id === action.stream.id) c = action.stream;
+					return a.concat([c]);
+				}, [])
 			return Object.assign({}, state, {
-				data: action.data
+				data: altered
 			})
 		case DELETE_STREAM:
+			var altered = state.data.reduce((a, c) => {
+					if (c.id === action.stream.id) return a;
+					return a.concat([c]);
+				}, [])
 			return Object.assign({}, state, {
-				data: action.data
+				data: altered
 			})
 		case OPEN_STREAM_MODAL:
 			return Object.assign({}, state, {
