@@ -9,30 +9,47 @@ class CreateStream extends Component {
 
 	componentDidMount() {
 		$('select').material_select();
+    $('.chips-placeholder').material_chip({
+       placeholder: 'Enter another keyword',
+       secondaryPlaceholder: 'Enter a keyword',
+     });
+    $('.chip').remove(); // remove any pre existing chips
 	}
 
-	formSubmitHandler(values) {
+	formSubmitHandler(e) {
+    e.preventDefault();
+    var form = e.target;
+    var keywords = []
+    var keywords_chips = $('.chip').each((e, c) => { keywords.push(c.firstChild.textContent)});
+    var categories = [];
+    var category_selections = form.categories.selectedOptions;
+    for (var i = 0; i < category_selections.length; i++) {
+      categories.push(category_selections[i].text)
+    }
 		const newStream = {
-			title: values.title,
-			description: values.description,
-			keywords: values.keywords,
-			categories: values.categories
+			title: form.title.value,
+			description: form.description.value,
+			keywords,
+			categories
 		}
-		this.props.createStream(newStream)
+		this.props.createStream(newStream);
 	}
 	render() {
 		return (
-			<StreamForm 
-				submitHandler={this.formSubmitHandler}
-				categories={this.props.categories}
-			/>
+      <div className='container'>
+  			<StreamForm 
+  				submitHandler={this.formSubmitHandler.bind(this)}
+  				categories={this.props.categories}
+  			/>
+      </div>
 		)
 	}
 }
 
 const mapStateToProps = (state) => {
 	return {
-		categories: ['Astronomy']
+		categories: ['Art', 'Music', 'Sports', 'History', 'Politics', 
+      'News', 'Education']
 	};
 }
 

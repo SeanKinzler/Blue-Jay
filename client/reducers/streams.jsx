@@ -1,6 +1,7 @@
 import { REQUEST_STREAMS, 
 		REQUEST_ERROR, 
 		SEARCH_STREAMS, 
+		SEARCH_STREAM_TERM,
 		FILTER_STREAM_CATEGORIES, 
 		FILTER_STREAM_PRICES,
 		FILTER_STREAM_TYPES,
@@ -23,15 +24,19 @@ const initialState = {
 
 const Stream = (state = initialState, action) => {
 	switch (action.type) {
+		case SEARCH_STREAMS:
+			return Object.assign({}, state, {
+			  data: action.data
+			});
 		case REQUEST_STREAMS:
 			return Object.assign({}, state, {
-			    data: action.data
-			});
+				data: action.data
+			})
 		case REQUEST_ERROR:
 			return Object.assign({}, state, {
 				error: action.payload.message
 			})
-		case SEARCH_STREAMS:
+		case SEARCH_STREAM_TERM:
 			return Object.assign({}, state, {
 				term: action.term
 			})
