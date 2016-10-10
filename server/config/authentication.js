@@ -26,7 +26,7 @@ var checkToken = function (req, res, next) {
         res.sendStatus(302);
 
       } else {
-
+        
         res.sendStatus(200);
 
       }
