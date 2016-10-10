@@ -7,7 +7,7 @@ import UserSubscriptions from '../components/UserSubscriptions.jsx';
 class Subscriptions extends Component {
 	
 	componentWillMount() {
-		this.props.requestUserData();
+		this.props.getUserData();
 	}
 
 	removeSubscriptionHandler(stream) {
