@@ -263,13 +263,13 @@ module.exports = {
   },
 
   getStream: (req, res) => {
-    var query = 'SELECT * FROM streams WHERE title="' + req.title + '";\n' + 
+    var query = 'SELECT * FROM streams WHERE title="' + req.body.title + '";\n' + 
       'SELECT c.* FROM streams s INNER JOIN (streams_categories sc, categories c) ' + 
-      'ON (s.title="' + req.title + '" AND s.id = sc.streamId AND c.id = sc.categoryId) ' + 
-      'WHERE s.title = "' + req.title + '";\n' +
+      'ON (s.title="' + req.body.title + '" AND s.id = sc.streamId AND c.id = sc.categoryId) ' + 
+      'WHERE s.title = "' + req.body.title + '";\n' +
       'SELECT k.* FROM streams s INNER JOIN (streams_keywords sk, keywords k) ' + 
-      'ON (s.title="' + req.title + '" AND s.id = sk.streamId AND k.id = sk.keywordId) ' + 
-      'WHERE s.title = "' + req.title + '";\n';
+      'ON (s.title="' + req.body.title + '" AND s.id = sk.streamId AND k.id = sk.keywordId) ' + 
+      'WHERE s.title = "' + req.body.title + '";\n';
     queries = query.split('\n');
     returnQueries(queries, res, function(toRet) {
       toRet[0].categories = [];

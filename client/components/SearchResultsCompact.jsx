@@ -22,7 +22,7 @@ const SearchResultsCompact = ({searchResults, openModal, addSubscription}) => {
 								<i onClick={ () => { addSubscription(stream) } } className='material-icons circle green'>done</i>
 								<div onClick={ () => { openModal(stream); } } className='btn'>Details</div>
 								<span>{ stream.creatorId }</span>
-								{ isOnline(stream) }
+								<span className="badge purple">{ isOnline(stream) }</span>
 								<span className="badge green">{ stream.subscriberCount }</span>
 							</div>
 						</div>
