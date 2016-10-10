@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 export default ({params}) => {
   return(
     <div className=''>
-      <h4 className='center-align'>Channel: { `${params.channelId}` }</h4>
+      <h4 className='center-align'>Channel: { `${params.channelId.split('_').join(' ')}` }</h4>
       <Video />
       <div id='infoPane'>
         <div className='teal' id='infoBanner'>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router';
-import allIcons from '../lib/allIcons.js';
-import allColors from '../lib/allColors.js';
+import randomIcon from '../lib/allIcons.js';
+import randomColor from '../lib/allColors.js';
 
 export default class LiveNow extends Component {
   constructor(props) {
@@ -22,14 +22,6 @@ export default class LiveNow extends Component {
 
     props.socket.emit('getStreams');
 
-  }
-
-  randomColor() {
-    return allColors[Math.floor(Math.random() * allColors.length)];
-  }
-
-  randomIcon() {
-    return allIcons[Math.floor(Math.random() * allIcons.length)];
   }
 
   componentWillMount() {
@@ -58,7 +50,7 @@ export default class LiveNow extends Component {
                 return ( 
                   <li className="collection-item avatar" key={ index }>
                     <Link className="valign" to={ '/' + streamObj.title }>
-                      <i className={ 'valign material-icons circle ' + context.randomColor() }>{ context.randomIcon() }</i>
+                      <i className={ 'valign material-icons circle ' + randomColor() }>{ randomIcon() }</i>
                     </Link>
                     <h6 className="title">
                       Title: <Link to={ '/' + streamObj.title }>{ title }</Link>
@@ -92,7 +84,7 @@ export default class LiveNow extends Component {
           <ul className="collection with-header">
             <li className="collection-header">
               <h5>The are no streams right now.</h5>
-              <Link href='/channel/StreamOne'>
+              <Link href='/streams'>
                 <h6>Be the first to start streaming!</h6>
               </Link>
             </li>
