@@ -52,6 +52,7 @@ class Search extends Component {
         <SearchResultsCompact 
           searchResults={searchResults} 
           openModal={this.props.openModal}
+          addSubscription={this.props.addSubscription}
         />
       )
     }
@@ -60,10 +61,12 @@ class Search extends Component {
         <SearchResultsExtended 
           searchResults={searchResults}
           openModal={this.props.openModal}
+          addSubscription={this.props.addSubscription}
         />
       )
     }
   }
+
 
   submitHandler() {
   	// consider adding title, description, keywords and days
