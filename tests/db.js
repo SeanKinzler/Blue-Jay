@@ -108,6 +108,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
           description: 'sick info broski',
           categories: ['testCat'],
           keywords: ['testKey'],
+          title: random,
         }
       }, {
         send: function (input) {
