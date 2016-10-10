@@ -30,7 +30,13 @@ const UserStreams = (state = initialState, action) => {
 				data: state.data.concat([action.stream])
 			})
 		case EDIT_STREAM:
-			return state;
+			var altered = state.data.reduce((a, c) => {
+					if (c.id === action.stream.id) c = action.stream;
+					return a.concat([c]);
+				}, [])
+			return Object.assign({}, state, {
+				data: altered
+			})
 		case DELETE_STREAM:
 			var altered = state.data.reduce((a, c) => {
 					if (c.id === action.stream.id) return a;
