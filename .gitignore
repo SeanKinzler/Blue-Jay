@@ -11,6 +11,7 @@ server/config/credentials/key.pem
 server/config/credentials/cert.pem
 server/config/credentials/chain.pem
 server/config/credentials/apikeys.js
+server/config/credentials/apiKeys.js
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
