@@ -20,7 +20,11 @@ passport.use(new GoogleStrategy({
   callbackURL: 'https://localhost:8443/google/success'
 }, function(accessToken, refreshToken, profile, done) {
   sql('select * from users where users.googleId = ' + profile.id, function (error, rows) {
-    if (error) { console.log(error); }
+    if (error) { 
+      console.log(error);
+      done();
+      return;
+    }
     if (rows.length) {
       token = jwt.createToken(rows[0]);
       done();
