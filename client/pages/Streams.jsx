@@ -17,11 +17,9 @@ class Streams extends Component {
 	editStreamHandler(e) {
 		e.preventDefault();
 		const form = e.target;
-		const stream = {
-			title: form.title.value.trim(),
-			description: form.description.value.trim()
-		}
-		this.props.editStream(stream);
+		this.props.userStreams.selectedStream.title = form.title.value.trim();
+		this.props.userStreams.selectedStream.description = form.description.value.trim();
+		this.props.editStream(this.props.userStreams.selectedStream);
 	}
 
 	renderStreams() {
