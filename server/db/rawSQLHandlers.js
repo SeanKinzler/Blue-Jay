@@ -318,7 +318,7 @@ module.exports = {
 
   updateSubscription: (req, res) => {
     var query  = 'DELETE FROM subscriptions WHERE (userId=' + req.userId + 
-    ' AND streamId=(SELECT id FROM streams WHERE title="' + req.body.title + '));\n' + 
+    ' AND streamId=(SELECT id FROM streams WHERE title="' + req.body.title + '"));\n' + 
     'UPDATE streams SET subscriberCount = subscriberCount + 1;\n';
     queries = query.split('\n');
     executeQueries(queries, res);
