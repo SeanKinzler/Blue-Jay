@@ -19,8 +19,10 @@ module.exports = {
     ].join(' '), function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);
+        return;
       } else {
         res.send(rows);
+        return;
       }
     });
   },
@@ -29,8 +31,10 @@ module.exports = {
     sql('SELECT * FROM users', (error, rows, fields) => {
       if (error) {
         res.sendStatus(404);
+        return;
       } else {
         res.send(rows);
+        return;
       }
     });
   },
@@ -44,10 +48,12 @@ module.exports = {
     function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);
+        return;
       } else {
         sql(query2, function(error2, rows2, fields2) {
           if (error2) {
             res.sendStatus(404);
+            return;
           } else {
             if(rows[0] !== undefined) {
               rows[0].subscriptions = [];
@@ -75,13 +81,16 @@ module.exports = {
                     descriptions: rows.description
                   });
                 res.send(rows);
+                return;
               } else {
                 rows.ownedStreams = rows2;
                 rows.subscriptions = [];
                 res.send(rows);
+                return;
               }
             }
             res.send(rows[0]); 
+            return;
           }
         })
       }
@@ -94,8 +103,10 @@ module.exports = {
     function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);
+        return;
       } else {
         res.send(rows);
+        return;
       }
     });    
   },
@@ -114,8 +125,10 @@ module.exports = {
       function(error, rows, fields) {
         if (error) {
           res.sendStatus(404);
+          return;
         } else {
-          res.send(rows)
+          res.send(rows);
+          return;
         }
       })
   },
@@ -205,11 +218,11 @@ module.exports = {
     }
     sql(query, function(error, rows, fields) {
       if (error) {
-        console.log(error); 
         res.sendStatus(404);
+        return;
       } else {
-        console.log(rows);
         res.send(rows);
+        return;
       }
     });
 
@@ -227,10 +240,10 @@ module.exports = {
     if (changes.length > 2) {
       changes = changes.slice(0, -2);
     }
-    var query = 'UPDATE streams SET ' + changes + ' WHERE title="' + req.title + '";\n' +
-      'SET @stream = (SELECT id FROM streams WHERE title="' + req.title + '");\n' +
-      'DELETE FROM streams_categories WHERE streamID=@stream; \n' +
-      'DELETE FROM streams_keywords WHERE streamID=@stream; \n';
+    var query = 'UPDATE streams SET ' + changes + ' WHERE id=' + req.body.id + ';\n' +
+      'SET @stream = (SELECT id FROM streams WHERE id=' + req.body.id + ');\n' +
+      'DELETE FROM streams_categories WHERE streamId=@stream; \n' +
+      'DELETE FROM streams_keywords WHERE streamId=@stream; \n';
     if (req.body.categories !== undefined) {
       for (var i = 0; i < req.body.categories.length; i++) {
         query = query + ('INSERT IGNORE INTO categories (text) VALUES ("' + req.body.categores[i] + '");\n' +  
@@ -276,6 +289,7 @@ module.exports = {
         toRet[0].keywords.push(toRet[2][i].text);
       }
       res.send(toRet[0]);
+      return;
     });
   },
 
@@ -285,8 +299,10 @@ module.exports = {
     function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);
+        return;
       } else {
         res.send(rows);
+        return;
       }
     });    
 
@@ -323,10 +339,12 @@ var executeQueries = function (queries, res, currIndex) {
     if (error) {
       console.log('repeater error: ', error)
       res.sendStatus(404);
+      return;
     } else {
       currIndex++;
       if (currIndex >= queries.length - 1) {
         res.send(rows);
+        return;
       } else {
         executeQueries(queries, res, currIndex);
       }
@@ -341,9 +359,11 @@ var returnQueries = function (queries, res, callback, currIndex, toRet) {
     if (error) {
       console.log('repeater error: ', error)
       res.sendStatus(404);
+      return;
     } else {
       currIndex++;
       toRet.push(rows);
+      return;
       if (currIndex >= queries.length - 1) {
         callback(toRet);
       } else {
