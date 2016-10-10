@@ -51,7 +51,7 @@ export const userSignedIn = (data) => {
 export const signInUser = (credentials) => {
 	return (dispatch) => {
 		axios({
-			url: 'https://localhost:8443/users/login',
+			url: '/users/login',
 			method: 'POST',
 			dataType: 'json',
 			data: credentials
@@ -77,7 +77,7 @@ export const signOutUser = () => {
 export const signUpUser = (credentials) => {
 	return (dispatch) => {
 		axios({
-			url: 'https://localhost:8443/users/signup',
+			url: '/users/signup',
 			method: 'POST',
 			dataType: 'json',
 			data: credentials
@@ -125,7 +125,7 @@ export const requestUserStreams = (streams) => {
 // user requesting his/her own streams
 export const getStreams = () => {
 	return (dispatch) => {
-		axios.get('https://localhost:8443/api/streams')
+		axios.get('/api/streams')
 		.then((res) => {
 			dispatch(requestStreams(res));
 		})
@@ -144,7 +144,7 @@ export const searchedStreams = (results) => {
 
 export const searchStreams = (query) => {
 	return (dispatch) => {
-		axios.get('https://localhost:8443/api/streams',
+		axios.get('/api/streams',
 			{ params: query }
 		)
 		.then((res) => {
@@ -248,7 +248,7 @@ export const subscriptionError = (error) => {
 
 export const requestSubscriptions = () => {
 	return (dispatch) => {
-		axios.get('https://localhost:8443/api/users')
+		axios.get('/api/users')
 		.then((res) => {
 			dispatch(subscriptionsRequested(res));
 		})
@@ -260,7 +260,7 @@ export const requestSubscriptions = () => {
 
 export const addSubscription = (stream) => {
 	return (dispatch) => {
-		axios.post('https://localhost:8443/api/users/subscriptions',
+		axios.post('/api/users/subscriptions',
 			stream
 		)
 		.then((res) => {
@@ -274,7 +274,7 @@ export const addSubscription = (stream) => {
 
 export const removeSubscription = (stream) => {
 	return (dispatch) => {
-		axios.put('https://localhost:8443/api/users/subscriptions',
+		axios.put('/api/users/subscriptions',
 			stream
 		)
 		.then((res) => {
@@ -308,7 +308,7 @@ const streamCreated = (stream) => {
 
 export const createStream = (stream) => {
 	return (dispatch) => {
-		axios.post('https://localhost:8443/api/streams',
+		axios.post('/api/streams',
 			stream
 		)
 		.then((res) => {
@@ -330,7 +330,7 @@ const streamEdited = (stream) => {
 
 export const editStream = (stream) => {
 	return (dispatch) => {
-		axios.put('https://localhost:8443/api/streams', 
+		axios.put('/api/streams', 
 			stream
 		)
 		.then((res) => {
@@ -351,7 +351,7 @@ const streamDeleted = (stream) => {
 
 export const deleteStream = (stream) => {
 	return (dispatch) => {
-		axios.put('https://localhost:8443/api/streams/extra',
+		axios.put('/api/streams/extra',
 			stream
 		)
 		.then((res) => {
@@ -365,7 +365,7 @@ export const deleteStream = (stream) => {
 
 export const getUserData = () => {
 	return (dispatch) => {
-		axios.get('https://localhost:8443/api/users')
+		axios.get('/api/users')
 		.then((res) => {
 			dispatch(requestUserStreams(res.data.ownedStreams))
 			dispatch(subscriptionsRequested(res.data.subscriptions))
