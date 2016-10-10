@@ -9,7 +9,7 @@ import SubscriptionsList from '../components/SubscriptionsList.jsx';
 class Dashboard extends Component {
 
   componentWillMount() {
-    this.props.getUserStreams();
+    this.props.getUserData();
   }
 
   render() {

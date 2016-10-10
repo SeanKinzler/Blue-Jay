@@ -8,7 +8,7 @@ class Subscriptions extends Component {
 	
 	componentWillMount() {
 		// need to load subscriptions when api endpoint is ready 
-		this.props.requestSubscriptions(this.props.username);
+		this.props.requestSubscriptions();
 	}
 
 	removeSubscriptionHandler(stream) {
