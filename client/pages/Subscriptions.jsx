@@ -10,10 +10,6 @@ class Subscriptions extends Component {
 		this.props.getUserData();
 	}
 
-	removeSubscriptionHandler(stream) {
-		this.props.removeSubscription(stream.id, this.props.username);
-	}
-
 	renderSubscriptions() {
 		if (!this.props.subscriptions.length) {
 			return (
@@ -25,7 +21,7 @@ class Subscriptions extends Component {
 		return (
 			<UserSubscriptions 
 				subscriptions={this.props.subscriptions} 
-				removeSubscription={this.props.removeSubscriptionHandler}
+				removeSubscription={this.props.removeSubscription}
 			/>
 		)
 	}
