@@ -18,6 +18,7 @@ import Subscriptions from './pages/Subscriptions.jsx';
 import Streams from './pages/Streams.jsx';
 import Profile from './pages/Profile.jsx';
 import JwtPage from './pages/JwtPage.jsx';
+import StreamUnavailable from './pages/StreamUnavailable.jsx';
 
 const store = configureStore();
 persistStore(store);
@@ -34,6 +35,7 @@ render((
         <Route path='create' component={CreateStream} onEnter={requireAuth} />
         <Route path='login' component={Login} />
         <Route path='signup' component={UserSignUp} />
+        <Route path='nostream' component={StreamUnavailable} />
         <Route path='jwt/:token' component={JwtPage} />
         <Route path=':channel' component={ Profile } onEnter={requireAuth} />
         <Route path=':channel/:channelId' component={Channel} onEnter={requireAuth} />

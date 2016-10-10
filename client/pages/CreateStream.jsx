@@ -7,16 +7,16 @@ import StreamForm from '../components/StreamForm.jsx';
 
 class CreateStream extends Component {
 
-	componentDidMount() {
-		$('select').material_select();
+  componentDidMount() {
+    $('select').material_select();
     $('.chips-placeholder').material_chip({
        placeholder: 'Enter another keyword',
        secondaryPlaceholder: 'Enter a keyword',
      });
     $('.chip').remove(); // remove any pre existing chips
-	}
+  }
 
-	formSubmitHandler(e) {
+  formSubmitHandler(e) {
     e.preventDefault();
     var form = e.target;
     var keywords = []
@@ -26,37 +26,37 @@ class CreateStream extends Component {
     for (var i = 0; i < category_selections.length; i++) {
       categories.push(category_selections[i].text)
     }
-		const newStream = {
-			title: form.title.value,
-			description: form.description.value,
-			keywords,
-			categories
-		}
-		this.props.createStream(newStream);
-	}
-	render() {
-		return (
+    const newStream = {
+      title: form.title.value,
+      description: form.description.value,
+      keywords,
+      categories
+    }
+    this.props.createStream(newStream);
+  }
+  render() {
+    return (
       <div className='container'>
-  			<StreamForm 
-  				submitHandler={this.formSubmitHandler.bind(this)}
-  				categories={this.props.categories}
-  			/>
+        <StreamForm 
+          submitHandler={this.formSubmitHandler.bind(this)}
+          categories={this.props.categories}
+        />
       </div>
-		)
-	}
+    )
+  }
 }
 
 const mapStateToProps = (state) => {
-	return {
-		categories: ['Art', 'Music', 'Sports', 'History', 'Politics', 
+  return {
+    categories: ['Art', 'Music', 'Sports', 'History', 'Politics', 
       'News', 'Education']
-	};
+  };
 }
 
 const mapDispatchToProps = (dispatch) => {
-	return {
-		actions: bindActionCreators(Actions, dispatch)
-	};
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  };
 }
 
 export default connect(mapStateToProps, Actions)(CreateStream);

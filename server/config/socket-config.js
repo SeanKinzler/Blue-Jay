@@ -2,6 +2,8 @@ var socketIO = require('socket.io')();
 var Tree = require('./connectionTree.js');
 var fs = require('fs');
 var path = require('path');
+var jwt = require('./authentication.js');
+var db = require('../db/rawSQLHandlers.js');
 
 var serverConfig = {
   key: fs.readFileSync(path.join(__dirname, './credentials/key.pem')),
@@ -45,7 +47,7 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('stop', function (data) {
-    
+    console.log(data);
     currentRoom[socket.id] = data.roomName;
     if (socket.adapter.rooms[data.roomName]) {
       var yourId = socket.id;
@@ -71,12 +73,39 @@ io.sockets.on('connection', function(socket) {
         });  
       });
 
-    } else {
-      socket.join(data.roomName);
+    } else {  
 
-      rooms[data.roomName] = new Tree(socket.id, 0);
-        
-      socket.emit('created', 'You have created the room: "' + data.roomName + '"');
+      jwt.decode(data.token, function (error, userData) {
+
+        if (error) {
+
+          console.log(error);
+          socket.emit('failure', 'That ain\'t a real token!');
+
+        } else {
+
+          db.getUser(userData, {
+            send: function (row) {
+              for (var i = 0; i < row.ownedStreams.length; i++) { 
+                console.log(data.roomName);
+                if ((row.username + '/' + row.ownedStreams[i].title).toLowerCase() === data.roomName.toLowerCase()) {
+                  socket.join(data.roomName);
+
+                  rooms[data.roomName] = new Tree(socket.id, 0);
+                  
+                  socket.emit('created', 'You have created the room: "' + data.roomName + '"');
+                  return;
+                }
+              }
+
+              socket.emit('failure', 'This ain\'t yo stream');
+            },
+            sendStatus: function () {
+              socket.emit('failure', 'That ain\'t a real token!');
+            }
+          });
+        }
+      });
     }
   });
 

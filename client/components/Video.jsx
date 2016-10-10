@@ -6,6 +6,8 @@ import ChatContainer from './ChatContainer.jsx';
 import EZRTC from '../lib/webRTC';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
+import urlUtil from '../utils/urlHelper.jsx';
 
 class Video extends Component {
 
@@ -15,29 +17,60 @@ class Video extends Component {
 
     this.state = {
       socket: io.connect(),
-      user: localStorage.user || 'DudeClown McDoogle',
-      roomId: window.location.pathname.slice(1),
-      room: window.location.pathname.slice(window.location.pathname.lastIndexOf('/') + 1),
+      roomId: urlUtil.deslugify(window.location.pathname.slice(1)),
+      room: urlUtil.deslugify(window.location.pathname.slice(window.location.pathname.lastIndexOf('/') + 1)),
       host: window.location.pathname.slice(1, window.location.pathname.lastIndexOf('/')),
     };
+
+    var context = this;
+
+    this.state.socket.on('failure', function () {
+
+      context.state.socket.disconnect();
+
+      if (window.checkForHelp) {
+        clearInterval(window.checkForHelp);
+
+        if (parentStream) {
+          parentStream.getTracks().forEach(function (track) {
+            track.stop();
+          });
+        }
+      }
+
+      setTimeout(function () {
+        browserHistory.push('/nostream');
+      }, 1000);
+
+    });
   }
 
   componentWillMount() {
     localStorage.username = this.props.username || localStorage.username;
+    
+
     EZRTC(this.state.roomId, localStorage.username, this.state.socket);
+
   }
 
   componentWillUnmount() {
     this.state.socket.disconnect();
-    clearInterval(window.checkForHelp);
 
-    parentStream.getTracks().forEach(function (track) {
-      track.stop();
-    });
+    if (window.checkForHelp) {
+      clearInterval(window.checkForHelp);
 
-    ownStream.getTracks().forEach(function (track) {
-      track.stop();
-    });
+      if (parentStream) {
+        parentStream.getTracks().forEach(function (track) {
+          track.stop();
+        });
+      }
+
+      if (ownStream) {
+        ownStream.getTracks().forEach(function (track) {
+          track.stop();
+        });
+      }
+    }
   }
 
   render () {

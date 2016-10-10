@@ -1,4 +1,4 @@
-module.exports = [
+var allIcons = [
   'info_outline',
   'input',
   'invert_colors',
@@ -240,3 +240,7 @@ module.exports = [
   'assignment_late',
   'mode_edit'
 ];
+
+module.exports = function () {
+  return allIcons[Math.floor(Math.random() * allIcons.length)];
+};
