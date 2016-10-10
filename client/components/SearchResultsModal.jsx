@@ -9,21 +9,22 @@ const SearchResultsModal = ({selectedStream, modalIsOpen, onRequestClose}) => {
 
 	return (
 		<Modal
-		  isOpen={ modalIsOpen }
-		  onRequestClose={ onRequestClose }
-		  style={SearchResultsModalStyling}
-		>
-			<div>
-				<h1>{ selectedStream.title }</h1>
-				<p>{ selectedStream.description }</p>
-				<p>Subscriber count: { selectedStream.subscriberCount }</p>
-				<p>Online: { selectedStream.online }</p>
-				<p>CreatorId: { selectedStream.CreatorId }</p>
-				<p>Created: { selectedStream.createdAt }</p>
-			</div>
-			<a className='btn blue' onClick={ onRequestClose }>Close</a>
+		  header='Modal Header'
+		  trigger={
+		    <Button waves='light'>MODAL</Button>
+		  }>
+		  <div>
+		  				<h1>{ selectedStream.title }</h1>
+		  				<p>{ selectedStream.description }</p>
+		  				<p>Subscriber count: { selectedStream.subscriberCount }</p>
+		  				<p>Online: { selectedStream.online }</p>
+		  				<p>CreatorId: { selectedStream.CreatorId }</p>
+		  				<p>Created: { selectedStream.createdAt }</p>
+		  			</div>
 		</Modal>
+
 	)
 }
+
 
 export default SearchResultsModal;
