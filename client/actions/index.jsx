@@ -118,7 +118,7 @@ export const requestStreams = (streams) => {
 export const requestUserStreams = (streams) => {
 	return {
 		type: REQUEST_USER_STREAMS,
-		data: streams.data.ownedStreams
+		data: streams
 	}
 }
 
@@ -222,19 +222,21 @@ export const closeModal = () => {
 export const subscriptionsRequested = (subscriptions) => {
 	return {
 		type: REQUEST_SUBSCRIPTIONS,
-		data: subscriptions.data
+		data: subscriptions
 	}
 }
 
-export const subscriptionAdded = () => {
+export const subscriptionAdded = (stream) => {
 	return {
-		type: ADD_SUBSCRIPTION
+		type: ADD_SUBSCRIPTION,
+		stream
 	}
 }
 
-export const subscriptionRemoved = () => {
+export const subscriptionRemoved = (stream) => {
 	return {
-		type: REMOVE_SUBSCRIPTION
+		type: REMOVE_SUBSCRIPTION,
+		stream
 	}
 }
 
@@ -244,7 +246,7 @@ export const subscriptionError = (error) => {
 	}
 }
 
-export const requestSubscriptions = (username) => {
+export const requestSubscriptions = () => {
 	return (dispatch) => {
 		axios.get('https://localhost:8443/api/users')
 		.then((res) => {
@@ -256,13 +258,13 @@ export const requestSubscriptions = (username) => {
 	}
 }
 
-export const addSubscription = (stream, username) => {
+export const addSubscription = (stream) => {
 	return (dispatch) => {
 		axios.post('https://localhost:8443/api/users/subscriptions',
 			stream
 		)
 		.then((res) => {
-			dispatch(subscriptionAdded(res));
+			dispatch(subscriptionAdded(stream));
 		})
 		.catch((err) => {
 			dispatch(requestError(err));
@@ -270,13 +272,13 @@ export const addSubscription = (stream, username) => {
 	}
 }
 
-export const removeSubscription = (stream, username) => {
+export const removeSubscription = (stream) => {
 	return (dispatch) => {
 		axios.put('https://localhost:8443/api/users/subscriptions',
 			stream
 		)
 		.then((res) => {
-			dispatch(subscriptionAdded(res));
+			dispatch(subscriptionAdded(stream));
 		})
 		.catch((err) => {
 			dispatch(requestError(err));
@@ -361,11 +363,12 @@ export const deleteStream = (stream) => {
 	}
 }
 
-export const getUserStreams = () => {
+export const getUserData = () => {
 	return (dispatch) => {
 		axios.get('https://localhost:8443/api/users')
 		.then((res) => {
-			dispatch(requestUserStreams(res))
+			dispatch(requestUserStreams(res.data.ownedStreams))
+			dispatch(subscriptionsRequested(res.data.subscriptions))
 		})
 		.catch((err) => {
 			dispatch(requestError(err))
