@@ -9,7 +9,7 @@ import Channel from './pages/Channel.jsx';
 import CreateStream from './pages/CreateStream.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import UserSignUp from './pages/UserSignUp.jsx';
-import Login from './pages/Login.jsx'
+import Login from './pages/Login.jsx';
 import configureStore from './store/storeConfig.jsx';
 import { persistStore } from 'redux-persist';
 import Search from './pages/Search.jsx';
@@ -17,6 +17,7 @@ import RequireAuth from './components/RequireAuth.jsx';
 import Subscriptions from './pages/Subscriptions.jsx';
 import Streams from './pages/Streams.jsx';
 import Profile from './pages/Profile.jsx';
+import JwtPage from './pages/JwtPage.jsx';
 
 const store = configureStore();
 persistStore(store);
@@ -33,6 +34,7 @@ render((
         <Route path='create' component={CreateStream} onEnter={requireAuth} />
         <Route path='login' component={Login} />
         <Route path='signup' component={UserSignUp} />
+        <Route path='jwt/:token' component={JwtPage} />
         <Route path=':channel' component={ Profile } onEnter={requireAuth} />
         <Route path=':channel/:channelId' component={Channel} onEnter={requireAuth} />
       </Route>

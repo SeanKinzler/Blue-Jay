@@ -45,6 +45,10 @@ module.exports = {
       outline                    : 'none',
       padding                    : '20px',
     }
+  },
+
+  googleLogin: {
+    marginTop: '50px',
   }
 
 };
