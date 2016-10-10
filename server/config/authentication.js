@@ -26,7 +26,7 @@ var checkToken = function (req, res, next) {
         res.sendStatus(302);
 
       } else {
-        
+
         res.sendStatus(200);
 
       }
@@ -54,7 +54,7 @@ var authMiddleware = function (req, res, next) {
       } else {
 
         req.username = decoded.username;
-        req.id = decoded.id;
+        req.userId = decoded.id;
 
         next();
 
