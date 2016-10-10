@@ -7,6 +7,10 @@ import UserStreamsModal from '../components/UserStreamsModal.jsx';
 
 class Streams extends Component {
 	
+	componentWillMount() {
+	  this.props.getUserData();
+	}
+
 	deleteStreamHandler(stream) {
 		const prompt = window.confirm('Are you sure you want to delete this stream?')
 		if (prompt) {
