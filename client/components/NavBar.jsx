@@ -24,7 +24,7 @@ class NavBar extends Component {
     } else {
       return (
         <li>
-          <a href='/google/login'>Login</a>
+          <Link to='/login'>Login</Link>
         </li>
       )
     }
