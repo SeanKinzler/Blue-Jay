@@ -90,7 +90,8 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
         body: { 
           'title': random,
           'categories': ['testCat'],
-          'keywords': ['testKey']
+          'keywords': ['testKey'],
+          'description': 'sick info broski'
         }
       }, {
         send: function (input) {
@@ -102,10 +103,11 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
 
     it('should be able to search streams', function (done) {
       dbHelpers.searchStreams({
-        params: {
-          
-        },
         body: {
+          creatorName: random2,
+          description: 'sick info broski',
+          categories: ['testCat'],
+          keywords: ['testKey'],
         }
       }, {
         send: function (input) {
