@@ -338,10 +338,13 @@ const streamEdited = (stream) => {
 
 export const editStream = (stream) => {
 	return (dispatch) => {
+		var newStream = Object.assign({}, stream);
+		delete newStream['username'];
 		axios.put('/api/streams', 
-			stream
+			newStream
 		)
 		.then((res) => {
+			console.log('stream: ', stream);
 			dispatch(streamEdited(stream));
 		})
 		.catch((err) => {

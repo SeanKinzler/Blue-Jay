@@ -273,6 +273,7 @@ module.exports = {
       }
     }
     queries = query.split('\n');
+    console.log(queries);
     executeQueries(queries, res);
   },
 

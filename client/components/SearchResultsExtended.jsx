@@ -46,7 +46,6 @@ const SearchResultsExtended = ({searchResults, openModal, addSubscription, remov
 												<p>Created: { stream.createdAt }</p>
 										  </div>
 										</Modal>
-
 									</td>
 									<td>Creator:<br/>{ stream.creatorId }</td>
 									<td>{ isOnline(stream) }</td>

@@ -18,9 +18,10 @@ class Streams extends Component {
     }
   }
 
-  editStreamHandler(e) {
+  editStreamHandler(e, stream) {
     e.preventDefault();
     const form = e.target;
+    this.props.userStreams.selectedStream = stream;
     this.props.userStreams.selectedStream.title = form.title.value.trim();
     this.props.userStreams.selectedStream.description = form.description.value.trim();
     this.props.editStream(this.props.userStreams.selectedStream);
@@ -40,6 +41,8 @@ class Streams extends Component {
           streams={ this.props.userStreams.data }
           onStreamSelect={ (stream) => { this.props.openStreamModal(stream) } }
           deleteStream={this.deleteStreamHandler.bind(this) }
+          onRequestClose={ () => { this.props.closeStreamModal() } }
+          editStream={ this.editStreamHandler.bind(this) }
         />
         <UserStreamsModal 
           selectedStream={ this.props.userStreams.selectedStream }
