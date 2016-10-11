@@ -1,5 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router';
+import allIcons from '../lib/allIcons.js';
+import allColors from '../lib/allColors.js';
+import urlHelper from '../utils/urlHelper.jsx';
 
 export default ({subscriptions}) => {
 	return (
@@ -11,11 +14,15 @@ export default ({subscriptions}) => {
 		  { subscriptions.map((sub, i) => {
 		  	return (
 				  <li key={i} className="collection-item avatar">
-				    <i className="material-icons circle blue">loop</i>
-				    <span className="title">{ sub.title }</span>
+				    <i className={`material-icons circle ${ allColors() }`}>{ allIcons() }</i>
+				    <Link to={ `username/${ urlHelper.slugify(sub.title) }` } >
+					    <h3 className="title">{ sub.title }</h3>
+					  </Link>
 				    <p>{ sub.description }
 				    </p>
-				    <Link to='username/title' className="secondary-content"><i className="material-icons">contact_phone</i></Link>
+				    <Link to={ `${ localStorage.username + '/' + urlHelper.slugify(sub.title) }` } className="secondary-content">
+				    	<i className="material-icons">contact_phone</i>
+				    </Link>
 				  </li>
 		  	)
 		  })}
