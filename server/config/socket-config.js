@@ -96,8 +96,12 @@ io.sockets.on('connection', function(socket) {
                 if ((row.username + '/' + row.ownedStreams[i].title).toLowerCase() === data.roomName.toLowerCase()) {
                   socket.join(data.roomName);
 
+                  currentRoom[socket.id] = data.roomName;
+
                   rooms[data.roomName] = new Tree(socket.id, 0);
                   
+                  db.toggleStreamOn({body: {title: row.ownedStreams[i].title}});
+
                   socket.emit('created', 'You have created the room: "' + data.roomName + '"');
                   return;
                 }
@@ -137,6 +141,10 @@ io.sockets.on('connection', function(socket) {
 
   socket.on('disconnect', function () {
     if (rooms[currentRoom[socket.id]]) {
+
+      if (!socket.adapter.rooms[currentRoom[socket.id]]) {
+        db.toggleStreamOff({body: { title: currentRoom[socket.id].slice(currentRoom[socket.id].lastIndexOf('/') + 1)}});
+      }
 
       rooms[currentRoom[socket.id]].remove(socket.id, function (targetId, selfId) {
         socket.to(selfId).emit('RTC-target', {

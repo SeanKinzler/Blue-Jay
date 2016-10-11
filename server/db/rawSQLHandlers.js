@@ -1,6 +1,19 @@
 var sql = require('./sqlConnectionHelper.js');
 
 module.exports = {
+
+  toggleStreamOff: (req, res) => {
+    sql('update streams set online="false" where title="' + req.body.title + '"', function (error, rows, fields) {
+      console.log(arguments);
+    });
+  },
+
+  toggleStreamOn: (req, res) => {
+    sql('update streams set online="true" where title="' + req.body.title + '"', function (error, rows, fields) {
+      console.log(arguments);
+    });
+  },
+
   //must have googleId, createdAt, avatarUrl
   addUser: (req, res) => {
     var keys = [];
