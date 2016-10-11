@@ -27,14 +27,24 @@ io.sockets.on('connection', function(socket) {
 
   socket.on('getStreams', function () {
     var results = [];
+    var realRoom = true;
+    for (var roomName in socket.adapter.rooms) {
+      var room = socket.adapter.rooms[roomName];
+      for (var socketId in room.sockets) {
+        if (socketId === roomName) {
+          realRoom = false;
+          break;
+        }
+        break;
+      }
 
-    for (var key in socket.adapter.rooms) {
-      if (key[0] !== '/') {
+      if (realRoom) {
         results.push({ 
-          title: key,
-          size: socket.adapter.rooms[key].length,
+          title: roomName,
+          size: socket.adapter.rooms[roomName].length,
         });
       }
+      realRoom = true;
     }
 
     socket.emit('allStreams', results);

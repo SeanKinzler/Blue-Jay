@@ -11,19 +11,21 @@ class Subscriptions extends Component {
 	}
 
 	renderSubscriptions() {
+		console.log(this.props.subscriptions);
 		if (!this.props.subscriptions.length) {
 			return (
 				<div>You have no subscriptions. 
 					<Link to='/search'>Go search for some!</Link>
 				</div>
 			)
+		} else {
+			return (
+				<UserSubscriptions 
+					subscriptions={this.props.subscriptions} 
+					removeSubscription={this.props.removeSubscription}
+				/>
+			)
 		}
-		return (
-			<UserSubscriptions 
-				subscriptions={this.props.subscriptions} 
-				removeSubscription={this.props.removeSubscription}
-			/>
-		)
 	}
 
 	render() {

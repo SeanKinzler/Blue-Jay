@@ -1,16 +1,24 @@
 import axios from 'axios';
 
 const slugify = (string) => {
-  return string.split(' ').join('_');
+  if (string) {
+    return string.split(' ').join('_');
+  } else {
+    return '';
+  }
 };
 
 const deslugify = (slug) => {
-  var string = slug.slice(0).split('_');
-  string.forEach(function (word) {
-    word = word[0].toUpperCase() + word.slice(1);
-  });
+  if (slug) {
+    var string = slug.slice(0).split('_');
+    string.forEach(function (word) {
+      word = word[0].toUpperCase() + word.slice(1);
+    });
 
-  return string.join(' ');
+    return string.join(' ');
+  } else {
+    return '';
+  }
 };
 
 export default {
