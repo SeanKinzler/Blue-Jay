@@ -53,9 +53,11 @@ class Search extends Component {
           searchResults={searchResults} 
           openModal={this.props.openModal}
           addSubscription={this.props.addSubscription}
+          removeSubscription={this.props.removeSubscription}
           selectedStream={this.props.modal.selectedStream} 
           modalIsOpen={this.props.modal.modalIsOpen}
           onRequestClose={ () => { this.props.closeModal() } }
+          subscriptions={this.props.subscriptions}
         />
       )
     }
@@ -65,9 +67,11 @@ class Search extends Component {
           searchResults={searchResults}
           openModal={this.props.openModal}
           addSubscription={this.props.addSubscription}
+          removeSubscription={this.props.removeSubscription}
           selectedStream={this.props.modal.selectedStream} 
           modalIsOpen={this.props.modal.modalIsOpen}
           onRequestClose={ () => { this.props.closeModal() } }
+          subscriptions={this.props.subscriptions}
         />
       )
     }
@@ -119,6 +123,7 @@ const mapStateToProps = (state) => {
   return {
     modal: state.modal,
     streams: state.streams,
+    subscriptions: state.subscriptions.data.map(s=>s.title),
     categories: {
       title: 'Categories', 
       handler: 'filterStreamCategories',

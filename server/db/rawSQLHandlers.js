@@ -40,11 +40,10 @@ module.exports = {
   },
   //return owned streams aswell
   getUser: (req, res) => {
-    var query1 = 'SELECT u.id, u.username, sub.phoneNotifications, sub.emailNotifications, s.title, s.subscriberCount, s.description, us.username AS creatorName FROM users u ' + 
+    var query1 = 'SELECT u.id, u.username, sub.phoneNotifications, sub.emailNotifications, s.id as streamId, s.title, s.subscriberCount, s.description, us.username AS creatorName FROM users u ' + 
       'LEFT JOIN (subscriptions sub, streams s, users us) ' + 
       'ON (u.username="' + req.username + '" AND u.id = sub.userId AND s.id = sub.streamId AND s.creatorId=us.id) WHERE u.username="' + req.username + '";\n'
       query2 = 'SELECT s.*, u.username FROM streams s JOIN (users u) ON s.creatorId=u.id WHERE creatorId=(SELECT id FROM users WHERE username="' + req.username +'");\n'
-    console.log(query1);
     sql(query1,
     function (error, rows, fields) {
       if (error) {
@@ -66,7 +65,8 @@ module.exports = {
                     emailNotifications: rows[i].emailNotifications,
                     title: rows[i].title,
                     online: rows[i].online,
-                    descriptions: rows[i].description
+                    description: rows[i].description,
+                    creatorName: rows[i].creatorName
                   });
                 }
               }
@@ -79,7 +79,8 @@ module.exports = {
                     emailNotifications: rows.emailNotifications,
                     title: rows.title,
                     online: rows.online,
-                    descriptions: rows.description
+                    description: rows.description,
+                    creatorName: rows.creatorName
                   });
                 res.send(rows);
                 return;
