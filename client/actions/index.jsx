@@ -67,8 +67,8 @@ export const signInUser = (credentials) => {
 }
 
 export const signOutUser = () => {
-	browserHistory.push('/');
 	localStorage.removeItem('token');
+	browserHistory.push('/');
 	return {
 		type: SIGN_OUT_USER
 	}
@@ -278,7 +278,7 @@ export const removeSubscription = (stream) => {
 			stream
 		)
 		.then((res) => {
-			dispatch(subscriptionAdded(stream));
+			dispatch(subscriptionRemoved(stream));
 		})
 		.catch((err) => {
 			dispatch(requestError(err));

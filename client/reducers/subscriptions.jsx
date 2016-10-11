@@ -21,7 +21,7 @@ const Subscriptions = (state = initialState, action) => {
 			})
 		case REMOVE_SUBSCRIPTION: 
 			var altered = state.data.reduce((a, c) => {
-					if (c.id === action.stream.id) return a;
+					if (c.title === action.stream.title) return a;
 					return a.concat([c]);
 				}, [])
 			return Object.assign({}, state, {

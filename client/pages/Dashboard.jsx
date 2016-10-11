@@ -17,7 +17,7 @@ class Dashboard extends Component {
       <div className='container'>
         <div className='row'>
           <div className='col s12 l6'>
-            <SubscriptionsList />
+            <SubscriptionsList subscriptions={ this.props.subscriptions.slice(0, 4) }/>
           </div>
           <div className='col s12 l6'>  
             <StreamsList streams={ this.props.userStreams.slice(0, 4) }/>     
