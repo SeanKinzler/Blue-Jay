@@ -42,8 +42,16 @@ export default ({subscriptions}) => {
     );
   } else {
     return (
-      <div>
-      </div>
+      <ul className="collection with-header">
+        <li className='collection-header'>
+          <h5>Subscriptions</h5>
+        </li>
+        <li className="collection-item">
+          <div>You have no subscriptions. 
+            <Link to='/search'>Go search for some!</Link>
+          </div>
+        </li>
+      </ul>
     );
   }
 
