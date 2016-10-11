@@ -53,6 +53,9 @@ class Search extends Component {
           searchResults={searchResults} 
           openModal={this.props.openModal}
           addSubscription={this.props.addSubscription}
+          selectedStream={this.props.modal.selectedStream} 
+          modalIsOpen={this.props.modal.modalIsOpen}
+          onRequestClose={ () => { this.props.closeModal() } }
         />
       )
     }
@@ -62,6 +65,9 @@ class Search extends Component {
           searchResults={searchResults}
           openModal={this.props.openModal}
           addSubscription={this.props.addSubscription}
+          selectedStream={this.props.modal.selectedStream} 
+          modalIsOpen={this.props.modal.modalIsOpen}
+          onRequestClose={ () => { this.props.closeModal() } }
         />
       )
     }
@@ -81,11 +87,6 @@ class Search extends Component {
     return (
       <div className='container'>
         <SearchBar onTermChange={this.props.searchStreamTerm} />
-        <SearchResultsModal 
-          selectedStream={this.props.modal.selectedStream} 
-          modalIsOpen={this.props.modal.modalIsOpen}
-          onRequestClose={ () => { this.props.closeModal() } }
-        />
         <div className='row'>
           <div className='col s4 m2'>
             <SearchFilter filterOptions={this.props.categories} />
