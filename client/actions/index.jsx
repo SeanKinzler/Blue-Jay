@@ -67,8 +67,8 @@ export const signInUser = (credentials) => {
 }
 
 export const signOutUser = () => {
-	browserHistory.push('/');
 	localStorage.removeItem('token');
+	browserHistory.push('/');
 	return {
 		type: SIGN_OUT_USER
 	}
