@@ -33,6 +33,7 @@
     "express": "^4.14.0",
     "express-static": "^1.0.3",
     "forever": "^0.15.2",
+    "forky": "^0.3.0",
     "fs": "0.0.1-security",
     "jsonwebtoken": "^7.1.9",
     "mysql": "^2.11.1",
