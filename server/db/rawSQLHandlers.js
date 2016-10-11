@@ -65,8 +65,8 @@ module.exports = {
                     emailNotifications: rows[i].emailNotifications,
                     title: rows[i].title,
                     online: rows[i].online,
-                    descriptions: rows[i].description,
-                    createName: rows[i].creatorName
+                    description: rows[i].description,
+                    creatorName: rows[i].creatorName
                   });
                 }
               }
@@ -79,8 +79,8 @@ module.exports = {
                     emailNotifications: rows.emailNotifications,
                     title: rows.title,
                     online: rows.online,
-                    descriptions: rows.description,
-                    createName: rows.creatorName
+                    description: rows.description,
+                    creatorName: rows.creatorName
                   });
                 res.send(rows);
                 return;
