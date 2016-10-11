@@ -1,9 +1,13 @@
 import React from 'react';
 import { Modal, Button } from 'react-materialize';
 
-const SearchResultsExtended = ({searchResults, openModal, addSubscription, subscriptions}) => {
-	const isSubscribed = (stream) => {
+const SearchResultsExtended = ({searchResults, openModal, addSubscription, removeSubscription, subscriptions}) => {
 
+	const isSubscribed = (stream) => {
+		if (subscriptions.includes(stream.title)) {
+			return <i onClick={ () => { removeSubscription(stream) } } className='material-icons circle green'>done</i>;
+		}
+		return <i onClick={ () => { addSubscription(stream) } } className='material-icons circle'>done</i>;
 	}
 
 	const isOnline = (stream) => {
@@ -13,11 +17,12 @@ const SearchResultsExtended = ({searchResults, openModal, addSubscription, subsc
 			return <i className="material-icons">volume_off</i>;
 		}
 	}
+
 	return (
 		<div>
 			{ searchResults.map((stream) => {
 				return (
-				<ul key={stream.title} className="collection with-header col s12">
+				<ul key={stream.id} className="collection with-header col s12">
 				  <li className="collection-header">
 				  	<h5>{stream.title}</h5>
 				  	<p>{stream.description}</p>
@@ -26,7 +31,7 @@ const SearchResultsExtended = ({searchResults, openModal, addSubscription, subsc
 				  	<table className='centered'>
 				  		<tbody>
 				  			<tr>
-									<td><i onClick={ () => { addSubscription(stream) } } className='material-icons circle green'>done</i></td>
+									<td>{ isSubscribed(stream) }</td>
 									<td>
 										<Modal
 										  header={ stream.title }
@@ -37,7 +42,7 @@ const SearchResultsExtended = ({searchResults, openModal, addSubscription, subsc
 												<p>Description: { stream.description }</p>
 												<p>Subscriber count: { stream.subscriberCount }</p>
 												<p>Online: { stream.online }</p>
-												<p>CreatorId: { stream.CreatorId }</p>
+												<p>Creator: { stream.creatorName }</p>
 												<p>Created: { stream.createdAt }</p>
 										  </div>
 										</Modal>
