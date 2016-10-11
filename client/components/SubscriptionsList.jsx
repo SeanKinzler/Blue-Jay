@@ -8,9 +8,9 @@ export default ({subscriptions}) => {
 		  	<h5>Subscriptions</h5>
 		  </li>
 
-		  { subscriptions.map((sub) => {
+		  { subscriptions.map((sub, i) => {
 		  	return (
-				  <li className="collection-item avatar">
+				  <li key={i} className="collection-item avatar">
 				    <i className="material-icons circle blue">loop</i>
 				    <span className="title">{ sub.title }</span>
 				    <p>{ sub.description }
