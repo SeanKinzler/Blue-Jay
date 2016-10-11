@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router';
 import randomIcon from '../lib/allIcons.js';
 import randomColor from '../lib/allColors.js';
+import urlUtil from '../utils/urlHelper.jsx';
 
 export default class LiveNow extends Component {
   constructor(props) {
@@ -53,7 +54,7 @@ export default class LiveNow extends Component {
                       <i className={ 'valign material-icons circle ' + randomColor() }>{ randomIcon() }</i>
                     </Link>
                     <h6 className="title">
-                      Title: <Link to={ '/' + streamObj.title }>{ title }</Link>
+                      Title: <Link to={ '/' + urlUtil.slugify(streamObj.title) }>{ title }</Link>
                     </h6>
                     
                     <h6>

@@ -47,7 +47,6 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('stop', function (data) {
-    currentRoom[socket.id] = data.roomName;
     if (socket.adapter.rooms[data.roomName]) {
       var yourId = socket.id;
 
@@ -61,17 +60,15 @@ io.sockets.on('connection', function(socket) {
           yourId: selfId,
         });
 
-        socket.emit('chatMessage', {
-          user: 'You have joined the room: ' + data.roomName,
-          text: '',
-        });
-
-        socket.broadcast.to(data.roomName).emit('chatMessage', {
-          user: '',
-          text: data.user + ' has joined the room.',
-        });  
+        if (!currentRoom[socket.id]) {
+          socket.broadcast.to(data.roomName).emit('chatMessage', {
+            user: '',
+            text: data.user + ' has joined the room.',
+          });
+        }
       });
 
+      currentRoom[socket.id] = data.roomName;
     } else {  
 
       jwt.decode(data.token, function (error, userData) {
