@@ -14,9 +14,9 @@ const StreamsList = ({streams}) => {
 		}
 		return (
 			<span>
-				{ streams.map((stream) => {
+				{ streams.map((stream, i) => {
 					return (
-						<li key={ stream.id } className='collection-item avatar'>
+						<li key={ i } className='collection-item avatar'>
 							<i className='material-icons circle red'>loop</i>
 							<span className='title'>{ stream.title }</span>
 							<p>{ stream.description }</p>
