@@ -8,12 +8,24 @@ export default class ChatContainer extends Component {
     this.state = {
       socket: props.socket,
       user: props.user,
+      roomId: props.roomId,
       room: props.room,
       messages: [{
         user: '',
         text: 'You have entered the room: "' + props.room + '"',
       }]
     };
+
+    var context = this;
+    this.state.socket.on('chatMessage', function (data) {
+      console.log(data);
+      context.state.messages.push({
+        user: data.user,
+        text: data.text
+      });
+
+      context.forceUpdate();
+    });
 
     window.__context = this;
   }
@@ -24,25 +36,16 @@ export default class ChatContainer extends Component {
   }
 
   componentDidMount() {
-    var context = this;
-    this.state.socket.on('chatMessage', function (data) {
-      context.state.messages.push({
-        user: data.user,
-        text: data.text
-      });
-
-      context.forceUpdate();
-    });
+    
   }
 
   sendMessage(e) {
     e.preventDefault();
 
     var submission = document.getElementById('messageText');
-      console.log(window.__context.state.socket);
 
     window.__context.state.socket.emit('chatMessage', {
-      room: window.__context.state.room,
+      room: window.__context.state.roomId,
       user: window.__context.state.user,
       text: submission.value,
     });

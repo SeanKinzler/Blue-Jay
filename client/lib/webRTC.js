@@ -232,6 +232,7 @@ module.exports = function (room, user, socket) {
         roomName: room,
         user: user,
         time: data,
+        token: localStorage.token,
       });
     });
 

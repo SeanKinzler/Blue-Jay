@@ -1,46 +1,38 @@
-// import React, { Component } from 'react';
-import {React} from 'react';
-import {ReactDOM} from 'react-dom';
-import {LoginPage} from './login';
-import {VideoPage} from './video';
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import { Router, IndexRoute, Route, browserHistory, Link } from 'react-router';
+import * as Actions from '../actions/index.jsx';
+import { connect } from 'react-redux';
+import NavBar from './NavBar.jsx';
 
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      loggedIn: false
-    }
+class App extends Component {
 
-    //Login Handlers:
-    this.loginHandlers = {
-      login: (event) => {
-        this.setState({loggedIn: true});
-      }
-    }
-
-    //Video Handlers:
-    this.videoHandlers = {
-      start: (event) => { console.log('Start Video') },
-      stop: (event) => { console.log('Stop Video') }
-    }
+  signOutHandler() {
+    this.props.signOutUser();
   }
 
   render() {
     return (
       <div>
-        <h1>Blue Jay</h1>
+        <NavBar 
+          signOut={this.signOutHandler.bind(this)}
+        />
+        { this.props.children } 
       </div>
     );
   }
-
-  // render() {
-  //   return (
-  //     <div>
-  //       <h1>Blue Jay</h1>
-  //       {this.state.loggedIn ? <Login /> : <Video />}
-  //     </div>
-  //   );
-  // }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+const mapStateToProps = (state) => {
+  return {
+    authenticated: state.auth.authenticated,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, Actions)(App);

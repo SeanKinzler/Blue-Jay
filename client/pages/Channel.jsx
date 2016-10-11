@@ -6,10 +6,13 @@ import {Link} from 'react-router';
 
 export default ({params}) => {
   return(
-    <div className='channel'>
-      <div>
-        <h4 className='center-align'>Channel: { `${params.channelId}` }</h4>
-        <Video />
+    <div className=''>
+      <h4 className='center-align'>Channel: { `${params.channelId.split('_').join(' ')}` }</h4>
+      <Video />
+      <div id='infoPane'>
+        <div className='teal' id='infoBanner'>
+          <h3 className='center-align white-text'>Class Info Below</h3>
+        </div>
       </div>
       <div className='row'>
         <button className="toggleInfoBox" onClick={('.infoBox').toggle();}></button>

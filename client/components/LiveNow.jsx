@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router';
-import allIcons from '../lib/allIcons.js';
-import allColors from '../lib/allColors.js';
+import randomIcon from '../lib/allIcons.js';
+import randomColor from '../lib/allColors.js';
+import urlUtil from '../utils/urlHelper.jsx';
 
 export default class LiveNow extends Component {
   constructor(props) {
@@ -22,14 +23,6 @@ export default class LiveNow extends Component {
 
     props.socket.emit('getStreams');
 
-  }
-
-  randomColor() {
-    return allColors[Math.floor(Math.random() * allColors.length)];
-  }
-
-  randomIcon() {
-    return allIcons[Math.floor(Math.random() * allIcons.length)];
   }
 
   componentWillMount() {
@@ -57,15 +50,15 @@ export default class LiveNow extends Component {
 
                 return ( 
                   <li className="collection-item avatar" key={ index }>
-                    <a className="valign" href={ '/' + streamObj.title }>
-                      <i className={ 'valign material-icons circle ' + context.randomColor() }>{ context.randomIcon() }</i>
-                    </a>
+                    <Link className="valign" to={ '/' + streamObj.title }>
+                      <i className={ 'valign material-icons circle ' + randomColor() }>{ randomIcon() }</i>
+                    </Link>
                     <h6 className="title">
-                      Title: <a href={ '/' + streamObj.title }>{ title }</a>
+                      Title: <Link to={ '/' + urlUtil.slugify(streamObj.title) }>{ title }</Link>
                     </h6>
                     
                     <h6>
-                      Host: <a href={ '/' + host }>{ host }</a>
+                      Host: <Link to={ '/' + host }>{ host }</Link>
                     </h6>
                     
                     <h7>
@@ -92,9 +85,9 @@ export default class LiveNow extends Component {
           <ul className="collection with-header">
             <li className="collection-header">
               <h5>The are no streams right now.</h5>
-              <a href='/channel/StreamOne'>
+              <Link href='/streams'>
                 <h6>Be the first to start streaming!</h6>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

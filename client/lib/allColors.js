@@ -1,4 +1,4 @@
-module.exports = [
+var allColors = [
   'red',
   'pink',
   'purple',
@@ -19,3 +19,12 @@ module.exports = [
   'grey',
   'blue-grey'
 ];
+
+module.exports = function () {
+  return allColors[Math.floor(Math.random() * allColors.length)];
+};
+
+
+
+
+

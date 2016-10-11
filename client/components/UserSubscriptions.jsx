@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const UserSubscriptions = ({subscriptions, removeSubscription}) => {
 	const isOnline = (stream) => {
@@ -12,11 +13,13 @@ const UserSubscriptions = ({subscriptions, removeSubscription}) => {
 		<div>
 			{ subscriptions.map((stream) => {
 				return (
-					<div key={stream.id} className='col s12'>
+					<div key={stream.title} className='col s12'>
 							<div className="card blue">
 								<div className="card-content white-text">
 									<span className="card-title">{ stream.title }</span>
 									<p>{ stream.description }</p>
+									<span>*Stream titles don't work well as urls. Use slugs.</span>
+									<Link to='stream/one' className="secondary-content"><i className="material-icons">contact_phone</i></Link>
 								</div>
 								<div className="card-action">
 									<span>{ stream.creatorId }</span>

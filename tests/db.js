@@ -108,6 +108,7 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
           description: 'sick info broski',
           categories: ['testCat'],
           keywords: ['testKey'],
+          title: random,
         }
       }, {
         send: function (input) {
@@ -120,7 +121,9 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
 
     it('should be able to get a stream', function (done) {
       dbHelpers.getStream({
-        title: random
+        body: {
+          title: random
+        }
       }, {
         send: function (input) {
           expect(input).to.not.equal(404);
@@ -132,8 +135,8 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
 
     it('should be able to update a stream', function (done) {
       dbHelpers.updateStream({
-        title: random,
         body: {
+          id: streamId,
           online: 'true',
           description: random,
           subscriberCount: 5
@@ -151,7 +154,9 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
     it('should be able to add a subscription', function (done) {
       dbHelpers.addSubscription({
         userId: userId,
-        title: random
+        body: {
+          title: random
+        }
       }, {
         send: function (input) {
           expect(input).to.not.equal(404);
@@ -163,7 +168,9 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
     it('should be able to remove a subscription', function (done) {
       dbHelpers.addSubscription({ 
         userId: userId,
-        title: random
+        body: {
+          title: random
+        }
       }, {
         send: function (input) {
           expect(input).to.not.equal(404);
@@ -185,7 +192,9 @@ if (!process.env.TRAVIS_PULL_REQUEST) {
 
     it('should be able to delete a stream', function (done) {
       dbHelpers.deleteStream({
-        title: random
+        body: {
+          title: random
+        }
       }, {
         send: function (input) {
           expect(input).to.not.equal(404);

@@ -5,19 +5,19 @@ import * as Actions from '../actions/index.jsx';
 
 class NavBar extends Component {
   
-  handleSignout() {
-    this.props.signOutUser();
+  constructor(props) {
+    super(props);
   }
 
   renderAuthLinks() {
-    if (this.props.authenticated) {
+    if (localStorage.token) {
       return (
         <span>
           <li>
             <Link to='/dashboard'>Dashboard</Link>
           </li>
           <li>
-            <a href='#' onClick={ (e) => { e.preventDefault(); this.handleSignout(); } }>Logout</a>
+            <a href='#' onClick={ (e) => { e.preventDefault(); this.props.signOut(); } }>Logout</a>
           </li>
         </span>
       )
@@ -49,9 +49,7 @@ class NavBar extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {
-    authenticated: state.auth.authenticated
-  }
+  return {}
 }
 
 export default connect(mapStateToProps, Actions)(NavBar);

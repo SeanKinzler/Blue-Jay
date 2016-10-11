@@ -7,12 +7,7 @@ import UserSubscriptions from '../components/UserSubscriptions.jsx';
 class Subscriptions extends Component {
 	
 	componentWillMount() {
-		// need to load subscriptions when api endpoint is ready 
-		this.props.requestSubscriptions(this.props.username);
-	}
-
-	removeSubscriptionHandler(stream) {
-		this.props.removeSubscription(stream.id, this.props.username);
+		this.props.getUserData();
 	}
 
 	renderSubscriptions() {
@@ -26,7 +21,7 @@ class Subscriptions extends Component {
 		return (
 			<UserSubscriptions 
 				subscriptions={this.props.subscriptions} 
-				removeSubscription={this.props.removeSubscriptionHandler}
+				removeSubscription={this.props.removeSubscription}
 			/>
 		)
 	}

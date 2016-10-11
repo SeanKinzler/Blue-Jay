@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
+import allIcons from '../lib/allIcons.js';
+import allColors from '../lib/allColors.js';
+import urlHelper from '../utils/urlHelper.jsx';
 
 const StreamsList = ({streams}) => {
 	
@@ -14,12 +17,17 @@ const StreamsList = ({streams}) => {
 		}
 		return (
 			<span>
-				{ streams.map((stream) => {
+				{ streams.map((stream, i) => {
 					return (
-						<li key={ stream.id } className='collection-item avatar'>
-							<i className='material-icons circle red'>loop</i>
-							<span className='title'>{ stream.title }</span>
+						<li key={ i } className='collection-item avatar'>
+							<i className={`material-icons circle ${ allColors() }`}>{ allIcons() }</i>
+							<Link to={ `${ localStorage.username + '/' + urlHelper.slugify(stream.title) }` } >
+								<h3 className='title'>{ stream.title }</h3>
+							</Link>
 							<p>{ stream.description }</p>
+					    <Link to={ `${ localStorage.username + '/' + urlHelper.slugify(stream.title) }` } className="secondary-content">
+						    <i className="material-icons">contact_phone</i>
+						  </Link>
 						</li>
 					)
 				})}

@@ -9,7 +9,7 @@ import SubscriptionsList from '../components/SubscriptionsList.jsx';
 class Dashboard extends Component {
 
   componentWillMount() {
-    this.props.getStreams();
+    this.props.getUserData();
   }
 
   render() {
@@ -17,10 +17,10 @@ class Dashboard extends Component {
       <div className='container'>
         <div className='row'>
           <div className='col s12 l6'>
-            <SubscriptionsList />
+            <SubscriptionsList subscriptions={ this.props.subscriptions.slice(0, 4) }/>
           </div>
           <div className='col s12 l6'>  
-            <StreamsList streams={ this.props.streams.slice(0, 4) }/>     
+            <StreamsList streams={ this.props.userStreams.slice(0, 4) }/>     
           </div>
           <div className='col s12'>
             <ul className='collection with-header'>
@@ -47,7 +47,7 @@ class Dashboard extends Component {
 const mapStateToProps = (state) => {
   return {
     user: state.auth.username,
-    streams: state.streams.data,
+    userStreams: state.userStreams.data,
     subscriptions: state.subscriptions.data
   };
 };

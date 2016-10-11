@@ -19,35 +19,42 @@ module.exports = {
     ].join(' '), function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);
+        return;
       } else {
         res.send(rows);
+        return;
       }
     });
   },
 
   getUsers: (req, res) => {
     sql('SELECT * FROM users', (error, rows, fields) => {
-      if(error) {
+      if (error) {
         res.sendStatus(404);
+        return;
       } else {
         res.send(rows);
+        return;
       }
-    })
+    });
   },
   //return owned streams aswell
   getUser: (req, res) => {
-    var query1 = 'SELECT u.id, u.username, sub.phoneNotifications, sub.emailNotifications, s.title, s.subscriberCount, s.description FROM users u ' + 
-      'LEFT JOIN (subscriptions sub, streams s) ' + 
-      'ON (u.username="' + req.username + '" AND u.id = sub.userId AND s.id = sub.streamId) WHERE u.username="' + req.username + '";\n'
-      query2 = 'SELECT * FROM streams WHERE creatorId=(SELECT id FROM users WHERE username="' + req.username +'");\n'
+    var query1 = 'SELECT u.id, u.username, sub.phoneNotifications, sub.emailNotifications, s.title, s.subscriberCount, s.description, us.username AS creatorName FROM users u ' + 
+      'LEFT JOIN (subscriptions sub, streams s, users us) ' + 
+      'ON (u.username="' + req.username + '" AND u.id = sub.userId AND s.id = sub.streamId AND s.creatorId=us.id) WHERE u.username="' + req.username + '";\n'
+      query2 = 'SELECT s.*, u.username FROM streams s JOIN (users u) ON s.creatorId=u.id WHERE creatorId=(SELECT id FROM users WHERE username="' + req.username +'");\n'
+    console.log(query1);
     sql(query1,
     function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);
+        return;
       } else {
         sql(query2, function(error2, rows2, fields2) {
           if (error2) {
             res.sendStatus(404);
+            return;
           } else {
             if(rows[0] !== undefined) {
               rows[0].subscriptions = [];
@@ -75,13 +82,16 @@ module.exports = {
                     descriptions: rows.description
                   });
                 res.send(rows);
+                return;
               } else {
                 rows.ownedStreams = rows2;
                 rows.subscriptions = [];
                 res.send(rows);
+                return;
               }
             }
             res.send(rows[0]); 
+            return;
           }
         })
       }
@@ -94,8 +104,10 @@ module.exports = {
     function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);
+        return;
       } else {
         res.send(rows);
+        return;
       }
     });    
   },
@@ -114,8 +126,10 @@ module.exports = {
       function(error, rows, fields) {
         if (error) {
           res.sendStatus(404);
+          return;
         } else {
-          res.send(rows)
+          res.send(rows);
+          return;
         }
       })
   },
@@ -156,15 +170,16 @@ module.exports = {
   },
 
   searchStreams: (req, res) => {
+    // need to use req.query because query values sent in url
     var keys = [];
     var values = [];
-    req.body = req.body || {};
-    var categories = req.body.categories || [];
-    var keywords = req.body.keywords || [];
-    for (var key in req.body) {
+    req.query = req.query || {};
+    var categories = req.query.categories || [];
+    var keywords = req.query.keywords || [];
+    for (var key in req.query) {
       if (key !== 'categories' && key !== 'keywords' && key !== 'creatorName') {
         keys.push(key);
-        values.push(req.body[key]);
+        values.push(req.query[key]);
       } 
     }
     var query = 'SELECT streams.* FROM streams ';
@@ -180,11 +195,11 @@ module.exports = {
         '(streams.id=sk.streamId AND sk.keywordId=k.id AND k.text="' + keywords[i] + '") ';
       }
     }
-    if (req.body.creatorName !== undefined || (keys !== undefined && keys.length > 0)) {
+    if (req.query.creatorName !== undefined || (keys !== undefined && keys.length > 0)) {
       query = query + 'WHERE (';
     
-      if (req.body.creatorName !== undefined) {
-        query = query + 'creatorId=(SELECT id FROM users WHERE username="'  + req.body.creatorName + '")'
+      if (req.query.creatorName !== undefined) {
+        query = query + 'creatorId=(SELECT id FROM users WHERE username="'  + req.query.creatorName + '")'
         if (keys !== undefined && keys.length > 0) {
           query = query + ' AND ';
         }
@@ -202,14 +217,13 @@ module.exports = {
     } else {
       query = query + ';\n';
     }
-    console.log('query: ', query);
     sql(query, function(error, rows, fields) {
       if (error) {
-        console.log(error); 
         res.sendStatus(404);
+        return;
       } else {
-        console.log(rows);
         res.send(rows);
+        return;
       }
     });
 
@@ -227,10 +241,10 @@ module.exports = {
     if (changes.length > 2) {
       changes = changes.slice(0, -2);
     }
-    var query = 'UPDATE streams SET ' + changes + ' WHERE title="' + req.title + '";\n' +
-      'SET @stream = (SELECT id FROM streams WHERE title="' + req.title + '");\n' +
-      'DELETE FROM streams_categories WHERE streamID=@stream; \n' +
-      'DELETE FROM streams_keywords WHERE streamID=@stream; \n';
+    var query = 'UPDATE streams SET ' + changes + ' WHERE id=' + req.body.id + ';\n' +
+      'SET @stream = (SELECT id FROM streams WHERE id=' + req.body.id + ');\n' +
+      'DELETE FROM streams_categories WHERE streamId=@stream; \n' +
+      'DELETE FROM streams_keywords WHERE streamId=@stream; \n';
     if (req.body.categories !== undefined) {
       for (var i = 0; i < req.body.categories.length; i++) {
         query = query + ('INSERT IGNORE INTO categories (text) VALUES ("' + req.body.categores[i] + '");\n' +  
@@ -250,13 +264,13 @@ module.exports = {
   },
 
   getStream: (req, res) => {
-    var query = 'SELECT * FROM streams WHERE title="' + req.title + '";\n' + 
+    var query = 'SELECT * FROM streams WHERE title="' + req.body.title + '";\n' + 
       'SELECT c.* FROM streams s INNER JOIN (streams_categories sc, categories c) ' + 
-      'ON (s.title="' + req.title + '" AND s.id = sc.streamId AND c.id = sc.categoryId) ' + 
-      'WHERE s.title = "' + req.title + '";\n' +
+      'ON (s.title="' + req.body.title + '" AND s.id = sc.streamId AND c.id = sc.categoryId) ' + 
+      'WHERE s.title = "' + req.body.title + '";\n' +
       'SELECT k.* FROM streams s INNER JOIN (streams_keywords sk, keywords k) ' + 
-      'ON (s.title="' + req.title + '" AND s.id = sk.streamId AND k.id = sk.keywordId) ' + 
-      'WHERE s.title = "' + req.title + '";\n';
+      'ON (s.title="' + req.body.title + '" AND s.id = sk.streamId AND k.id = sk.keywordId) ' + 
+      'WHERE s.title = "' + req.body.title + '";\n';
     queries = query.split('\n');
     returnQueries(queries, res, function(toRet) {
       toRet[0].categories = [];
@@ -276,17 +290,21 @@ module.exports = {
         toRet[0].keywords.push(toRet[2][i].text);
       }
       res.send(toRet[0]);
+      return;
+      return;
     });
   },
 
   //must take obj with classname key
   deleteStream: (req, res) => {
-    sql('DELETE FROM streams WHERE title="' + req.title + '"', 
+    sql('DELETE FROM streams WHERE title="' + req.body.title + '"', 
     function (error, rows, fields) {
       if (error) {
         res.sendStatus(404);
+        return;
       } else {
         res.send(rows);
+        return;
       }
     });    
 
@@ -294,7 +312,7 @@ module.exports = {
 
   addSubscription: (req, res) => {
     var query  = 'INSERT INTO subscriptions (streamId, userId, phoneNotifications, emailNotifications) VALUES (' + 
-    '(SELECT id FROM streams WHERE title="' + req.title + '"), ' + req.userId + ', "false", "false");\n' + 
+    '(SELECT id FROM streams WHERE title="' + req.body.title + '"), ' + req.userId + ', "false", "false");\n' + 
     'UPDATE streams SET subscriberCount = subscriberCount + 1;\n';
     queries = query.split('\n');
     executeQueries(queries, res);
@@ -302,8 +320,8 @@ module.exports = {
 
   updateSubscription: (req, res) => {
     var query  = 'DELETE FROM subscriptions WHERE (userId=' + req.userId + 
-    ' AND streamId=(SELECT id FROM streams WHERE title="' + req.title + '));\n' + 
-    'UPDATE streams SET subscriberCount = subscriberCount + 1;\n';
+    ' AND streamId=(SELECT id FROM streams WHERE title="' + req.body.title + '"));\n' + 
+    'UPDATE streams SET subscriberCount = subscriberCount - 1;\n';
     queries = query.split('\n');
     executeQueries(queries, res);
   },
@@ -323,10 +341,12 @@ var executeQueries = function (queries, res, currIndex) {
     if (error) {
       console.log('repeater error: ', error)
       res.sendStatus(404);
+      return;
     } else {
       currIndex++;
       if (currIndex >= queries.length - 1) {
         res.send(rows);
+        return;
       } else {
         executeQueries(queries, res, currIndex);
       }
@@ -341,6 +361,7 @@ var returnQueries = function (queries, res, callback, currIndex, toRet) {
     if (error) {
       console.log('repeater error: ', error)
       res.sendStatus(404);
+      return;
     } else {
       currIndex++;
       toRet.push(rows);

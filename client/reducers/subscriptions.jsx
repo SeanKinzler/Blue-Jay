@@ -17,12 +17,16 @@ const Subscriptions = (state = initialState, action) => {
 			});
 		case ADD_SUBSCRIPTION:
 			return Object.assign({}, state, {
-				data: action.data
-			});
+				data: state.data.concat([action.stream])
+			})
 		case REMOVE_SUBSCRIPTION: 
+			var altered = state.data.reduce((a, c) => {
+					if (c.title === action.stream.title) return a;
+					return a.concat([c]);
+				}, [])
 			return Object.assign({}, state, {
-				data: action.data
-			});
+				data: altered
+			})
 		case SUBSCRIPTIONS_ERROR:
 			return Object.assign({}, state, {
 				error: action.error

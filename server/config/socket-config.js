@@ -2,11 +2,13 @@ var socketIO = require('socket.io')();
 var Tree = require('./connectionTree.js');
 var fs = require('fs');
 var path = require('path');
+var jwt = require('./authentication.js');
+var db = require('../db/rawSQLHandlers.js');
 
 var serverConfig = {
-  key: fs.readFileSync(path.join(__dirname, './key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, './cert.pem')),
-  // ca: fs.readFileSync(path.join(__dirname, './chain.pem'))
+  key: fs.readFileSync(path.join(__dirname, './credentials/key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, './credentials/cert.pem')),
+  // ca: fs.readFileSync(path.join(__dirname, './credentials/chain.pem'))
 };
 
 var server = require('https').createServer(serverConfig, require('./app-config.js'));
@@ -45,8 +47,6 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('stop', function (data) {
-    
-    currentRoom[socket.id] = data.roomName;
     if (socket.adapter.rooms[data.roomName]) {
       var yourId = socket.id;
 
@@ -60,23 +60,47 @@ io.sockets.on('connection', function(socket) {
           yourId: selfId,
         });
 
-        socket.emit('chatMessage', {
-          user: 'You have joined the room: ' + data.roomName,
-          text: '',
-        });
-
-        socket.broadcast.to(data.roomName).emit('chatMessage', {
-          user: '',
-          text: data.user + ' has joined the room.',
-        });  
+        if (!currentRoom[socket.id]) {
+          socket.broadcast.to(data.roomName).emit('chatMessage', {
+            user: '',
+            text: data.user + ' has joined the room.',
+          });
+        }
       });
 
-    } else {
-      socket.join(data.roomName);
+      currentRoom[socket.id] = data.roomName;
+    } else {  
 
-      rooms[data.roomName] = new Tree(socket.id, 0);
-        
-      socket.emit('created', 'You have created the room: "' + data.roomName + '"');
+      jwt.decode(data.token, function (error, userData) {
+
+        if (error) {
+
+          console.log(error);
+          socket.emit('failure', 'That ain\'t a real token!');
+
+        } else {
+
+          db.getUser(userData, {
+            send: function (row) {
+              for (var i = 0; i < row.ownedStreams.length; i++) { 
+                if ((row.username + '/' + row.ownedStreams[i].title).toLowerCase() === data.roomName.toLowerCase()) {
+                  socket.join(data.roomName);
+
+                  rooms[data.roomName] = new Tree(socket.id, 0);
+                  
+                  socket.emit('created', 'You have created the room: "' + data.roomName + '"');
+                  return;
+                }
+              }
+
+              socket.emit('failure', 'This ain\'t yo stream');
+            },
+            sendStatus: function () {
+              socket.emit('failure', 'That ain\'t a real token!');
+            }
+          });
+        }
+      });
     }
   });
 
