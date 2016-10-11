@@ -13,7 +13,7 @@ const UserSubscriptions = ({subscriptions, removeSubscription}) => {
 		<div>
 			{ subscriptions.map((stream) => {
 				return (
-					<div key={stream.id} className='col s12'>
+					<div key={stream.title} className='col s12'>
 							<div className="card blue">
 								<div className="card-content white-text">
 									<span className="card-title">{ stream.title }</span>
