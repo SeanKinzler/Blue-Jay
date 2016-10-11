@@ -31,7 +31,7 @@ var checkToken = function (req, res, next) {
 
       } else {
 
-        res.sendStatus(200);
+        res.send(decoded);
 
       }
     });
