@@ -1,24 +1,38 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Router, IndexRoute, Route, browserHistory, Link } from 'react-router';
-import Video from './Video.jsx';
-import Dashboard from '../pages/Dashboard.jsx';
+import * as Actions from '../actions/index.jsx';
+import { connect } from 'react-redux';
 import NavBar from './NavBar.jsx';
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
+class App extends Component {
+
+  signOutHandler() {
+    this.props.signOutUser();
   }
 
   render() {
     return (
       <div>
-        <NavBar />
+        <NavBar 
+          signOut={this.signOutHandler.bind(this)}
+        />
         { this.props.children } 
       </div>
     );
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    authenticated: state.auth.authenticated,
+  }
+}
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  };
+}
 
+export default connect(mapStateToProps, Actions)(App);
