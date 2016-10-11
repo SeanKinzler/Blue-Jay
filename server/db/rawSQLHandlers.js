@@ -40,7 +40,7 @@ module.exports = {
   },
   //return owned streams aswell
   getUser: (req, res) => {
-    var query1 = 'SELECT u.id, u.username, sub.phoneNotifications, sub.emailNotifications, s.title, s.subscriberCount, s.description FROM users u ' + 
+    var query1 = 'SELECT u.id, u.username, sub.phoneNotifications, sub.emailNotifications, s.id as streamId, s.title, s.subscriberCount, s.description FROM users u ' + 
       'LEFT JOIN (subscriptions sub, streams s) ' + 
       'ON (u.username="' + req.username + '" AND u.id = sub.userId AND s.id = sub.streamId) WHERE u.username="' + req.username + '";\n'
       query2 = 'SELECT * FROM streams WHERE creatorId=(SELECT id FROM users WHERE username="' + req.username +'");\n'
