@@ -1,21 +1,19 @@
 var webpack = require('webpack');
-var path = require('path');
-
-var BUILD_DIR = path.resolve(__dirname, 'client/bundled');
-var APP_DIR = path.resolve(__dirname, 'client/components');
 
 module.exports = {
-  entry: APP_DIR + '/app.jsx',
+  entry: './client/index.jsx',
   output: {
-    path: BUILD_DIR,
+    path: './client/bundled/',
     filename: 'bundle.js'
   },
   module: {
     loaders: [{
-      test: /\.jsx?/,
-      include: './client/components',
+      test: /\.jsx$/,
       exclude: '/node_modules | /server | /client/bundled ',
-      loader: 'babel'
+      loader: 'babel',
+      query: {
+        presets: ['react', 'es2015']
+      }
     }]
   }
 };
