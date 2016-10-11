@@ -1,7 +1,7 @@
-class Whiteboard extends React.Component {
-  constructor() {
-    super();
+import React from 'react';
 
+class Whiteboard extends React.Component {
+  componentDidMount() {
     this.canvas = new fabric.Canvas('whiteboard', {isDrawingMode: true});
 
     //Connect to the server:
@@ -14,17 +14,21 @@ class Whiteboard extends React.Component {
     this.socket.on('dataFromServer', (data) => this.recieveWhiteboard(data));
   }
 
-  sendWhiteboard() {
-    this.socket.emit('dataFromClient', JSON.stringify(this.canvas));
-  }
+  // sendWhiteboard() {
+  //   this.socket.emit('dataFromClient', JSON.stringify(this.canvas));
+  // }
 
-  recieveWhiteboard(data) {
-    this.canvas.loadFromJSON(JSON.parse(data), this.canvas.renderAll.bind(this.canvas));
-  }
+  // recieveWhiteboard(data) {
+  //   this.canvas.loadFromJSON(JSON.parse(data), this.canvas.renderAll.bind(this.canvas));
+  // }
 
   render() {
-    <div className="whiteboard">
-      <canvas id="whiteboard"></canvas>
-    </div>
+    return (
+      <div className="whiteboard">
+        <canvas id="whiteboard"></canvas>
+      </div>
+    );
   }
 }
+
+export default Whiteboard;

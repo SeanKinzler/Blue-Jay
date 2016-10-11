@@ -1,28 +1,24 @@
 import React, { Component } from 'react';
 import Video from '../components/Video.jsx';
 import InfoBox from '../components/InfoBox.jsx';
-import ChatContainer from '../components/InfoBox.jsx';
+import ChatContainer from '../components/ChatContainer.jsx';
+import Whiteboard from '../components/Whiteboard.jsx'
 import {Link} from 'react-router';
+
+const data = {
+  title: 'cat',
+  uploader: 'person',
+  description: 'cat video',
+  tags: 'tag',
+  category: 'Art'
+};
 
 export default ({params}) => {
   return(
     <div className='channel'>
-      <div>
-        <h4 className='center-align'>Channel: { `${params.channelId}` }</h4>
-        <Video />
-      </div>
-      <div className='row'>
-        <button className="toggleInfoBox" onClick={('.infoBox').toggle();}></button>
-        <InfoBox />
-      </div>
-      <div>
-        <button className="toggleChat" onClick={$('.chat').toggle();}></button>
-        <ChatContainer />
-      </div>
-      <div>
-        <button className="toggleWhiteboard" onClick={$('.whiteboard').toggle();}></button>
-        <Whiteboard />
-      </div>
+      <Video />
+      <InfoBox stuff={data}/>
+      <Whiteboard />
     </div>
   );
 };
