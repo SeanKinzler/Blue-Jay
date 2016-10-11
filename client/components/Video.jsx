@@ -17,6 +17,7 @@ class Video extends Component {
 
     this.state = {
       socket: io.connect(),
+      user: localStorage.firstName + ' ' + localStorage.lastName[0],
       roomId: urlUtil.deslugify(window.location.pathname.slice(1)),
       room: urlUtil.deslugify(window.location.pathname.slice(window.location.pathname.lastIndexOf('/') + 1)),
       host: window.location.pathname.slice(1, window.location.pathname.lastIndexOf('/')),
@@ -98,8 +99,9 @@ class Video extends Component {
      
           <div className='col s12 m3' >
               <ChatContainer 
+                roomId={ this.state.roomId }
                 room={ this.state.room }
-                user={ localStorage.username }
+                user={ this.state.user }
                 socket={ this.state.socket } 
               />
           </div>
