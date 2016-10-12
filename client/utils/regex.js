@@ -1,4 +1,4 @@
-var regex = new RegExp(/[^a-z0-9 '!?.,&-]+/gi);
+var regex = new RegExp(/[^a-z0-9 '!?:.,&-]+/gi);
 
 
 var screen = function (text) {
