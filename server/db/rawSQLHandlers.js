@@ -185,15 +185,16 @@ module.exports = {
 
   searchStreams: (req, res) => {
     // need to use req.query because query values sent in url
+    console.log('req.query:', req.query)
     var keys = [];
     var values = [];
     req.query = req.query || {};
     var categories = req.query.categories || [];
-    var keywords = req.query.keywords || [];
-    for (var key in req.query) {
+    var keywords = ['test']//req.query.keywords || [];
+    for (var key in {title:'', description: ''}) {
       if (key !== 'categories' && key !== 'keywords' && key !== 'creatorName') {
         keys.push(key);
-        values.push(req.query[key]);
+        values.push(req.query.text);
       } 
     }
     var query = 'SELECT streams.* FROM streams ';
@@ -203,27 +204,27 @@ module.exports = {
         '(streams.id=sc.streamId AND sc.categoryId=c.id AND c.text="' + categories[i] + '") ';
       }
     }
-    if (keywords !== undefined) {
-      for(var i = 0; i < keywords.length; i++) {
+    if (req.query.text !== undefined) {
+      // for(var i = 0; i < keywords.length; i++) {
         query = query + 'INNER JOIN (streams_keywords sk, keywords k) ON ' +
-        '(streams.id=sk.streamId AND sk.keywordId=k.id AND k.text="' + keywords[i] + '") ';
-      }
+        '(streams.id=sk.streamId AND sk.keywordId=k.id AND k.text LIKE "%' + req.query.text + '%") ';
+      // }
     }
-    if (req.query.creatorName !== undefined || (keys !== undefined && keys.length > 0)) {
+    if (req.query.text !== undefined && (keys !== undefined && keys.length > 0)) {
       query = query + 'WHERE (';
     
-      if (req.query.creatorName !== undefined) {
-        query = query + 'creatorId=(SELECT id FROM users WHERE username="'  + req.query.creatorName + '")'
-        if (keys !== undefined && keys.length > 0) {
-          query = query + ' AND ';
-        }
-      }
-      if (keys !== undefined && keys.length > 0) {
+      // if (req.query.creatorName !== undefined) {
+      //   query = query + 'creatorId=(SELECT id FROM users WHERE username="'  + req.query.creatorName + '")'
+      //   if (keys !== undefined && keys.length > 0) {
+      //     query = query + ' AND ';
+      //   }
+      // }
+      if (keys !== undefined && keys.length > 0 && req.query.text) {
         for (var i = 0; i < keys.length; i++) {
           if (i === 0) {
-            query = query + keys[i] + '="' + values[i] + '"';
+            query = query + keys[i] + ' LIKE "%' + values[i] + '%"';
           } else {
-            query = query + ' AND ' + keys[i] + '="' + values[i] + '"';
+            query = query + ' OR ' + keys[i] + ' LIKE "%' + values[i] + '%"';
           }
         }
       }
@@ -231,6 +232,7 @@ module.exports = {
     } else {
       query = query + ';\n';
     }
+    console.log('query:', query)
     sql(query, function(error, rows, fields) {
       if (error) {
         res.sendStatus(404);
