@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Button } from 'react-materialize';
-
+import checkLength from '../utils/lengthHelper.jsx';
 const SearchResultsExtended = ({searchResults, openModal, addSubscription, removeSubscription, subscriptions}) => {
 
 	const isSubscribed = (stream) => {
@@ -17,15 +17,6 @@ const SearchResultsExtended = ({searchResults, openModal, addSubscription, remov
 			return <i className="material-icons">volume_off</i>;
 		}
 	}
-
-	const checkLength = (string, length) => {
-	  if (string === null || string === undefined) {string = ''}
-	  if (string.length >= length) {
-	    return string.slice(0, length) + '...';
-	  } else {
-	    return string;
-	  }
-	};
 
 	return (
 		<div>

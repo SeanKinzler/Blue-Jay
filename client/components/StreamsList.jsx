@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import allIcons from '../lib/allIcons.js';
 import allColors from '../lib/allColors.js';
 import urlHelper from '../utils/urlHelper.jsx';
+import checkLength from '../utils/lengthHelper.jsx';
 
 const StreamsList = ({streams}) => {
 	
@@ -22,9 +23,9 @@ const StreamsList = ({streams}) => {
 						<li key={ i } className='collection-item avatar'>
 							<i className={`material-icons circle ${ allColors() }`}>{ allIcons() }</i>
 							<Link to={ `${ stream.username + '/' + urlHelper.slugify(stream.title) }` } >
-								<h3 className='title'>{ stream.title }</h3>
+								<h3 className='title'>{ checkLength(stream.title, 25) }</h3>
 							</Link>
-							<p>{ stream.description }</p>
+							<p>{ checkLength(stream.description, 40) }</p>
 					    <Link to={ `${ stream.username + '/' + urlHelper.slugify(stream.title) }` } className="secondary-content">
 						    <i className="material-icons">contact_phone</i>
 						  </Link>
