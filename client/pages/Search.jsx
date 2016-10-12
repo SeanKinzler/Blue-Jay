@@ -15,8 +15,13 @@ class Search extends Component {
   }
 
   componentWillMount() {
-    // this.props.getStreams();
-    this.props.searchStreams();
+    // Category potentially selected from home page
+    const selectedCategory = this.props.categories.selected;
+    if (selectedCategory.length) {
+      this.props.searchStreams({categories: this.props.categories.selected});
+    } else {
+      this.props.searchStreams();
+    }
   }
 
   componentDidMount() {

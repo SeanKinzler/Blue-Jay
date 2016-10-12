@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../actions/index.jsx';
+import categoriesList from '../lib/categories.js';
 import Carousel from '../components/Carousel.jsx';
 import LiveNow from '../components/LiveNow.jsx';
 import Categories from '../components/Categories.jsx';
@@ -28,7 +29,10 @@ class Home extends Component {
               <LiveNow socket={ this.props.socket }/>
             </div>
             <div className='col s12 m6'>        
-              <Categories />
+              <Categories 
+                categoriesList={categoriesList}
+                selectCategory={this.props.filterStreamCategories}
+              />
             </div>
           </div>
         </div>
