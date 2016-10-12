@@ -54,23 +54,23 @@ class Video extends Component {
   }
 
   componentWillUnmount() {
-    this.state.socket.disconnect();
-
     if (window.checkForHelp) {
       clearInterval(window.checkForHelp);
-
-      if (parentStream) {
-        parentStream.getTracks().forEach(function (track) {
-          track.stop();
-        });
-      }
-
-      if (ownStream) {
-        ownStream.getTracks().forEach(function (track) {
-          track.stop();
-        });
-      }
     }
+    
+    if (window.parentStream) {
+      window.parentStream.getTracks().forEach(function (track) {
+        track.stop();
+      });
+    }
+
+    if (window.ownStream) {
+      window.ownStream.getTracks().forEach(function (track) {
+        track.stop();
+      });
+    }
+
+    this.state.socket.disconnect();
   }
 
   render () {

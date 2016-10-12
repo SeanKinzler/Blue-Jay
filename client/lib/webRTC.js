@@ -1,5 +1,4 @@
 module.exports = function (room, user, socket, browserHistory) {
-
   navigator.getUserMedia({
     video: true,
     audio: true,
@@ -106,11 +105,12 @@ module.exports = function (room, user, socket, browserHistory) {
           offer: offerObj,
           returnAddress: yourUserId,
         });
+      }, function (error) {
+        console.log(error);
       });
     };
 
     var sendAnswer = function (receivedData) {
-
       var id = receivedData.returnAddress;
 
       peers[id] = new RTCPeerConnection(ICE);
@@ -167,7 +167,6 @@ module.exports = function (room, user, socket, browserHistory) {
 
     socket.on('RTC-target', function (data) {
       host = false;
-
       clearInterval(window.checkForHelp);
 
       if (peers[data.deleteTarget]) {
