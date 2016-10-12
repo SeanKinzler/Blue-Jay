@@ -7,9 +7,16 @@ class JwtPage extends Component {
   
 
   componentDidMount() {
+    const query = window.location.search.split('=');
     localStorage.token = window.location.pathname.slice(window.location.pathname.lastIndexOf('/') + 1);
+    // Performs redirect based on url query parameters (if provided)
+    if (query[1].length) {
+      const url = query[1].replace(/%2F/g, '/');
+      browserHistory.push(url);
+    } else {
+      browserHistory.push('/');    
+    }
     this.props.userSignedIn(localStorage.token);
-    browserHistory.push('/');
   }
 
 
