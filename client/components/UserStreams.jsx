@@ -1,9 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router';
 import urlUtil from '../utils/urlHelper.jsx';
+import { Button, Modal } from 'react-materialize'
 
-const UserStreams = ({streams, deleteStream, onStreamSelect}) => {
+const UserStreams = ({streams, deleteStream, onStreamSelect, onRequestClose, editStream}) => {
 	return (
+									// <a onClick={ () => { onStreamSelect(stream); } }>Edit Stream</a>
+									// <a className='btn blue' onClick={ onRequestClose }>Cancel</a>
 		<div>
 			{ streams.map((stream) => {
 				return (
@@ -16,7 +19,19 @@ const UserStreams = ({streams, deleteStream, onStreamSelect}) => {
 								<div className="card-action">
 									<span className="badge green">{ stream.subscriberCount }</span>
 									<Link to={ localStorage.username + '/' + urlUtil.slugify(stream.title) }>Start Streaming</Link>
-									<a onClick={ () => { onStreamSelect(stream); } }>Edit Stream</a>
+									<Modal
+									  header='Modal Header'
+									  trigger={
+									    <a>Edit Stream</a>
+									  }>
+									  <div>
+									  	<form onSubmit={ (e) => { editStream(e, stream) } }>
+									  		<input type='text' defaultValue={ stream.title } name='title' />
+									  		<input type='text' defaultValue={ stream.description } name='description' />
+									  		<input type='submit' value='Submit' className='btn' />
+									  	</form>
+									  </div>
+									</Modal>
 									<a onClick={ () => { deleteStream(stream); } }>Delete Stream</a>
 								</div>
 							</div>

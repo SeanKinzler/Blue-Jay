@@ -1,6 +1,19 @@
 var sql = require('./sqlConnectionHelper.js');
 
 module.exports = {
+
+  toggleStreamOff: (req, res) => {
+    sql('update streams set online="false" where title="' + req.body.title + '"', function (error, rows, fields) {
+      console.log(arguments);
+    });
+  },
+
+  toggleStreamOn: (req, res) => {
+    sql('update streams set online="true" where title="' + req.body.title + '"', function (error, rows, fields) {
+      console.log(arguments);
+    });
+  },
+
   //must have googleId, createdAt, avatarUrl
   addUser: (req, res) => {
     var keys = [];
@@ -176,41 +189,40 @@ module.exports = {
     var values = [];
     req.query = req.query || {};
     var categories = req.query.categories || [];
-    var keywords = req.query.keywords || [];
-    for (var key in req.query) {
+    for (var key in {title:'', description: ''}) {
       if (key !== 'categories' && key !== 'keywords' && key !== 'creatorName') {
         keys.push(key);
-        values.push(req.query[key]);
+        values.push(req.query.text);
       } 
     }
-    var query = 'SELECT streams.* FROM streams ';
+    var query = 'SELECT streams.*, u.username as creatorName FROM streams ';
     if (categories !== undefined) {
       for(var i = 0; i < categories.length; i++) {
         query = query + 'INNER JOIN (streams_categories sc, categories c) ON ' +
         '(streams.id=sc.streamId AND sc.categoryId=c.id AND c.text="' + categories[i] + '") ';
       }
     }
-    if (keywords !== undefined) {
-      for(var i = 0; i < keywords.length; i++) {
-        query = query + 'INNER JOIN (streams_keywords sk, keywords k) ON ' +
-        '(streams.id=sk.streamId AND sk.keywordId=k.id AND k.text="' + keywords[i] + '") ';
-      }
-    }
-    if (req.query.creatorName !== undefined || (keys !== undefined && keys.length > 0)) {
+    // if (req.query.text !== undefined) {
+    //     query = query + 'INNER JOIN (streams_keywords sk, keywords k) ON ' +
+    //     '(streams.id=sk.streamId AND sk.keywordId=k.id AND k.text LIKE "%' + req.query.text + '%") ';
+    // }
+    query = query + 'INNER JOIN (users u) ON streams.creatorId=u.id '
+    if (req.query.text !== undefined && (keys !== undefined && keys.length > 0)) {
       query = query + 'WHERE (';
     
-      if (req.query.creatorName !== undefined) {
-        query = query + 'creatorId=(SELECT id FROM users WHERE username="'  + req.query.creatorName + '")'
-        if (keys !== undefined && keys.length > 0) {
-          query = query + ' AND ';
-        }
-      }
-      if (keys !== undefined && keys.length > 0) {
+      // if (req.query.creatorName !== undefined) {
+      //   query = query + 'creatorId=(SELECT id FROM users WHERE username="'  + req.query.creatorName + '")'
+      //   if (keys !== undefined && keys.length > 0) {
+      //     query = query + ' AND ';
+      //   }
+      // }
+
+      if (keys !== undefined && keys.length > 0 && req.query.text) {
         for (var i = 0; i < keys.length; i++) {
           if (i === 0) {
-            query = query + keys[i] + '="' + values[i] + '"';
+            query = query + keys[i] + ' LIKE "%' + values[i] + '%"';
           } else {
-            query = query + ' AND ' + keys[i] + '="' + values[i] + '"';
+            query = query + ' OR ' + keys[i] + ' LIKE "%' + values[i] + '%"';
           }
         }
       }
@@ -218,6 +230,7 @@ module.exports = {
     } else {
       query = query + ';\n';
     }
+    console.log(query);
     sql(query, function(error, rows, fields) {
       if (error) {
         res.sendStatus(404);
@@ -261,6 +274,7 @@ module.exports = {
       }
     }
     queries = query.split('\n');
+    console.log(queries);
     executeQueries(queries, res);
   },
 

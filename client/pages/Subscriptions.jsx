@@ -11,7 +11,6 @@ class Subscriptions extends Component {
 	}
 
 	renderSubscriptions() {
-		console.log(this.props.subscriptions);
 		if (!this.props.subscriptions.length) {
 			return (
 				<div>You have no subscriptions. 
