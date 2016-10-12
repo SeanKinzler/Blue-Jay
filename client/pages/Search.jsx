@@ -10,6 +10,10 @@ import SearchResultsModal from '../components/SearchResultsModal.jsx';
 
 class Search extends Component {
 
+  componentWillUnmount() {
+    this.props.resetSearchQuery();
+  }
+
   componentWillMount() {
     // this.props.getStreams();
     this.props.searchStreams();
@@ -79,9 +83,9 @@ class Search extends Component {
     }
   }
 
-
-  submitHandler() {
-  	// consider adding title, description, keywords and days
+  submitHandler(e) {
+    e.preventDefault();
+    this.props.resetSearchQuery();
   	var query = {
   		text: this.props.streams.term,
   		categories: this.props.streams.categories 
