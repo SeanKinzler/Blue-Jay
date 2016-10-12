@@ -189,7 +189,6 @@ module.exports = {
     var values = [];
     req.query = req.query || {};
     var categories = req.query.categories || [];
-    var keywords = ['test']//req.query.keywords || [];
     for (var key in {title:'', description: ''}) {
       if (key !== 'categories' && key !== 'keywords' && key !== 'creatorName') {
         keys.push(key);

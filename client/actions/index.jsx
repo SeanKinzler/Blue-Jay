@@ -148,7 +148,6 @@ export const searchStreams = (query) => {
 			{ params: query }
 		)
 		.then((res) => {
-			console.log('res:', res)
 			dispatch(requestStreams(res));
 			// dispatch(searchedStreams(res));
 		})
