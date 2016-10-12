@@ -1,5 +1,6 @@
 import { REQUEST_STREAMS, 
-		REQUEST_ERROR, 
+		REQUEST_ERROR,
+		RESET_SEARCH_QUERY, 
 		SEARCH_STREAMS, 
 		SEARCH_STREAM_TERM,
 		FILTER_STREAM_CATEGORIES, 
@@ -24,6 +25,16 @@ const initialState = {
 
 const Stream = (state = initialState, action) => {
 	switch (action.type) {
+		case RESET_SEARCH_QUERY:
+			return Object.assign({}, state, {
+			  data: [],
+			  term: null,
+			  categories: [],
+			  prices: [],
+			  types: [],
+			  days: [],
+			  times: []
+			});
 		case SEARCH_STREAMS:
 			return Object.assign({}, state, {
 			  data: action.data
