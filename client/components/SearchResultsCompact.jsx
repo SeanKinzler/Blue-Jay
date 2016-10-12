@@ -3,7 +3,7 @@ import { Button, Modal } from 'react-materialize'
 import { SearchResultsModal } from './SearchResultsModal.jsx'
 import style from '../styles.js'
 
-const SearchResultsCompact = ({searchResults, openModal, addSubscription, selectedStream, removeSubscription, modalIsOpen, onRequestClose}) => {
+const SearchResultsCompact = ({searchResults, openModal, addSubscription, selectedStream, removeSubscription, modalIsOpen, onRequestClose, subscriptions}) => {
 	const isSubscribed = (stream) => {
 		if (subscriptions.includes(stream.title)) {
 			return <i onClick={ () => { removeSubscription(stream) } } className='material-icons circle green'>done</i>;
@@ -20,13 +20,13 @@ const SearchResultsCompact = ({searchResults, openModal, addSubscription, select
 	}
 
 	const checkLength = (string, length) => {
-		if (string === null || string === undefined) {string = ''}
-		if (string.length >= length) {
-			return string.slice(0, length);
-		} else {
-			return string;
-		}
-	}
+	  if (string === null || string === undefined) {string = ''}
+	  if (string.length >= length) {
+	    return string.slice(0, length) + '...';
+	  } else {
+	    return string;
+	  }
+	};
 
 	///<div onClick={ () => { openModal(stream); } } className='btn'>Details</div>
 	return (
@@ -34,7 +34,7 @@ const SearchResultsCompact = ({searchResults, openModal, addSubscription, select
 			{ 
 				searchResults.map((stream) => {
 					return (
-						<ul key={stream.id} className="collection with-header col s4 m6">
+						<ul key={stream.id} className="collection with-header col s12 m6 l6">
 						  <li className="collection-header">
 						  	<h5>{ checkLength(stream.title, 23) }</h5>
 						  </li>
@@ -54,7 +54,6 @@ const SearchResultsCompact = ({searchResults, openModal, addSubscription, select
 				  									<p>Subscriber count: { stream.subscriberCount }</p>
 				  									<p>Online: { stream.online }</p>
 				  									<p>Creator: { checkLength(stream.creatorName, 60) }</p>
-				  									<p>Created: { stream.createdAt }</p>
 				  							  </div>
 				  							</Modal>
 				  						</td>

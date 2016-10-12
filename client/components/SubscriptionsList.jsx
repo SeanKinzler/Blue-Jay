@@ -10,6 +10,15 @@ export default ({subscriptions}) => {
     return !!item.title;
   });
 
+  const checkLength = (string, length) => {
+    if (string === null || string === undefined) {string = ''}
+    if (string.length >= length) {
+      return string.slice(0, length) + '...';
+    } else {
+      return string;
+    }
+  };
+
   if (subscriptions.length) {
     return (
       <ul className="collection with-header">
@@ -22,9 +31,9 @@ export default ({subscriptions}) => {
             <li key={i} className="collection-item avatar">
               <i className={`material-icons circle ${ allColors() }`}>{ allIcons() }</i>
               <Link to={ `username/${ urlHelper.slugify(sub.title) }` } >
-                <h3 className="title">{ sub.title }</h3>
+                <h3 className="title">{ checkLength(sub.title, 30) }</h3>
               </Link>
-              <p>{ sub.description }
+              <p>{ checkLength(sub.description, 40) }
               </p>
               <Link to={ `${ localStorage.username + '/' + urlHelper.slugify(sub.title) }` } className="secondary-content">
                 <i className="material-icons">contact_phone</i>
