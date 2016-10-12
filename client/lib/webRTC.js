@@ -1,93 +1,72 @@
-module.exports = function (room, user, socket) {
-
-
-  peers = {};
-  var parent = null;
-  window.parentStream;
-  window.ownStream;
-  var localSrc;
-  var host = false;
-  var initial = true;
-
-  var myEvent = window.attachEvent || window.addEventListener;
-  var chkevent = window.attachEvent ? 'onbeforeunload' : 'beforeunload';
-
-  myEvent(chkevent, function(e) {
-    for (var key in peers) {
-      peers[key].close();
-    }  
-  });
-
-  var STUN = {
-    urls: 'stun:stun.l.google.com:19302'
-  };
-
-  var TURN = {
-    urls: 'turn:turn.bistri.com:80',
-    credential: 'homeo',
-    username: 'homeo'
-  };
-
-  var ICE = {
-    iceServers: [STUN, TURN]
-  };
-
-  // FOR KINZLER TO EDIT. //////////////////////////////////////////////////////////////////////
-
-  var addVideo = function (source, elementId) {
-
-    document.getElementById('remoteVideo').src = window.URL.createObjectURL(source);
-
-  };
-
-  var removeVideo = function (id) {
-    document.getElementById('remoteVideo').src = '';
-  };
-
-  //////////////////////////////////////////////////////////////////////////////////////////////
+module.exports = function (room, user, socket, browserHistory) {
 
   navigator.getUserMedia({
     video: true,
     audio: true,
   }, function (stream) {
+
     window.parentStream = stream;
+    window.ownStream = stream;
 
-    var askForCamera = function () {
-      navigator.getUserMedia({
-        video: true,
-        audio: false, 
-      }, function (stream) {
-        window.ownStream = stream;
-        localSrc = window.URL.createObjectURL(stream);
+    var localVid = document.getElementById('localVideo');
+    localVid.muted = 'muted';
+    localVid.src = window.URL.createObjectURL(stream);
 
-        var localVideoPort = document.getElementById('localVideo');
-        if (localVideoPort) {
-          localVideoPort.src = localSrc;
-        } else {
-          document.getElementById('remoteVideo').src = localSrc;
-        }
-      }, function (error) {
-        setTimeout(function () {
-          askForCamera();
-        }, 500);
-      });
+    peers = {};
+    var host = false;
+
+    var myEvent = window.attachEvent || window.addEventListener;
+    var chkevent = window.attachEvent ? 'onbeforeunload' : 'beforeunload';
+
+    myEvent(chkevent, function(e) {
+      for (var key in peers) {
+        peers[key].close();
+      }  
+    });
+
+    var STUN = {
+      urls: 'stun:stun.l.google.com:19302'
     };
 
-    askForCamera();
+    var TURN = {
+      urls: 'turn:turn.bistri.com:80',
+      credential: 'homeo',
+      username: 'homeo'
+    };
+
+    var ICE = {
+      iceServers: [STUN, TURN]
+    };
+
+    // FOR KINZLER TO EDIT. //////////////////////////////////////////////////////////////////////
+
+    var addVideo = function (source, elementId) {
+
+      document.getElementById('remoteVideo').src = window.URL.createObjectURL(source);
+
+    };
+
+    var removeVideo = function (id) {
+      document.getElementById('remoteVideo').src = '';
+    };
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
+
 
     var sendOffer = function (targetUserId, yourUserId) {
-      parent = new RTCPeerConnection(ICE);
 
-      peers[targetUserId] = parent;
+      var id = targetUserId;
 
-      parent.addStream(parentStream);
+      peers[id] = new RTCPeerConnection(ICE);
 
-      parent.onaddstream = function (media) {
+      peers[id].addStream(ownStream);
+
+      peers[id].onaddstream = function (media) {
         window.parentStream = media.stream;
         addVideo(media.stream, targetUserId);
       };
 
-      parent.onicecandidate = function (event) {
+      peers[id].onicecandidate = function (event) {
         if (!!event.candidate) {
           socket.emit('ice-candidate', {
             recipient: targetUserId,
@@ -97,14 +76,21 @@ module.exports = function (room, user, socket) {
         }
       };
 
-      parent.oniceconnectionstatechange = function(event) {
-        if (parent.iceConnectionState === 'disconnected') {
+      peers[id].oniceconnectionstatechange = function(event) {
+        if (peers[id].iceConnectionState === 'disconnected') {
           peers[targetUserId].close();
           delete peers[targetUserId];
           if (!host) {
             removeVideo(targetUserId);
           }
-        } else if (parent.iceConnectionState === 'completed') {
+        } else if (peers[id].iceConnectionState === 'completed') {
+
+          window.checkForHelp = setInterval(function () {
+            if (!host && document.getElementById('remoteVideo').src.slice(0, 4) !== 'blob') {
+              socket.emit('ready');
+            }
+          }, 2000);
+
           var localStream = peers[targetUserId].getLocalStreams()[0];
           var audioTracks = localStream.getAudioTracks();
           audioTracks.forEach(function (track) {
@@ -113,20 +99,18 @@ module.exports = function (room, user, socket) {
         }
       };
 
-      parent.createOffer(function (offerObj) {
-        parent.setLocalDescription(offerObj);
+      peers[id].createOffer(function (offerObj) {
+        peers[id].setLocalDescription(offerObj);
         socket.emit('offer', {
           recipient: targetUserId,
           offer: offerObj,
           returnAddress: yourUserId,
         });
-      }, function (error) {
-        console.log(error);
       });
     };
 
     var sendAnswer = function (receivedData) {
-      peers.length++;
+
       var id = receivedData.returnAddress;
 
       peers[id] = new RTCPeerConnection(ICE);
@@ -183,6 +167,9 @@ module.exports = function (room, user, socket) {
 
     socket.on('RTC-target', function (data) {
       host = false;
+
+      clearInterval(window.checkForHelp);
+
       if (peers[data.deleteTarget]) {
         peers[data.deleteTarget].close();
         delete peers[data.deleteTarget];
@@ -198,10 +185,11 @@ module.exports = function (room, user, socket) {
 
     socket.on('created', function (data) {
       host = true;
-      document.getElementById('remoteVideo').src = localSrc;
+      var remoteVideo = document.getElementById('remoteVideo');
+      remoteVideo.muted = 'muted';
+      remoteVideo.src = window.URL.createObjectURL(ownStream);
 
-      var ownVideo = document.getElementById('localVideo');
-      ownVideo.parentNode.removeChild(ownVideo);
+      localVid.parentNode.removeChild(localVid);
     });
 
     socket.on('offer', function (data) {
@@ -236,16 +224,12 @@ module.exports = function (room, user, socket) {
       });
     });
 
-    window.checkForHelp = setInterval(function () {
-      if (!host && document.getElementById('remoteVideo').src.slice(0, 4) !== 'blob') {
-        socket.emit('ready');
-      }
-    }, 2000);
-
     socket.emit('ready');
 
   }, function (error) {
-    console.log(error);
+    socket.disconnect();
+    console.error(new Error(error));
+    browserHistory.push('/nomedia');
   });
 };
 

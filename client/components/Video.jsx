@@ -13,7 +13,7 @@ class Video extends Component {
 
   constructor(props) {
     super(props);
-    
+
     this.state = {
       socket: props.socket,
       user: localStorage.firstName + ' ' + localStorage.lastName[0],
@@ -49,7 +49,7 @@ class Video extends Component {
     localStorage.username = this.props.username || localStorage.username;
     
 
-    EZRTC(this.state.roomId, localStorage.username, this.state.socket);
+    EZRTC(this.state.roomId, localStorage.username, this.state.socket, browserHistory);
 
   }
 
