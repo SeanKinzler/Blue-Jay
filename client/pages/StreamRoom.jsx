@@ -14,7 +14,7 @@ const data = {
   category: 'Art'
 };
 
-export default class Channel extends Component {
+export default class StreamRoom extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,7 +24,7 @@ export default class Channel extends Component {
 
   render() {
     return (
-      <div className='channel'>
+      <div className='stream'>
         <Video socket={ this.state.socket } />
         <InfoBox stuff={data}/>
         <Whiteboard socket={ this.state.socket } />
@@ -32,7 +32,3 @@ export default class Channel extends Component {
     );
   }
 }
-
-
-
-

@@ -84,13 +84,13 @@ class Video extends Component {
                 controls
                 className='col s9 m12' 
                 id='remoteVideo'
-                poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png" 
+                poster="/static/video.jpg" 
                 autoPlay>
               </video>
               <video
                 className='col s3' 
                 id='localVideo'
-                poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png"
+                poster="/static/video.jpg"
                 autoPlay>
               </video>
             </div>  
