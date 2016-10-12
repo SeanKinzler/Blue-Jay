@@ -21,11 +21,11 @@ const StreamsList = ({streams}) => {
 					return (
 						<li key={ i } className='collection-item avatar'>
 							<i className={`material-icons circle ${ allColors() }`}>{ allIcons() }</i>
-							<Link to={ `${ localStorage.username + '/' + urlHelper.slugify(stream.title) }` } >
+							<Link to={ `${ stream.username + '/' + urlHelper.slugify(stream.title) }` } >
 								<h3 className='title'>{ stream.title }</h3>
 							</Link>
 							<p>{ stream.description }</p>
-					    <Link to={ `${ localStorage.username + '/' + urlHelper.slugify(stream.title) }` } className="secondary-content">
+					    <Link to={ `${ stream.username + '/' + urlHelper.slugify(stream.title) }` } className="secondary-content">
 						    <i className="material-icons">contact_phone</i>
 						  </Link>
 						</li>

@@ -29,12 +29,12 @@ export default ({subscriptions}) => {
           return (
             <li key={i} className="collection-item avatar">
               <i className={`material-icons circle ${ allColors() }`}>{ allIcons() }</i>
-              <Link to={ `username/${ urlHelper.slugify(sub.title) }` } >
+              <Link to={ `${ sub.creatorName + '/' + urlHelper.slugify(sub.title) }` } >
                 <h3 className="title">{ checkLength(sub.title, 30) }</h3>
               </Link>
               <p>{ checkLength(sub.description, 40) }
               </p>
-              <Link to={ `${ localStorage.username + '/' + urlHelper.slugify(sub.title) }` } className="secondary-content">
+              <Link to={ `${ sub.creatorName + '/' + urlHelper.slugify(sub.title) }` } className="secondary-content">
                 <i className="material-icons">contact_phone</i>
               </Link>
             </li>
