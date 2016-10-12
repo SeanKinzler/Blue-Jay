@@ -155,10 +155,12 @@ export const searchStreams = (query) => {
 			{ params: query }
 		)
 		.then((res) => {
+			console.log('res: ', res)
 			dispatch(requestStreams(res));
 			// dispatch(searchedStreams(res));
 		})
 		.catch((err) => {
+			console.log('err: ', err);
 			dispatch(requestError(err));
 		})
 	}
@@ -338,10 +340,13 @@ const streamEdited = (stream) => {
 
 export const editStream = (stream) => {
 	return (dispatch) => {
+		var newStream = Object.assign({}, stream);
+		delete newStream['username'];
 		axios.put('/api/streams', 
-			stream
+			newStream
 		)
 		.then((res) => {
+			console.log('stream: ', stream);
 			dispatch(streamEdited(stream));
 		})
 		.catch((err) => {
