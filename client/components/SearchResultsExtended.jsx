@@ -19,13 +19,13 @@ const SearchResultsExtended = ({searchResults, openModal, addSubscription, remov
 	}
 
 	const checkLength = (string, length) => {
-		if (string === null || string === undefined) {string = ''}
-		if (string.length >= length) {
-			return string.slice(0, length);
-		} else {
-			return string;
-		}
-	}
+	  if (string === null || string === undefined) {string = ''}
+	  if (string.length >= length) {
+	    return string.slice(0, length) + '...';
+	  } else {
+	    return string;
+	  }
+	};
 
 	return (
 		<div>
@@ -52,7 +52,6 @@ const SearchResultsExtended = ({searchResults, openModal, addSubscription, remov
 												<p>Subscriber count: { stream.subscriberCount }</p>
 												<p>Online: { stream.online }</p>
 												<p>Creator: { checkLength(stream.creatorName, 60) }</p>
-												<p>Created: { stream.createdAt }</p>
 										  </div>
 										</Modal>
 									</td>
