@@ -12,6 +12,8 @@ export const SIGN_OUT_USER = 'SIGN_OUT_USER';
 export const SIGN_UP_USER = 'SIGN_UP_USER';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const JOIN_STREAM = 'JOIN_STREAM';
+export const LEAVE_STREAM = 'LEAVE_STREAM';
+export const JOIN_STREAM_ERROR = 'JOIN_STREAM_ERROR';
 export const RESET_SEARCH_QUERY = 'RESET_SEARCH_QUERY'
 export const SEARCH_STREAM_TERM = 'SEARCH_STREAM_TERM';
 export const FILTER_STREAM_CATEGORIES = 'FILTER_STREAM_CATEGORIES';
@@ -20,7 +22,6 @@ export const FILTER_STREAM_TYPES = 'FILTER_STREAM_TYPES';
 export const FILTER_STREAM_DAYS = 'FILTER_STREAM_DAYS';
 export const FILTER_STREAM_TIMES = 'FILTER_STREAM_TIMES';
 export const TOGGLE_SEARCH_RESULTS_VIEW = 'TOGGLE_SEARCH_RESULTS_VIEW';
-export const JOIN_STREAM_ERROR = 'JOIN_STREAM_ERROR';
 export const ADD_SUBSCRIPTION = 'ADD_SUBSCRIPTION';
 export const REMOVE_SUBSCRIPTION = 'REMOVE_SUBSCRIPTION';
 export const REQUEST_SUBSCRIPTIONS = 'REQUEST_SUBSCRIPTIONS';
@@ -33,10 +34,16 @@ export const CLOSE_STREAM_MODAL = 'CLOSE_STREAM_MODAL';
 export const CREATE_STREAM = 'CREATE_STREAM';
 export const REQUEST_USER_STREAMS = 'REQUEST_USER_STREAMS';
 
-export const joinStream = (socket) => {
+export const joinStream = (stream) => {
 	return {
 		type: JOIN_STREAM,
-		payload: socket
+		stream
+	}
+}
+
+export const leaveStream = () => {
+	return {
+		type: LEAVE_STREAM
 	}
 }
 
