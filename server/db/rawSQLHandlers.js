@@ -185,7 +185,6 @@ module.exports = {
 
   searchStreams: (req, res) => {
     // need to use req.query because query values sent in url
-    console.log('req.query:', req.query)
     var keys = [];
     var values = [];
     req.query = req.query || {};
@@ -205,10 +204,8 @@ module.exports = {
       }
     }
     if (req.query.text !== undefined) {
-      // for(var i = 0; i < keywords.length; i++) {
         query = query + 'INNER JOIN (streams_keywords sk, keywords k) ON ' +
         '(streams.id=sk.streamId AND sk.keywordId=k.id AND k.text LIKE "%' + req.query.text + '%") ';
-      // }
     }
     if (req.query.text !== undefined && (keys !== undefined && keys.length > 0)) {
       query = query + 'WHERE (';
@@ -219,6 +216,7 @@ module.exports = {
       //     query = query + ' AND ';
       //   }
       // }
+
       if (keys !== undefined && keys.length > 0 && req.query.text) {
         for (var i = 0; i < keys.length; i++) {
           if (i === 0) {
@@ -232,7 +230,7 @@ module.exports = {
     } else {
       query = query + ';\n';
     }
-    console.log('query:', query)
+
     sql(query, function(error, rows, fields) {
       if (error) {
         res.sendStatus(404);
