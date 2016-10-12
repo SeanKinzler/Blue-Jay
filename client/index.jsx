@@ -2,18 +2,17 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Router, IndexRoute, Route, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
+import { persistStore } from 'redux-persist';
 import requireAuth from './utils/auth.jsx';
 import App from './components/App.jsx';
 import Home from './pages/Home.jsx';
-import Channel from './pages/Channel.jsx';
+import StreamRoom from './pages/StreamRoom.jsx';
 import CreateStream from './pages/CreateStream.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import UserSignUp from './pages/UserSignUp.jsx';
 import Login from './pages/Login.jsx';
 import configureStore from './store/storeConfig.jsx';
-import { persistStore } from 'redux-persist';
 import Search from './pages/Search.jsx';
-import RequireAuth from './components/RequireAuth.jsx';
 import Subscriptions from './pages/Subscriptions.jsx';
 import Streams from './pages/Streams.jsx';
 import Profile from './pages/Profile.jsx';
@@ -39,7 +38,7 @@ render((
         <Route path='nostream' component={StreamUnavailable} />
         <Route path='nomedia' component={NoMedia} />
         <Route path='jwt/:token' component={JwtPage} />
-        <Route path=':channel/:channelId' component={Channel} onEnter={requireAuth} />
+        <Route path=':stream/:streamId' component={StreamRoom} onEnter={requireAuth} />
       </Route>
     </Router>
   </Provider>
