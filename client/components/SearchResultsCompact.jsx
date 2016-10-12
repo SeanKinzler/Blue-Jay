@@ -3,7 +3,7 @@ import { Button, Modal } from 'react-materialize'
 import { SearchResultsModal } from './SearchResultsModal.jsx'
 import style from '../styles.js'
 
-const SearchResultsCompact = ({searchResults, openModal, addSubscription, selectedStream, modalIsOpen, onRequestClose}) => {
+const SearchResultsCompact = ({searchResults, openModal, addSubscription, selectedStream, removeSubscription, modalIsOpen, onRequestClose}) => {
 	const isSubscribed = (stream) => {
 		if (subscriptions.includes(stream.title)) {
 			return <i onClick={ () => { removeSubscription(stream) } } className='material-icons circle green'>done</i>;
@@ -42,7 +42,7 @@ const SearchResultsCompact = ({searchResults, openModal, addSubscription, select
 				  	  	<table className='centered'>
 				  	  		<tbody>
 				  	  			<tr>
-				  						
+				  						<td>{ isSubscribed(stream) }</td>
 				  						<td>
 				  							<Modal
 				  							  header={ checkLength(stream.title, 23) }

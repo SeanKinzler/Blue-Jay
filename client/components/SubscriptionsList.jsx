@@ -5,6 +5,7 @@ import allColors from '../lib/allColors.js';
 import urlHelper from '../utils/urlHelper.jsx';
 
 export default ({subscriptions}) => {
+  console.log(subscriptions)
   subscriptions = subscriptions.filter(function (item) {
     return !!item.title;
   });
