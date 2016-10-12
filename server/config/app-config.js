@@ -16,8 +16,12 @@ app.use(express.static(path.join(__dirname, '../../client')));
 app.get('/google/login', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'] }));
 
 app.get('/google/success', (req, res) => {
+  // Used to grab header refer and perform a login redirect
+  const nextParamsIndex = req.headers.referer.lastIndexOf('?');
+  const nextParamsRaw = req.headers.referer.slice(nextParamsIndex);
+  const nextParams = nextParamsRaw.replace(/%2F/g, '/');
   passport.authenticate('google', (err, user, info) => {
-    res.redirect('/jwt/' + getToken());
+    res.redirect('/jwt/' + getToken() + nextParams);
   })(req, res);
 });
 

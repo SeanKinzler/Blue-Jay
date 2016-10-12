@@ -13,7 +13,8 @@ const requireAuth = (nextState, replace, callback) => {
     localStorage.username = 'Suspicious user';
     replace({
       pathname: '/login',
-      state: { nextPathname: nextState.location.pathname }
+      state: { nextPathname: nextState.location.pathname },
+      query: { next: nextState.location.pathname }
     })
     callback();
   })
