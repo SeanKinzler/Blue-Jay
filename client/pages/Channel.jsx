@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import Video from '../components/Video.jsx';
 import InfoBox from '../components/InfoBox.jsx';
 import ChatContainer from '../components/ChatContainer.jsx';
-import Whiteboard from '../components/Whiteboard.jsx'
+import Whiteboard from '../components/Whiteboard.jsx';
 import {Link} from 'react-router';
+import io from 'socket.io-client';
 
 const data = {
   title: 'cat',
@@ -13,12 +14,25 @@ const data = {
   category: 'Art'
 };
 
-export default ({params}) => {
-  return(
-    <div className='channel'>
-      <Video />
-      <InfoBox stuff={data}/>
-      <Whiteboard />
-    </div>
-  );
-};
+export default class Channel extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      socket: io.connect(),
+    };
+  }
+
+  render() {
+    return (
+      <div className='channel'>
+        <Video socket={ this.state.socket } />
+        <InfoBox stuff={data}/>
+        <Whiteboard socket={ this.state.socket } />
+      </div>
+    );
+  }
+}
+
+
+
+

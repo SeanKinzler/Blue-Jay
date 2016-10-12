@@ -13,10 +13,9 @@ class Video extends Component {
 
   constructor(props) {
     super(props);
-
-
+    
     this.state = {
-      socket: io.connect(),
+      socket: props.socket,
       user: localStorage.firstName + ' ' + localStorage.lastName[0],
       roomId: urlUtil.deslugify(window.location.pathname.slice(1)),
       room: urlUtil.deslugify(window.location.pathname.slice(window.location.pathname.lastIndexOf('/') + 1)),

@@ -1,26 +1,39 @@
 import React from 'react';
+import urlUtil from '../utils/urlHelper.jsx';
 
 class Whiteboard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      socket: props.socket,
+      roomId: urlUtil.deslugify(window.location.pathname.slice(1)),
+    };
+  }
+
   componentDidMount() {
     this.canvas = new fabric.Canvas('whiteboard', {isDrawingMode: true});
-
-    //Connect to the server:
-    this.socket = io.connect();
 
     //Send whiteboard changes to the server:
     this.canvas.on('path:created', () => this.sendWhiteboard());
 
     //Recieve whiteboard changes from the server:
-    this.socket.on('dataFromServer', (data) => this.recieveWhiteboard(data));
+    this.state.socket.on('dataFromServer', (data) => {
+      console.log(data);
+      this.recieveWhiteboard(data);
+    });
   }
 
-  // sendWhiteboard() {
-  //   this.socket.emit('dataFromClient', JSON.stringify(this.canvas));
-  // }
+  sendWhiteboard() {
+    console.log(this.state.roomId);
+    this.state.socket.emit('dataFromClient', {
+      room: this.state.roomId,
+      canvasJSON: JSON.stringify(this.canvas),
+    });
+  }
 
-  // recieveWhiteboard(data) {
-  //   this.canvas.loadFromJSON(JSON.parse(data), this.canvas.renderAll.bind(this.canvas));
-  // }
+  recieveWhiteboard(canvasJSON) {
+    this.canvas.loadFromJSON(canvasJSON, this.canvas.renderAll.bind(this.canvas));
+  }
 
   render() {
     return (

@@ -156,6 +156,10 @@ io.sockets.on('connection', function(socket) {
     }
   });
 
+  socket.on('dataFromClient', function (data) {
+    socket.broadcast.to(data.room).emit('dataFromServer', data.canvasJSON);
+  });
+
 });
 
 
