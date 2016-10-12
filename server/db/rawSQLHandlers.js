@@ -4,13 +4,11 @@ module.exports = {
 
   toggleStreamOff: (req, res) => {
     sql('update streams set online="false" where title="' + req.body.title + '"', function (error, rows, fields) {
-      console.log(arguments);
     });
   },
 
   toggleStreamOn: (req, res) => {
     sql('update streams set online="true" where title="' + req.body.title + '"', function (error, rows, fields) {
-      console.log(arguments);
     });
   },
 
