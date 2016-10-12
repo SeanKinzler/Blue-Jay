@@ -6,6 +6,15 @@ import styles from '../styles';
 
 class Login extends Component {
 
+  parseUrl() {
+    let url = '/google/login';
+    const query = window.location.search.split('=');
+    if (query[1].length) {
+      url += '?next='.concat(query[1].replace(/%2F/g, '/'));
+    }
+    return url;
+  }
+
   signInHandler(form) {
     this.props.signInUser({
       username: form.username.value,
@@ -17,7 +26,7 @@ class Login extends Component {
     return (
       <div>
         <div className='center-align' style={ styles.googleLogin }>
-          <a href="/google/login">
+          <a href={ this.parseUrl() } >
              <button className="btn red darken-1 waves-effect waves-light" type="submit" name="action">
               Log in with Google
              </button>
