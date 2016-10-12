@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button, Modal } from 'react-materialize'
 import { SearchResultsModal } from './SearchResultsModal.jsx'
-import style from '../styles.js'
+import style from '../styles.js';
+import checkLength from '../utils/lengthHelper.jsx';
 
 const SearchResultsCompact = ({searchResults, openModal, addSubscription, selectedStream, removeSubscription, modalIsOpen, onRequestClose, subscriptions}) => {
 	const isSubscribed = (stream) => {
@@ -19,16 +20,6 @@ const SearchResultsCompact = ({searchResults, openModal, addSubscription, select
 		}
 	}
 
-	const checkLength = (string, length) => {
-	  if (string === null || string === undefined) {string = ''}
-	  if (string.length >= length) {
-	    return string.slice(0, length) + '...';
-	  } else {
-	    return string;
-	  }
-	};
-
-	///<div onClick={ () => { openModal(stream); } } className='btn'>Details</div>
 	return (
 		<div>
 			{ 

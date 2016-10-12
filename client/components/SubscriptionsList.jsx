@@ -3,20 +3,12 @@ import {Link} from 'react-router';
 import allIcons from '../lib/allIcons.js';
 import allColors from '../lib/allColors.js';
 import urlHelper from '../utils/urlHelper.jsx';
+import checkLength from '../utils/lengthHelper.jsx';
 
 export default ({subscriptions}) => {
   subscriptions = subscriptions.filter(function (item) {
     return !!item.title;
   });
-
-  const checkLength = (string, length) => {
-    if (string === null || string === undefined) {string = ''}
-    if (string.length >= length) {
-      return string.slice(0, length) + '...';
-    } else {
-      return string;
-    }
-  };
 
   if (subscriptions.length) {
     return (
@@ -30,7 +22,7 @@ export default ({subscriptions}) => {
             <li key={i} className="collection-item avatar">
               <i className={`material-icons circle ${ allColors() }`}>{ allIcons() }</i>
               <Link to={ `${ sub.creatorName + '/' + urlHelper.slugify(sub.title) }` } >
-                <h3 className="title">{ checkLength(sub.title, 30) }</h3>
+                <h3 className="title">{ checkLength(sub.title, 25) }</h3>
               </Link>
               <p>{ checkLength(sub.description, 40) }
               </p>
