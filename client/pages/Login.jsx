@@ -9,7 +9,7 @@ class Login extends Component {
   parseUrl() {
     let url = '/google/login';
     const query = window.location.search.split('=');
-    if (query[1].length) {
+    if (query[1] && query[1].length) {
       url += '?next='.concat(query[1].replace(/%2F/g, '/'));
     }
     return url;
