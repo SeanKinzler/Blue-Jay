@@ -20,6 +20,7 @@ class Search extends Component {
     if (selectedCategory.length) {
       this.props.searchStreams({categories: this.props.categories.selected});
     } else {
+      this.props.resetSearchQuery();
       this.props.searchStreams();
     }
   }
@@ -90,11 +91,12 @@ class Search extends Component {
 
   submitHandler(e) {
     e.preventDefault();
-    this.props.resetSearchQuery();
+    // this.props.resetSearchQuery();
   	var query = {
   		text: this.props.streams.term,
   		categories: this.props.streams.categories 
   	}
+    this.props.resetSearchQuery();
   	this.props.searchStreams(query)
   }
 
