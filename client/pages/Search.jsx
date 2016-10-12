@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as Actions from '../actions/index.jsx';
+import categoriesList from '../lib/categories.js';
 import SearchBar from '../components/SearchBar.jsx';
 import SearchFilter from '../components/SearchFilter.jsx';
 import SearchResultsCompact from '../components/SearchResultsCompact.jsx';
@@ -9,8 +10,18 @@ import SearchResultsModal from '../components/SearchResultsModal.jsx';
 
 class Search extends Component {
 
+  componentWillUnmount() {
+    this.props.resetSearchQuery();
+  }
+
   componentWillMount() {
-    this.props.getStreams();
+    // Category potentially selected from home page
+    const selectedCategory = this.props.categories.selected;
+    if (selectedCategory.length) {
+      this.props.searchStreams({categories: this.props.categories.selected});
+    } else {
+      this.props.searchStreams();
+    }
   }
 
   componentDidMount() {
@@ -77,11 +88,11 @@ class Search extends Component {
     }
   }
 
-
-  submitHandler() {
-  	// consider adding title, description, keywords and days
+  submitHandler(e) {
+    e.preventDefault();
+    this.props.resetSearchQuery();
   	var query = {
-  		title: this.props.streams.term,
+  		text: this.props.streams.term,
   		categories: this.props.streams.categories 
   	}
   	this.props.searchStreams(query)
@@ -92,22 +103,16 @@ class Search extends Component {
       <div className='container'>
         <SearchBar onTermChange={this.props.searchStreamTerm} />
         <div className='row'>
-          <div className='col s4 m2'>
+          <div className='col s6 m6'>
             <SearchFilter filterOptions={this.props.categories} />
           </div>
-          <div className='col s4 m2'>
-            <SearchFilter filterOptions={this.props.prices} />
-          </div>
-          <div className='col s4 m2'>
+          <div className='col s6 m2'>
             <SearchFilter filterOptions={this.props.types} />
           </div>
-          <div className='col s4 m2'>
-            <SearchFilter filterOptions={this.props.days} />
-          </div>
-          <div className='col s4 m2'>
+          <div className='col s6 m2'>
             <div className='btn blue' id='submit' onClick={this.submitHandler.bind(this)}>Search</div>
           </div>
-          <div className='col s4 m2'>
+          <div className='col s6 m2'>
             { this.renderFilterView() }
           </div>
         </div>
@@ -127,7 +132,7 @@ const mapStateToProps = (state) => {
     categories: {
       title: 'Categories', 
       handler: 'filterStreamCategories',
-      options: ['Math', 'Entertainment', 'History', 'Politics'],
+      options: categoriesList,
       selected: state.streams.categories
     },
     prices: {

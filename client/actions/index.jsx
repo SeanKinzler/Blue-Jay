@@ -12,6 +12,7 @@ export const SIGN_OUT_USER = 'SIGN_OUT_USER';
 export const SIGN_UP_USER = 'SIGN_UP_USER';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const JOIN_STREAM = 'JOIN_STREAM';
+export const RESET_SEARCH_QUERY = 'RESET_SEARCH_QUERY'
 export const SEARCH_STREAM_TERM = 'SEARCH_STREAM_TERM';
 export const FILTER_STREAM_CATEGORIES = 'FILTER_STREAM_CATEGORIES';
 export const FILTER_STREAM_PRICES = 'FILTER_STREAM_PRICES';
@@ -135,6 +136,12 @@ export const getStreams = () => {
 	}
 }
 
+export const resetSearchQuery = () => {
+	return {
+		type: RESET_SEARCH_QUERY
+	}
+}
+
 export const searchedStreams = (results) => {
 	return {
 		type: SEARCH_STREAMS,
@@ -148,7 +155,8 @@ export const searchStreams = (query) => {
 			{ params: query }
 		)
 		.then((res) => {
-			dispatch(searchedStreams(res));
+			dispatch(requestStreams(res));
+			// dispatch(searchedStreams(res));
 		})
 		.catch((err) => {
 			dispatch(requestError(err));

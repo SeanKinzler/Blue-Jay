@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import categoriesList from '../lib/categories.js';
 import * as Actions from '../actions/index.jsx';
 import StreamForm from '../components/StreamForm.jsx';
 
@@ -39,7 +40,7 @@ class CreateStream extends Component {
       <div className='container'>
         <StreamForm 
           submitHandler={this.formSubmitHandler.bind(this)}
-          categories={this.props.categories}
+          categories={categoriesList}
         />
       </div>
     )
@@ -47,10 +48,7 @@ class CreateStream extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {
-    categories: ['Art', 'Music', 'Sports', 'History', 'Politics', 
-      'News', 'Education']
-  };
+  return {}
 }
 
 const mapDispatchToProps = (dispatch) => {

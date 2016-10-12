@@ -36,9 +36,9 @@ export default class Carousel extends Component {
       <div className="carousel carousel-slider center" data-indicators="true">
         <div className="carousel-fixed-item center">
           <Link 
-            to='login' 
+            to='/search' 
             className='btn waves-effect white grey-text darken-text-2'>
-            Login/Signup
+            Discover Streams
           </Link>
         </div>
         <div className="carousel-item red white-text" href="#one!">
