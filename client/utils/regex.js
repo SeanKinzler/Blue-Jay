@@ -13,6 +13,9 @@ var scrub = function (text) {
 console.log(scrub('hello'));
 console.log(scrub('What\'s going on, guys? <script>killme</script>'));
 
-module.exports = screen;
+module.exports = {
+  screen: screen,
+  scrub: scrub,
+};
 
 
