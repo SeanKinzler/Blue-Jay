@@ -18,13 +18,11 @@ class Whiteboard extends React.Component {
 
     //Recieve whiteboard changes from the server:
     this.state.socket.on('dataFromServer', (data) => {
-      console.log(data);
       this.recieveWhiteboard(data);
     });
   }
 
   sendWhiteboard() {
-    console.log(this.state.roomId);
     this.state.socket.emit('dataFromClient', {
       room: this.state.roomId,
       canvasJSON: JSON.stringify(this.canvas),
