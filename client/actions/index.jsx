@@ -155,10 +155,12 @@ export const searchStreams = (query) => {
 			{ params: query }
 		)
 		.then((res) => {
+			console.log('res: ', res)
 			dispatch(requestStreams(res));
 			// dispatch(searchedStreams(res));
 		})
 		.catch((err) => {
+			console.log('err: ', err);
 			dispatch(requestError(err));
 		})
 	}

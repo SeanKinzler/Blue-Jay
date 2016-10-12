@@ -202,10 +202,11 @@ module.exports = {
         '(streams.id=sc.streamId AND sc.categoryId=c.id AND c.text="' + categories[i] + '") ';
       }
     }
-    if (req.query.text !== undefined) {
-        query = query + 'INNER JOIN (streams_keywords sk, keywords k) ON ' +
-        '(streams.id=sk.streamId AND sk.keywordId=k.id AND k.text LIKE "%' + req.query.text + '%") ';
-    }
+    // if (req.query.text !== undefined) {
+    //     query = query + 'INNER JOIN (streams_keywords sk, keywords k) ON ' +
+    //     '(streams.id=sk.streamId AND sk.keywordId=k.id AND k.text LIKE "%' + req.query.text + '%") ';
+    // }
+    query = query + 'INNER JOIN (users u) ON streams.creatorId=u.id '
     if (req.query.text !== undefined && (keys !== undefined && keys.length > 0)) {
       query = query + 'WHERE (';
     
@@ -229,7 +230,7 @@ module.exports = {
     } else {
       query = query + ';\n';
     }
-
+    console.log(query);
     sql(query, function(error, rows, fields) {
       if (error) {
         res.sendStatus(404);
