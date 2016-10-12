@@ -1,51 +1,73 @@
 import React from 'react';
 import { Button, Modal } from 'react-materialize'
 import { SearchResultsModal } from './SearchResultsModal.jsx'
+import style from '../styles.js'
 
 const SearchResultsCompact = ({searchResults, openModal, addSubscription, selectedStream, modalIsOpen, onRequestClose}) => {
+	const isSubscribed = (stream) => {
+		if (subscriptions.includes(stream.title)) {
+			return <i onClick={ () => { removeSubscription(stream) } } className='material-icons circle green'>done</i>;
+		}
+		return <i onClick={ () => { addSubscription(stream) } } className='material-icons circle'>done</i>;
+	}
+
 	const isOnline = (stream) => {
-		if (stream.online) {
-			return <span className="badge red">{ stream.online }</span>
+		if (stream.online === 'true') {
+			return <i className="material-icons">volume_up</i>;
 		} else {
-			return <span></span>;
+			return <i className="material-icons">volume_off</i>;
+		}
+	}
+
+	const checkLength = (string, length) => {
+		if (string === null || string === undefined) {string = ''}
+		if (string.length >= length) {
+			return string.slice(0, length);
+		} else {
+			return string;
 		}
 	}
 
 	///<div onClick={ () => { openModal(stream); } } className='btn'>Details</div>
 	return (
 		<div>
-			{ searchResults.map((stream) => {
-				return (
-					<div key={stream.id} className='col s6 m4'>
-						<div className="card blue">
-							<div className="card-content white-text">
-								<span className="card-title">{ stream.title }</span>
-								<p>{ stream.description }</p>
-							</div>
-							<div className="card-action">
-								<i onClick={ () => { addSubscription(stream) } } className='material-icons circle green'>done</i>
-								<Modal
-								  header='Modal Header'
-								  trigger={
-								    <Button waves='light'>MODALs</Button>
-								  }>
-								  <div>
-										<h1>{ stream.title }</h1>
-										<p>{ stream.description }</p>
-										<p>Subscriber count: { stream.subscriberCount }</p>
-										<p>Online: { stream.online }</p>
-										<p>CreatorId: { stream.CreatorId }</p>
-										<p>Created: { stream.createdAt }</p>
-								  </div>
-								</Modal>
-								<span>{ stream.creatorId }</span>
-								<span className="badge purple">{ isOnline(stream) }</span>
-								<span className="badge green">{ stream.subscriberCount }</span>
-							</div>
-						</div>
-					</div>
-				)
-			})}
+			{ 
+				searchResults.map((stream) => {
+					return (
+						<ul key={stream.id} className="collection with-header col s4 m6">
+						  <li className="collection-header">
+						  	<h5>{ checkLength(stream.title, 23) }</h5>
+						  </li>
+						  <li className="collection-item">
+				  	  	<table className='centered'>
+				  	  		<tbody>
+				  	  			<tr>
+				  						
+				  						<td>
+				  							<Modal
+				  							  header={ checkLength(stream.title, 23) }
+				  							  trigger={
+				  							    <Button onClick={ () => { openModal(stream); } } waves='light'>Details</Button>
+				  							  }>
+				  							  <div>
+				  									<p>Description: { checkLength(stream.description, 60)  }</p>
+				  									<p>Subscriber count: { stream.subscriberCount }</p>
+				  									<p>Online: { stream.online }</p>
+				  									<p>Creator: { checkLength(stream.creatorName, 60) }</p>
+				  									<p>Created: { stream.createdAt }</p>
+				  							  </div>
+				  							</Modal>
+				  						</td>
+				  						<td>{ isOnline(stream) }</td>
+				  						<td><i className="material-icons">supervisor_account</i><br/>{ stream.subscriberCount }</td>
+				  	  			</tr>
+				  	  		</tbody>
+				  	  	</table>
+						  </li>
+						</ul>
+					);
+				}) 
+			}
 		</div>
 	)
 }

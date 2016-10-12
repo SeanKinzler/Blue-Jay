@@ -195,7 +195,7 @@ module.exports = {
         values.push(req.query.text);
       } 
     }
-    var query = 'SELECT streams.* FROM streams ';
+    var query = 'SELECT streams.*, u.username as creatorName FROM streams ';
     if (categories !== undefined) {
       for(var i = 0; i < categories.length; i++) {
         query = query + 'INNER JOIN (streams_categories sc, categories c) ON ' +

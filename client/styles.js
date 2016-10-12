@@ -1,5 +1,6 @@
 module.exports = {
 
+
   chatterbox: {
     'marginTop': '5px',
     'maxHeight': window.innerHeight - 330 + 'px',
@@ -49,6 +50,12 @@ module.exports = {
 
   googleLogin: {
     marginTop: '50px',
+  },
+
+  //SearchResultsCompact
+  '.banner': {
+    'text-align': 'center'
   }
+
 
 };
