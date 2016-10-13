@@ -3,8 +3,10 @@ import style from '../styles.js';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../actions/index.jsx';
 import ChatContainer from './ChatContainer.jsx';
+import InfoBox from '../components/InfoBox.jsx';
 import EZRTC from '../lib/webRTC';
 import io from 'socket.io-client';
+import Whiteboard from '../components/Whiteboard.jsx';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import urlUtil from '../utils/urlHelper.jsx';
@@ -77,25 +79,33 @@ class Video extends Component {
       <div className='container'>
         <div className='row'>
           
-          <div className='col s12 m9'>
+          <div className='col s12'>
             <div className='row' id='putVidsHere'>
               <video
                 controls
-                className='col s9 m12' 
+                className='col s9 responsive-video' 
                 id='remoteVideo'
                 poster="/static/video.jpg" 
                 autoPlay>
               </video>
+              <InfoBox 
+                video={ this.props.video } 
+                creatorName={ this.props.creatorName } 
+                subscriptions={ this.props.subscriptions }
+                addSubscription={ this.props.addSubscription }
+                removeSubscription={ this.props.removeSubscription}
+              />
               <video
-                className='col s3' 
+                className='col s3 responsive-video' 
                 id='localVideo'
                 poster="/static/video.jpg"
                 autoPlay>
               </video>
             </div>  
           </div>
-     
-          <div className='col s12 m3' >
+        </div>
+        <div className='row'>
+          <div className='col s12'>
               <ChatContainer 
                 roomId={ this.state.roomId }
                 room={ this.state.room }
@@ -103,7 +113,6 @@ class Video extends Component {
                 socket={ this.state.socket } 
               />
           </div>
-
         </div>
       </div>
     );
@@ -113,7 +122,8 @@ class Video extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    username: state.auth.username
+    username: state.auth.username,
+    subscriptions: state.subscriptions.data.map(s=>s.title),
   }
 }
 

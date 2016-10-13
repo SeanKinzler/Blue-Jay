@@ -1,15 +1,27 @@
 import React from 'react';
 import { Button, Modal } from 'react-materialize'
 import { SearchResultsModal } from './SearchResultsModal.jsx'
-import style from '../styles.js';
 import checkLength from '../utils/lengthHelper.jsx';
+import isSubscribed from '../utils/isSubscribed.jsx';
+import style from '../styles.js'
 
 const SearchResultsCompact = ({searchResults, openModal, addSubscription, selectedStream, removeSubscription, modalIsOpen, onRequestClose, subscriptions}) => {
+	
 	const isSubscribed = (stream) => {
-		if (subscriptions.includes(stream.title)) {
-			return <i onClick={ () => { removeSubscription(stream) } } className='material-icons circle green'>done</i>;
-		}
-		return <i onClick={ () => { addSubscription(stream) } } className='material-icons circle'>done</i>;
+	  if (subscriptions.includes(stream.title)) {
+	    return (
+	      <i onClick={ () => { removeSubscription(stream) } } 
+	         className='material-icons circle teal'>
+	         done
+	      </i>
+	    );
+	  }
+	  return (
+	    <i onClick={ () => { addSubscription(stream) } } 
+	       className='material-icons circle'>
+	       done
+	    </i>
+	  );
 	}
 
 	const isOnline = (stream) => {

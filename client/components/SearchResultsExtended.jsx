@@ -1,14 +1,25 @@
 import React from 'react';
 import { Modal, Button } from 'react-materialize';
 import checkLength from '../utils/lengthHelper.jsx';
+
 const SearchResultsExtended = ({searchResults, openModal, addSubscription, removeSubscription, subscriptions}) => {
 
-	const isSubscribed = (stream) => {
-		if (subscriptions.includes(stream.title)) {
-			return <i onClick={ () => { removeSubscription(stream) } } className='material-icons circle'>done</i>;
-		}
-		return <i onClick={ () => { addSubscription(stream) } } className='material-icons circle'>done</i>;
-	}
+  const isSubscribed = (stream) => {
+    if (subscriptions.includes(stream.title)) {
+      return (
+        <i onClick={ () => { removeSubscription(stream) } } 
+           className='material-icons circle teal'>
+           done
+        </i>
+      );
+    }
+    return (
+      <i onClick={ () => { addSubscription(stream) } } 
+         className='material-icons circle'>
+         done
+      </i>
+    );
+  }
 
 	const isOnline = (stream) => {
 		if (stream.online === 'true') {
