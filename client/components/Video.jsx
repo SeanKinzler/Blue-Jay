@@ -82,13 +82,13 @@ class Video extends Component {
             <div className='row' id='putVidsHere'>
               <video
                 controls
-                className='col s9 m12' 
+                className='col s9 m12 responsive-video' 
                 id='remoteVideo'
                 poster="/static/video.jpg" 
                 autoPlay>
               </video>
               <video
-                className='col s3' 
+                className='col s3 responsive-video' 
                 id='localVideo'
                 poster="/static/video.jpg"
                 autoPlay>
