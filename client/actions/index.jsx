@@ -12,8 +12,9 @@ export const SIGN_OUT_USER = 'SIGN_OUT_USER';
 export const SIGN_UP_USER = 'SIGN_UP_USER';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const JOIN_STREAM = 'JOIN_STREAM';
-export const LEAVE_STREAM = 'LEAVE_STREAM';
 export const JOIN_STREAM_ERROR = 'JOIN_STREAM_ERROR';
+export const LEAVE_STREAM = 'LEAVE_STREAM';
+export const REQUEST_STREAM_INFO_ERROR = 'REQUEST_STREAM_INFO_ERROR';
 export const RESET_SEARCH_QUERY = 'RESET_SEARCH_QUERY'
 export const SEARCH_STREAM_TERM = 'SEARCH_STREAM_TERM';
 export const FILTER_STREAM_CATEGORIES = 'FILTER_STREAM_CATEGORIES';
@@ -45,6 +46,31 @@ export const leaveStream = () => {
 	return {
 		type: LEAVE_STREAM
 	}
+}
+
+export const requestStreamInfoError = (streamTitle) => {
+	return {
+		type: REQUEST_STREAM_INFO_ERROR,
+		error: streamTitle
+	}
+}
+
+export const requestStreamInfo = (streamTitle) => {
+	return (dispatch) => {
+		axios.get('/api/streams/extra',
+			{ params: { title: streamTitle } }
+		)
+		.then((res) => {
+			if (res.data[0]) {
+				dispatch(joinStream(res.data[0]))
+			}	else {
+				dispatch(requestStreamInfoError(streamTitle));
+			}
+		})
+		.catch((err) => {
+			dispatch(requestStreamInfoError(err));					
+		})
+	}	
 }
 
 export const userSignedIn = (token) => {
@@ -351,7 +377,6 @@ export const editStream = (stream) => {
 			newStream
 		)
 		.then((res) => {
-			console.log('stream: ', stream);
 			dispatch(streamEdited(stream));
 		})
 		.catch((err) => {
