@@ -20,7 +20,7 @@ const UserStreamsModal = ({selectedStream, modalIsOpen, onRequestClose, editStre
 					<input type='submit' value='Submit' className='btn' />
 				</form>
 			</div>
-			<a className='btn blue' onClick={ onRequestClose }>Cancel</a>
+			<a className='btn' onClick={ onRequestClose }>Cancel</a>
 		</Modal>
 	)
 }

@@ -72,7 +72,7 @@ export default class ChatContainer extends Component {
         </div>
         <form onSubmit={ this.sendMessage }>
           <input type='text' id='messageText'></input>
-          <input className='btn blue' type='submit' value='Send'></input>
+          <input className='btn' type='submit' value='Send'></input>
         </form>
       </div>
     );

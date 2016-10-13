@@ -27,7 +27,7 @@ class Login extends Component {
       <div>
         <div className='center-align' style={ styles.googleLogin }>
           <a href={ this.parseUrl() } >
-             <button className="btn red darken-1 waves-effect waves-light" type="submit" name="action">
+             <button className="btn waves-effect waves-light" type="submit" name="action">
               Log in with Google
              </button>
            </a>

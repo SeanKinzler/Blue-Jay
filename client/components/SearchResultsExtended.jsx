@@ -5,7 +5,7 @@ const SearchResultsExtended = ({searchResults, openModal, addSubscription, remov
 
 	const isSubscribed = (stream) => {
 		if (subscriptions.includes(stream.title)) {
-			return <i onClick={ () => { removeSubscription(stream) } } className='material-icons circle green'>done</i>;
+			return <i onClick={ () => { removeSubscription(stream) } } className='material-icons circle'>done</i>;
 		}
 		return <i onClick={ () => { addSubscription(stream) } } className='material-icons circle'>done</i>;
 	}
