@@ -23,17 +23,6 @@ class Whiteboard extends React.Component {
   }
 
   sendWhiteboard() {
-<<<<<<< HEAD
-    let room = urlUtil.deslugify(window.location.pathname.slice(1));
-    // let room = urlUtil.deslugify(window.location.pathname.slice(1).split('/')[1]);
-    this.socket.emit('dataFromClient', {canvas: JSON.stringify(this.canvas), room: room});
-  }
-
-  recieveWhiteboard(data) {
-    console.log('Recieved from whiteboard');
-    // this.canvas.loadFromJSON(JSON.parse(data), this.canvas.renderAll.bind(this.canvas));
-    this.canvas.loadFromJSON(JSON.parse(data), this.canvas.renderAll.bind(this.canvas));
-=======
     this.state.socket.emit('dataFromClient', {
       room: this.state.roomId,
       canvasJSON: JSON.stringify(this.canvas),
@@ -42,7 +31,6 @@ class Whiteboard extends React.Component {
 
   recieveWhiteboard(canvasJSON) {
     this.canvas.loadFromJSON(canvasJSON, this.canvas.renderAll.bind(this.canvas));
->>>>>>> 020b74c4cdf38842d605af2a2a414cbfaae01bf1
   }
 
   render() {
