@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import categoriesList from '../lib/categories.js';
 import * as Actions from '../actions/index.jsx';
 import StreamForm from '../components/StreamForm.jsx';
+import regex from '../utils/regex';
 
 class CreateStream extends Component {
 
@@ -21,15 +22,15 @@ class CreateStream extends Component {
     e.preventDefault();
     var form = e.target;
     var keywords = []
-    var keywords_chips = $('.chip').each((e, c) => { keywords.push(c.firstChild.textContent)});
+    var keywords_chips = $('.chip').each((e, c) => { keywords.push(regex.scrub(c.firstChild.textContent))});
     var categories = [];
     var category_selections = form.categories.selectedOptions;
     for (var i = 0; i < category_selections.length; i++) {
-      categories.push(category_selections[i].text)
+      categories.push(regex.scrub(category_selections[i].text));
     }
     const newStream = {
-      title: form.title.value,
-      description: form.description.value,
+      title: regex.scrub(form.title.value),
+      description: regex.scrub(form.description.value),
       keywords,
       categories
     }

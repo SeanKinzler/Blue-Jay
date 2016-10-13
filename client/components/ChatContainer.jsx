@@ -44,20 +44,22 @@ export default class ChatContainer extends Component {
 
     var submission = document.getElementById('messageText');
 
-    window.__context.state.socket.emit('chatMessage', {
-      room: window.__context.state.roomId,
-      user: window.__context.state.user,
-      text: submission.value,
-    });
+    if (submission.value) {
+      window.__context.state.socket.emit('chatMessage', {
+        room: window.__context.state.roomId,
+        user: window.__context.state.user,
+        text: submission.value,
+      });
 
-    window.__context.state.messages.push({
-      user: window.__context.state.user,
-      text: submission.value,
-    });
+      window.__context.state.messages.push({
+        user: window.__context.state.user,
+        text: submission.value,
+      });
 
-    submission.value = '';
+      submission.value = '';
 
-    window.__context.forceUpdate();
+      window.__context.forceUpdate();
+    }
   }
 
   render() {

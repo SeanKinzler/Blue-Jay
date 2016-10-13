@@ -1,37 +1,40 @@
 import React from 'react';
 import { Link } from 'react-router';
 import urlHelper from '../utils/urlHelper.jsx';
+import checkLength from '../utils/lengthHelper.jsx';
 
 const UserSubscriptions = ({subscriptions, removeSubscription}) => {
 	const isOnline = (stream) => {
-		if (stream.online) {
-			return <span className="badge red">{ stream.online }</span>
+		if (stream.online === 'true') {
+			return <i className="material-icons">volume_up</i>;
 		} else {
-			return <span></span>;
+			return <i className="material-icons">volume_off</i>;
 		}
 	}
 	return (
 		<div>
 			{ subscriptions.map((stream) => {
 				return (
-					<div key={stream.title} className='col s12'>
-							<div className="card">
-								<div className="card-content white-text">
-									<span className="card-title">{ stream.title }</span>
-									<p>{ stream.description }</p>
-									<span>{ stream.creatorName }</span>
-									<Link 
-										to={`${stream.creatorName + '/' + urlHelper.slugify(stream.title)}`} 
-										className="secondary-content white-text"><i className="material-icons">contact_phone</i></Link>
-								</div>
-								<div className="card-action">
-									<span>{ stream.creatorId }</span>
-									{ isOnline(stream) }
-									<span className="badge">{ stream.subscriberCount }</span>
-									<span onClick={ () => { removeSubscription(stream) } }>Remove</span>
-								</div>
-							</div>
-					</div>
+					<ul key={stream.title} className='collection with-header col s12'>
+							<li className="collection-header">
+								<Link to={`${stream.creatorName + '/' + urlHelper.slugify(stream.title)}`}>
+									<h5>{ checkLength(stream.title, 40) }</h5>
+								</Link>
+								<p>{ stream.description }</p>
+							</li>
+							<li className="collection-item">
+								<table className="centered">
+									<tbody>
+										<tr>
+											<td>{ checkLength(stream.creatorName, 30) }</td>
+											<td>{ isOnline(stream) }</td>
+											<td><i className="material-icons">supervisor_account</i><br/>{ stream.subscriberCount }</td>
+											<td><span onClick={ () => { removeSubscription(stream) } }>Remove</span></td>
+										</tr>
+									</tbody>
+								</table>
+							</li>
+					</ul>
 				)
 			})}
 		</div>

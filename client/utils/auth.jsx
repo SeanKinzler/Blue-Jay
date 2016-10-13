@@ -14,7 +14,8 @@ const requireAuth = (nextState, replace, callback) => {
     replace({
       pathname: '/login',
       state: { nextPathname: nextState.location.pathname },
-      query: { next: nextState.location.pathname }
+      // may be used for login redirect
+      // query: { next: nextState.location.pathname }
     })
     callback();
   })

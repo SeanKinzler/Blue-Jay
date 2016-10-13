@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 import allIcons from '../lib/allIcons.js';
 import allColors from '../lib/allColors.js';
 import urlHelper from '../utils/urlHelper.jsx';
+import checkLength from '../utils/lengthHelper.jsx';
 
 export default ({subscriptions}) => {
   subscriptions = subscriptions.filter(function (item) {
@@ -20,12 +21,12 @@ export default ({subscriptions}) => {
           return (
             <li key={i} className="collection-item avatar color2">
               <i className={`material-icons circle ${ allColors() }`}>{ allIcons() }</i>
-              <Link to={ `username/${ urlHelper.slugify(sub.title) }` } >
-                <h3 className="title">{ sub.title }</h3>
+              <Link to={ `${ sub.creatorName + '/' + urlHelper.slugify(sub.title) }` } >
+                <h3 className="title">{ checkLength(sub.title, 25) }</h3>
               </Link>
-              <p>{ sub.description }
+              <p>{ checkLength(sub.description, 40) }
               </p>
-              <Link to={ `${ localStorage.username + '/' + urlHelper.slugify(sub.title) }` } className="secondary-content">
+              <Link to={ `${ sub.creatorName + '/' + urlHelper.slugify(sub.title) }` } className="secondary-content">
                 <i className="material-icons">contact_phone</i>
               </Link>
             </li>

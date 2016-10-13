@@ -3,10 +3,10 @@ import { Link } from 'react-router';
 import allIcons from '../lib/allIcons.js';
 import allColors from '../lib/allColors.js';
 import urlHelper from '../utils/urlHelper.jsx';
+import checkLength from '../utils/lengthHelper.jsx';
 
 const StreamsList = ({streams}) => {
-	
-	const renderStreams = (streams) => {
+  const renderStreams = (streams) => {
 		if (!streams.length) {
 			return (
 				<li className='collection-item color2'>
@@ -21,11 +21,11 @@ const StreamsList = ({streams}) => {
 					return (
 						<li key={ i } className='collection-item avatar color2'>
 							<i className={`material-icons circle ${ allColors() }`}>{ allIcons() }</i>
-							<Link to={ `${ localStorage.username + '/' + urlHelper.slugify(stream.title) }` } >
-								<h3 className='title'>{ stream.title }</h3>
+							<Link to={ `${ stream.username + '/' + urlHelper.slugify(stream.title) }` } >
+								<h3 className='title'>{ checkLength(stream.title, 25) }</h3>
 							</Link>
-							<p>{ stream.description }</p>
-					    <Link to={ `${ localStorage.username + '/' + urlHelper.slugify(stream.title) }` } className="secondary-content">
+							<p>{ checkLength(stream.description, 40) }</p>
+					    <Link to={ `${ stream.username + '/' + urlHelper.slugify(stream.title) }` } className="secondary-content">
 						    <i className="material-icons color2 lighten-1">contact_phone</i>
 						  </Link>
 						</li>

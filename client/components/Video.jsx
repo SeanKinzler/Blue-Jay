@@ -25,7 +25,6 @@ class Video extends Component {
     var context = this;
 
     this.state.socket.on('failure', function () {
-
       console.log(arguments);
 
       context.state.socket.disconnect();
@@ -50,27 +49,27 @@ class Video extends Component {
   componentWillMount() {
     localStorage.username = this.props.username || localStorage.username;
 
-    EZRTC(this.state.roomId, localStorage.username, this.state.socket);
+    EZRTC(this.state.roomId, localStorage.username, this.state.socket, browserHistory);
   }
 
   componentWillUnmount() {
-    this.state.socket.disconnect();
-
     if (window.checkForHelp) {
       clearInterval(window.checkForHelp);
-
-      if (parentStream) {
-        parentStream.getTracks().forEach(function (track) {
-          track.stop();
-        });
-      }
-
-      if (ownStream) {
-        ownStream.getTracks().forEach(function (track) {
-          track.stop();
-        });
-      }
     }
+    
+    if (window.parentStream) {
+      window.parentStream.getTracks().forEach(function (track) {
+        track.stop();
+      });
+    }
+
+    if (window.ownStream) {
+      window.ownStream.getTracks().forEach(function (track) {
+        track.stop();
+      });
+    }
+
+    this.state.socket.disconnect();
   }
 
   render () {
@@ -84,13 +83,13 @@ class Video extends Component {
                 controls
                 className='col s9 m12' 
                 id='remoteVideo'
-                poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png" 
+                poster="/static/video.jpg" 
                 autoPlay>
               </video>
               <video
                 className='col s3' 
                 id='localVideo'
-                poster="http://www.rockymountainrep.com/wp-content/themes/rockymountainrep/library/images/youtube-default.png"
+                poster="/static/video.jpg"
                 autoPlay>
               </video>
             </div>  

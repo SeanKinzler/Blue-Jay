@@ -7,6 +7,7 @@ import SearchFilter from '../components/SearchFilter.jsx';
 import SearchResultsCompact from '../components/SearchResultsCompact.jsx';
 import SearchResultsExtended from '../components/SearchResultsExtended.jsx';
 import SearchResultsModal from '../components/SearchResultsModal.jsx';
+import regex from '../utils/regex';
 
 class Search extends Component {
 
@@ -92,12 +93,13 @@ class Search extends Component {
   submitHandler(e) {
     e.preventDefault();
     // this.props.resetSearchQuery();
-  	var query = {
-  		text: this.props.streams.term,
-  		categories: this.props.streams.categories 
-  	}
+    var query = {
+      text: regex.scrub(this.props.streams.term),
+      categories: this.props.streams.categories 
+    };
+
     this.props.resetSearchQuery();
-  	this.props.searchStreams(query)
+    this.props.searchStreams(query);
   }
 
   render() {

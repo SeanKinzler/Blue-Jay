@@ -17,11 +17,12 @@ app.get('/google/login', passport.authenticate('google', { scope: ['https://www.
 
 app.get('/google/success', (req, res) => {
   // Used to grab header refer and perform a login redirect
-  const nextParamsIndex = req.headers.referer.lastIndexOf('?');
-  const nextParamsRaw = req.headers.referer.slice(nextParamsIndex);
-  const nextParams = nextParamsRaw.replace(/%2F/g, '/');
+  // const nextParamsIndex = req.headers.referer.lastIndexOf('?');
+  // const nextParamsRaw = req.headers.referer.slice(nextParamsIndex);
+  // const nextParams = nextParamsRaw.replace(/%2F/g, '/');
+  // nextParams will need to be concatenated to redirect url
   passport.authenticate('google', (err, user, info) => {
-    res.redirect('/jwt/' + getToken() + nextParams);
+    res.redirect('/jwt/' + getToken());
   })(req, res);
 });
 

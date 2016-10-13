@@ -158,20 +158,7 @@ io.sockets.on('connection', function(socket) {
     }
   });
 
-  //Whiteboard Events:
-  //Join the specified room:
-  // socket.on('room', (roomName) => {
-  //   room = roomName;
-  //   socket.join(roomName);
-  // });
-
-  //Broadcast data from the client to other clients in the same room:
-  socket.on('dataFromClient', (data) => {
-    console.log('Message recieved');
-    console.log(data.room);
-    socket.broadcast.to(data.room).emit('dataFromServer', data.canvas);
-  });
-
+  socket.on('dataFromClient', (data) => socket.broadcast.to(data.room).emit('dataFromServer', data.canvasJSON));
 });
 
 

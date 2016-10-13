@@ -36,7 +36,7 @@ class Streams extends Component {
       )
     }
     return (
-      <div className='container'>
+      <div>
         <UserStreams 
           streams={ this.props.userStreams.data }
           onStreamSelect={ (stream) => { this.props.openStreamModal(stream) } }
