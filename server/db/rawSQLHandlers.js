@@ -51,7 +51,7 @@ module.exports = {
   },
   //return owned streams aswell
   getUser: (req, res) => {
-    var query1 = 'SELECT u.id, u.username, sub.phoneNotifications, sub.emailNotifications, s.id as streamId, s.title, s.subscriberCount, s.description, us.username AS creatorName FROM users u ' + 
+    var query1 = 'SELECT u.id, u.username, u.avatarUrl, u. avatarThumbUrl, sub.phoneNotifications, sub.emailNotifications, s.id as streamId, s.title, s.subscriberCount, s.description, us.username AS creatorName FROM users u ' + 
       'LEFT JOIN (subscriptions sub, streams s, users us) ' + 
       'ON (u.username="' + req.username + '" AND u.id = sub.userId AND s.id = sub.streamId AND s.creatorId=us.id) WHERE u.username="' + req.username + '";\n'
       query2 = 'SELECT s.*, u.username FROM streams s JOIN (users u) ON s.creatorId=u.id WHERE creatorId=(SELECT id FROM users WHERE username="' + req.username +'");\n'
@@ -94,8 +94,8 @@ module.exports = {
                     online: rows.online,
                     description: rows.description,
                     creatorName: rows.creatorName,
-                    avatarUrl: rows[i].avatarUrl,
-                    avatarThumbUrl: rows[i].avatarThumbUrl
+                    avatarUrl: rows.avatarUrl,
+                    avatarThumbUrl: rows.avatarThumbUrl
                   });
                 res.send(rows);
                 return;
