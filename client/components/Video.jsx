@@ -91,6 +91,9 @@ class Video extends Component {
               <InfoBox 
                 video={ this.props.video } 
                 creatorName={ this.props.creatorName } 
+                subscriptions={ this.props.subscriptions }
+                addSubscription={ this.props.addSubscription }
+                removeSubscription={ this.props.removeSubscription}
               />
               <video
                 className='col s3 responsive-video' 
@@ -119,7 +122,8 @@ class Video extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    username: state.auth.username
+    username: state.auth.username,
+    subscriptions: state.subscriptions.data.map(s=>s.title),
   }
 }
 
