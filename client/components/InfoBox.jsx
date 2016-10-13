@@ -1,9 +1,37 @@
 import React, { Component } from 'react';
+import isSubscribed from '../utils/isSubscribed.jsx';
 
-export default ({video, creatorName}) => {
-  if (!video) {
-    return <div>loading video data...</div>;
+export default ({video, creatorName, subscriptions, addSubscription, removeSubscription}) => {
+
+  const isSubscribed = (stream) => {
+    if (subscriptions.includes(stream.title)) {
+      return (
+        <i onClick={ () => { removeSubscription(stream) } } 
+           className='material-icons circle teal'>
+           done
+        </i>
+      );
+    }
+    return (
+      <i onClick={ () => { addSubscription(stream) } } 
+         className='material-icons circle'>
+         done
+      </i>
+    );
   }
+
+  if (!video) {
+    return (
+      <ul className="collection">
+        <li className='collection-item'>
+          <span className="title">
+            { 'Video data loading...' }
+          </span>
+        </li>
+      </ul>
+    )
+  }
+
   return (
     <ul className="collection">
         <li className="collection-header">
@@ -24,7 +52,7 @@ export default ({video, creatorName}) => {
         </li>
         <li className='collection-item'>
           <span>
-            sub
+            { isSubscribed(video) }
           </span>
           <a href="#!" className="secondary-content">
             <i className="material-icons">supervisor_account</i>
