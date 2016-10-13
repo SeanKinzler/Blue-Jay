@@ -32,15 +32,6 @@ const SearchResultsCompact = ({searchResults, openModal, addSubscription, select
 		}
 	}
 
-	const checkLength = (string, length) => {
-	  if (string === null || string === undefined) {string = ''}
-	  if (string.length >= length) {
-	    return string.slice(0, length) + '...';
-	  } else {
-	    return string;
-	  }
-	};
-
 	return (
 		<div>
 			{ 

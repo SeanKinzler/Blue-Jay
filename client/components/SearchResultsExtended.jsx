@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Button } from 'react-materialize';
 import checkLength from '../utils/lengthHelper.jsx';
+
 const SearchResultsExtended = ({searchResults, openModal, addSubscription, removeSubscription, subscriptions}) => {
 
   const isSubscribed = (stream) => {
