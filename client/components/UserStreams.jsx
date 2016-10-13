@@ -34,7 +34,7 @@ const UserStreams = ({streams, deleteStream, onStreamSelect, onRequestClose, edi
 										</Modal></td>
 
 										<td><a onClick={ () => { deleteStream(stream); } }>Delete Stream</a></td>
-										<td><i className="material-icons">supervisor_account</i><br/>{ stream.subscriberCount }</td>
+										<td><i className="material-icons color1-text text-lighten-5">supervisor_account</i><br/>{ stream.subscriberCount }</td>
 									</tr>
 								</tbody>
 							</table>

@@ -7,16 +7,16 @@ import checkLength from '../utils/lengthHelper.jsx';
 const SearchResultsCompact = ({searchResults, openModal, addSubscription, selectedStream, removeSubscription, modalIsOpen, onRequestClose, subscriptions}) => {
 	const isSubscribed = (stream) => {
 		if (subscriptions.includes(stream.title)) {
-			return <i onClick={ () => { removeSubscription(stream) } } className='material-icons circle green'>done</i>;
+			return <i onClick={ () => { removeSubscription(stream) } } className='material-icons circle color1-text text-lighten-5'>done</i>;
 		}
-		return <i onClick={ () => { addSubscription(stream) } } className='material-icons circle'>done</i>;
+		return <i onClick={ () => { addSubscription(stream) } } className='material-icons circle color1-text text-lighten-5'>done</i>;
 	}
 
 	const isOnline = (stream) => {
 		if (stream.online === 'true') {
-			return <i className="material-icons">volume_up</i>;
+			return <i className="material-icons color1-text text-lighten-5">volume_up</i>;
 		} else {
-			return <i className="material-icons">volume_off</i>;
+			return <i className="material-icons color1-text text-lighten-5">volume_off</i>;
 		}
 	}
 
@@ -25,11 +25,11 @@ const SearchResultsCompact = ({searchResults, openModal, addSubscription, select
 			{ 
 				searchResults.map((stream) => {
 					return (
-						<ul key={stream.id} className="collection with-header col s12 m6 l6">
-						  <li className="collection-header">
+						<ul key={stream.id} className="collection with-header col s12 m6 l6 color1">
+						  <li className="collection-header color1">
 						  	<h5>{ checkLength(stream.title, 23) }</h5>
 						  </li>
-						  <li className="collection-item">
+						  <li className="collection-item color1">
 				  	  	<table className='centered'>
 				  	  		<tbody>
 				  	  			<tr>
@@ -49,7 +49,7 @@ const SearchResultsCompact = ({searchResults, openModal, addSubscription, select
 				  							</Modal>
 				  						</td>
 				  						<td>{ isOnline(stream) }</td>
-				  						<td><i className="material-icons">supervisor_account</i><br/>{ stream.subscriberCount }</td>
+				  						<td><i className="material-icons color1-text text-lighten-5">supervisor_account</i><br/>{ stream.subscriberCount }</td>
 				  	  			</tr>
 				  	  		</tbody>
 				  	  	</table>

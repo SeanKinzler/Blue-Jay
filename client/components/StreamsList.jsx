@@ -26,7 +26,7 @@ const StreamsList = ({streams}) => {
 							</Link>
 							<p>{ checkLength(stream.description, 40) }</p>
 					    <Link to={ `${ stream.username + '/' + urlHelper.slugify(stream.title) }` } className="secondary-content">
-						    <i className="material-icons color1 lighten-1">contact_phone</i>
+						    <i className="material-icons color1-text text-lighten-5">contact_phone</i>
 						  </Link>
 						</li>
 					)

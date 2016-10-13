@@ -27,7 +27,7 @@ export default ({subscriptions}) => {
               <p>{ checkLength(sub.description, 40) }
               </p>
               <Link to={ `${ sub.creatorName + '/' + urlHelper.slugify(sub.title) }` } className="secondary-content">
-                <i className="material-icons">contact_phone</i>
+                <i className="material-icons color1-text text-lighten-5">contact_phone</i>
               </Link>
             </li>
           );
