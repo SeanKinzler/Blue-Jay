@@ -1,7 +1,13 @@
-import { JOIN_STREAM, LEAVE_STREAM, JOIN_STREAM_ERROR } from '../actions/index.jsx';
+import { 
+	JOIN_STREAM, 
+	LEAVE_STREAM, 
+	JOIN_STREAM_ERROR,
+	REQUEST_STREAM_INFO_ERROR 
+} from '../actions/index.jsx';
 
 const initialState = {
 	stream: null,
+	streamInfoError: null,
 	error: null
 }
 
@@ -14,7 +20,11 @@ const Video = (state = initialState, action) => {
 		case LEAVE_STREAM:
 			return Object.assign({}, state, {
 			    stream: null
-			});			
+			});
+		case REQUEST_STREAM_INFO_ERROR:
+			return Object.assign({}, state, {
+			  streamInfoError: action.error
+			});						
 		case JOIN_STREAM_ERROR:
 			return Object.assign({}, state, {
 				error: action.payload
