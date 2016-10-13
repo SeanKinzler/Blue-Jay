@@ -77,7 +77,9 @@ module.exports = {
                     title: rows[i].title,
                     online: rows[i].online,
                     description: rows[i].description,
-                    creatorName: rows[i].creatorName
+                    creatorName: rows[i].creatorName,
+                    avatarUrl: rows[i].avatarUrl,
+                    avatarThumbUrl: rows[i].avatarThumbUrl
                   });
                 }
               }
@@ -91,7 +93,9 @@ module.exports = {
                     title: rows.title,
                     online: rows.online,
                     description: rows.description,
-                    creatorName: rows.creatorName
+                    creatorName: rows.creatorName,
+                    avatarUrl: rows[i].avatarUrl,
+                    avatarThumbUrl: rows[i].avatarThumbUrl
                   });
                 res.send(rows);
                 return;
