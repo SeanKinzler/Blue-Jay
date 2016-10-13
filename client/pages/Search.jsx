@@ -114,7 +114,7 @@ class Search extends Component {
             <SearchFilter filterOptions={this.props.types} />
           </div>
           <div className='col s6 m2'>
-            <div className='btn blue' id='submit' onClick={this.submitHandler.bind(this)}>Search</div>
+            <div className='btn' id='submit' onClick={this.submitHandler.bind(this)}>Search</div>
           </div>
           <div className='col s6 m2'>
             { this.renderFilterView() }

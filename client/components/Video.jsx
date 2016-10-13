@@ -25,6 +25,7 @@ class Video extends Component {
     var context = this;
 
     this.state.socket.on('failure', function () {
+      console.log(arguments);
 
       context.state.socket.disconnect();
 
@@ -47,10 +48,8 @@ class Video extends Component {
 
   componentWillMount() {
     localStorage.username = this.props.username || localStorage.username;
-    
 
     EZRTC(this.state.roomId, localStorage.username, this.state.socket, browserHistory);
-
   }
 
   componentWillUnmount() {

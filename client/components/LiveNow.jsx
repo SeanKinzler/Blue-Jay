@@ -37,7 +37,7 @@ export default class LiveNow extends Component {
 
         <div>
           <ul className="collection with-header">
-            <li className="collection-header">
+            <li className="collection-header color2">
               <h5 className='align-center'>Live Now</h5>
             </li>
           </ul>
@@ -78,12 +78,12 @@ export default class LiveNow extends Component {
 
         <div>
           <ul className="collection with-header">
-            <li className="collection-header">
+            <li className="collection-header color2">
               <h5 className='align-center'>Live Now</h5>
             </li>
           </ul>
           <ul className="collection with-header">
-            <li className="collection-header">
+            <li className="collection-header color2">
               <h5>The are no streams right now.</h5>
               <Link href='/streams'>
                 <h6>Be the first to start streaming!</h6>

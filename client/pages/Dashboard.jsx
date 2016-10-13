@@ -24,8 +24,8 @@ class Dashboard extends Component {
           </div>
           <div className='col s12'>
             <ul className='collection with-header'>
-              <li className='collection-header'><h5>Account Settings</h5></li>
-              <li className='collection-item'>
+              <li className='collection-header color2'><h5>Account Settings</h5></li>
+              <li className='collection-item color2'>
                 <table className='centered responsive-table'>
                   <tbody>
                     <tr>

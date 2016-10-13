@@ -33,7 +33,7 @@ class NavBar extends Component {
   render() {
     return (
       <nav>
-        <div className='nav-wrapper blue darken-1'>
+        <div className='nav-wrapper'>
           <Link className='brand-logo center' to='/'>BlueJay</Link>
           <ul id="nav-mobile" className="right">
             <li>
