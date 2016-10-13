@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Modal } from 'react-materialize'
-import { SearchResultsModal } from './SearchResultsModal.jsx'
 import checkLength from '../utils/lengthHelper.jsx';
 import isSubscribed from '../utils/isSubscribed.jsx';
 import style from '../styles.js'
