@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 
-export default (props) => {
+export default ({video, creatorName}) => {
+  if (!video) {
+    return <div>loading video data...</div>;
+  }
   return (
     <div className="infoBox">
-      <h1>{props.stuff.title}</h1>
-      <h2>{props.stuff.uploader}</h2>
-      <span>{props.stuff.description}</span>
-      <span>{props.stuff.tags}</span>
-      <span>{props.stuff.category}</span>
+      <div>
+        Title:{ video.title }<br/>
+        Description:{ video.description }<br/>
+        Creator: { creatorName }<br/>
+        Subscribers: { video.subscriberCount } 
+      </div>
     </div>
   );
 };
