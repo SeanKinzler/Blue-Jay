@@ -5,9 +5,7 @@ import { connect } from 'react-redux';
 import * as Actions from '../actions/index.jsx';
 import io from 'socket.io-client';
 import Video from '../components/Video.jsx';
-import InfoBox from '../components/InfoBox.jsx';
 import ChatContainer from '../components/ChatContainer.jsx';
-import Whiteboard from '../components/Whiteboard.jsx';
 import urlHelper from '../utils/urlHelper.jsx';
 
 class StreamRoom extends Component {
@@ -31,9 +29,11 @@ class StreamRoom extends Component {
   render() {
     return (
       <div className='container'>
-        <Video socket={ this.state.socket } />
-        <InfoBox video={ this.props.video } creatorName={ this.props.params.creatorName } />
-        <Whiteboard socket={ this.state.socket } />
+        <Video 
+          socket={ this.state.socket } 
+          video={ this.props.video }
+          creatorName={ this.props.params.creatorName }
+        />
       </div>
     );
   }
