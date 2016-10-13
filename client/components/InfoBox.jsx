@@ -5,13 +5,32 @@ export default ({video, creatorName}) => {
     return <div>loading video data...</div>;
   }
   return (
-    <div className="infoBox">
-      <div>
-        Title:{ video.title }<br/>
-        Description:{ video.description }<br/>
-        Creator: { creatorName }<br/>
-        Subscribers: { video.subscriberCount } 
-      </div>
-    </div>
+    <ul className="collection">
+        <li className="collection-header">
+            <h5 className='center-align'>
+              { video.title }
+            </h5>
+        </li>
+        <li className='collection-item'>
+          <span className='title'>
+            { video.description }
+          </span>
+        </li>
+        <li className="collection-item avatar">
+          <i className="material-icons circle">folder</i>
+          <span className="title">
+            { creatorName }
+          </span>
+        </li>
+        <li className='collection-item'>
+          <span>
+            sub
+          </span>
+          <a href="#!" className="secondary-content">
+            <i className="material-icons">supervisor_account</i>
+            { video.subscriberCount }
+          </a>
+        </li>
+    </ul>
   );
 };
