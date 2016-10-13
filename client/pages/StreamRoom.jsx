@@ -10,14 +10,6 @@ import ChatContainer from '../components/ChatContainer.jsx';
 import Whiteboard from '../components/Whiteboard.jsx';
 import urlHelper from '../utils/urlHelper.jsx';
 
-const data = {
-  title: 'cat',
-  uploader: 'person',
-  description: 'cat video',
-  tags: 'tag',
-  category: 'Art'
-};
-
 class StreamRoom extends Component {
 
   constructor(props) {
@@ -40,7 +32,7 @@ class StreamRoom extends Component {
     return (
       <div className='container'>
         <Video socket={ this.state.socket } />
-        <InfoBox video={this.props.video} creatorName={this.props.params.creatorName} />
+        <InfoBox video={ this.props.video } creatorName={ this.props.params.creatorName } />
         <Whiteboard socket={ this.state.socket } />
       </div>
     );
