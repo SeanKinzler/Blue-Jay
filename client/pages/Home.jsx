@@ -22,7 +22,17 @@ class Home extends Component {
     return (
       <div>
       <Carousel />
-        <div className='container'>     
+        <div className='container'>
+          <div className='row'>
+            <div className='center-align'>
+              <h5>Broadcast Yourself</h5>
+            </div>
+            <div>
+              <p>
+                Bluejay is a webRTC based streaming platform designed for no hassle viewing and broadcasting of streams between small, intimate groups.
+              </p>
+            </div>
+          </div>     
           <div className='row'>
             <div className='col s12 m6'>
               <LiveNow socket={ this.props.socket }/>
