@@ -204,10 +204,10 @@ module.exports = {
         '(streams.id=sc.streamId AND sc.categoryId=c.id AND c.text="' + categories[i] + '") ';
       }
     }
-    // if (req.query.text !== undefined) {
-    //     query = query + 'INNER JOIN (streams_keywords sk, keywords k) ON ' +
-    //     '(streams.id=sk.streamId AND sk.keywordId=k.id AND k.text LIKE "%' + req.query.text + '%") ';
-    // }
+    if (req.query.text !== undefined) {
+        query = query + 'INNER JOIN (streams_keywords sk, keywords k) ON ' +
+        '(streams.id=sk.streamId AND sk.keywordId=k.id) ';
+    }
     query = query + 'INNER JOIN (users u) ON streams.creatorId=u.id '
     if (req.query.text !== undefined && (keys !== undefined && keys.length > 0)) {
       query = query + 'WHERE (';
@@ -218,14 +218,14 @@ module.exports = {
       //     query = query + ' AND ';
       //   }
       // }
-
+      query = query + 'k.text LIKE "%' + req.query.text + '%"';
       if (keys !== undefined && keys.length > 0 && req.query.text) {
         for (var i = 0; i < keys.length; i++) {
-          if (i === 0) {
-            query = query + keys[i] + ' LIKE "%' + values[i] + '%"';
-          } else {
-            query = query + ' OR ' + keys[i] + ' LIKE "%' + values[i] + '%"';
-          }
+          // if (i === 0) {
+          //   query = query + keys[i] + ' LIKE "%' + values[i] + '%"';
+          // } else {
+          query = query + ' OR ' + keys[i] + ' LIKE "%' + values[i] + '%"';
+          // }
         }
       }
       query = query + ');\n';
