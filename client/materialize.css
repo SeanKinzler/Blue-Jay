@@ -2214,7 +2214,8 @@ th {
   padding: 0; }
 
 html {
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  color: #acd7e2; }
 
 *, *:before, *:after {
   box-sizing: inherit; }
@@ -3355,7 +3356,7 @@ html {
   line-height: 1.5;
   font-family: "Roboto", sans-serif;
   font-weight: normal;
-  color: rgba(0, 0, 0, 0.87); }
+  color: #acd7e2; }
   @media only screen and (min-width: 0) {
     html {
       font-size: 14px; } }

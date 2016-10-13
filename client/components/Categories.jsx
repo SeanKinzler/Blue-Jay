@@ -5,7 +5,7 @@ export default ({categoriesList, selectCategory}) => {
 	return (
 		<div>
 			<ul className="collection with-header">
-				<li className="collection-header color2">
+				<li className="collection-header color1">
 					<h5 className='align-center'>Categories</h5>
 				</li>
 			</ul>
@@ -13,10 +13,10 @@ export default ({categoriesList, selectCategory}) => {
 				{ categoriesList.map((category, i) => {
 					return (
 						<div key={i} className='col s3 center-align'>
-							<div className="chip color2">
+							<div className="chip color1">
 							  <Link to='/search' 
 							  			onClick={()=> { selectCategory([category]) } } >
-							 		<span className="color2-text text-lighten-5">{ category }</span>
+							 		<span className="color1-text text-lighten-5">{ category }</span>
 							  </Link>
 							</div>
 						</div>
