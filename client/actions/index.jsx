@@ -7,6 +7,7 @@ export const CLOSE_MODAL = 'CLOSE_MODAL';
 export const REQUEST_STREAMS = 'REQUEST_STREAMS';
 export const SEARCH_STREAMS = 'SEARCH_STREAMS';
 export const REQUEST_ERROR = 'REQUEST_ERROR';
+export const LOAD_USER_DATA = 'LOAD_USER_DATA';
 export const SIGN_IN_USER = 'SIGN_IN_USER';
 export const SIGN_OUT_USER = 'SIGN_OUT_USER';
 export const SIGN_UP_USER = 'SIGN_UP_USER';
@@ -406,10 +407,19 @@ export const deleteStream = (stream) => {
 	}
 }
 
+export const loadUserData = (data) => {
+	return {
+		type: LOAD_USER_DATA,
+		username: data.username,
+		avatarUrl: data.avatarUrl
+	}
+}
+
 export const getUserData = () => {
 	return (dispatch) => {
 		axios.get('/api/users')
 		.then((res) => {
+			dispatch(loadUserData(res.data))
 			dispatch(requestUserStreams(res.data.ownedStreams))
 			dispatch(subscriptionsRequested(res.data.subscriptions))
 		})
