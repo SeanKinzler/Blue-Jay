@@ -18,7 +18,6 @@ export default class ChatContainer extends Component {
 
     var context = this;
     this.state.socket.on('chatMessage', function (data) {
-      console.log(data);
       context.state.messages.push({
         user: data.user,
         text: data.text
