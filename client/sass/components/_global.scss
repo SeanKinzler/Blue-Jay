@@ -16,6 +16,10 @@
   background: linear-gradient(to bottom, rgba(64, 158, 181, 1), rgba(11, 26, 30, 1));
 }
 
+.chip {
+  min-width: 8em;
+}
+
 html {
  box-sizing: border-box;
  color: lighten($primary-color, 50%);

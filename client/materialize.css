@@ -2229,6 +2229,9 @@ th {
   color: #D2E9EF !important;
   background: linear-gradient(to bottom, #409eb5, #0b1a1e); }
 
+.chip {
+  min-width: 8em; }
+
 html {
   box-sizing: border-box;
   color: white; }
