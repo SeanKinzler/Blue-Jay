@@ -22,7 +22,7 @@ export default ({video, creatorName, subscriptions, addSubscription, removeSubsc
 
   if (!video) {
     return (
-      <ul className="collection hide-on-small-only">
+      <ul className="collection hide-on-med-and-down">
         <li className='collection-item'>
           <span className="title">
             { 'Video data loading...' }
@@ -33,7 +33,7 @@ export default ({video, creatorName, subscriptions, addSubscription, removeSubsc
   }
 
   return (
-    <ul className="collection hide-on-small-only">
+    <ul className="collection hide-on-med-and-down">
         <li className="collection-header">
             <h5 className='center-align'>
               { video.title }
