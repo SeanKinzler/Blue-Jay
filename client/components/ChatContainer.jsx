@@ -63,18 +63,22 @@ export default class ChatContainer extends Component {
 
   render() {
     return (
-      <div className="chat" style={ style.chatterbox }>
-        <div id='chats'>
-          { 
-            this.state.messages.map(function (messageObject, index) {
-              return <Message message={ messageObject } key={ index } />
-            }) 
-          }
+      <div className="container">
+        <div class="row">
+          <div className="chat" style={ style.chatterbox }>
+            <div id='chats' style={ style.messageBox }>
+              { 
+                this.state.messages.map(function (messageObject, index) {
+                  return <Message message={ messageObject } key={ index } />
+                }) 
+              }
+            </div>
+            <form onSubmit={ this.sendMessage }>
+              <input type='text' id='messageText'></input>
+              <input className='btn color1-text text-lighten-5' type='submit' value='Send'></input>
+            </form>
+          </div>
         </div>
-        <form onSubmit={ this.sendMessage }>
-          <input type='text' id='messageText'></input>
-          <input className='btn color1-text text-lighten-5' type='submit' value='Send'></input>
-        </form>
       </div>
     );
   }

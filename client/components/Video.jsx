@@ -78,17 +78,15 @@ class Video extends Component {
     return (
       <div className='container'>
         <div className='row'>
-          
-         
             <div className='row' id='putVidsHere'>
               <div 
                 className='col s12 m9'
-                style={{position:'relative'}}>
+                style={{position: 'relative'}}>
                 <video
-                  style={{'max-height': window.innerHeight * .65 + 'px',
-                          'max-width': window.innerWidth * .65 + 'px',
+                  style={{'maxHeight': window.innerHeight * .60 + 'px',
+                          'maxWidth': '95%',
                           display: 'inline',
-                          'z-index': 1,
+                          'zIndex': 1,
                           position: 'absolute'}}
                   controls
                   className='responsive-video' 
@@ -97,10 +95,11 @@ class Video extends Component {
                   autoPlay>
                 </video>
                 <video
-                  style={{'max-width': window.innerWidth * .10 + 'px', 
+                  style={{'maxWidth': window.innerWidth * .10 + 'px', 
                           display: 'inline', 
+                          'minWidth': '5%',
                           float: 'left',
-                          'z-index': 10,
+                          'zIndex': 10,
                           position: 'absolute'}}
                   className='responsive-video' 
                   id='localVideo'
@@ -120,7 +119,7 @@ class Video extends Component {
             </div>  
         </div>
         <div className='row'>
-          <div className='col s12'>
+          <div className='col s12 m9'>
               <ChatContainer 
                 roomId={ this.state.roomId }
                 room={ this.state.room }

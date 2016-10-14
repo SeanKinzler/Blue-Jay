@@ -22,8 +22,8 @@ export default ({video, creatorName, subscriptions, addSubscription, removeSubsc
 
   if (!video) {
     return (
-      <ul className="collection hide-on-med-and-down">
-        <li className='collection-item'>
+      <ul className="collection hide-on-med-and-down transparent componentGradient">
+        <li className='collection-item transparent componentGradient'>
           <span className="title">
             { 'Video data loading...' }
           </span>
@@ -33,25 +33,25 @@ export default ({video, creatorName, subscriptions, addSubscription, removeSubsc
   }
 
   return (
-    <ul className="collection hide-on-med-and-down">
-        <li className="collection-header">
+    <ul className="collection hide-on-med-and-down transparent componentGradient">
+        <li className="collection-header transparent componentGradient">
             <h5 className='center-align color1-text text-lighten-5'>
               { video.title }
             </h5>
         </li>
-        <li className='collection-item'>
+        <li className='collection-item transparent componentGradient'>
           <span className='title center-align'>
             { video.description }
           </span>
         </li>
-        <li className="collection-item avatar">
+        <li className="collection-item avatar transparent componentGradient">
           <i className="material-icons circle teal">perm_identity</i>
           <span className="title">
             <br/>
             <p>{ creatorName }</p>
           </span>
         </li>
-        <li className='collection-item'>
+        <li className='collection-item transparent componentGradient'>
           <span>
             { isSubscribed(video) }
           </span>

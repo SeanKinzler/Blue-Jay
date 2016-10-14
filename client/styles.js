@@ -1,14 +1,16 @@
 module.exports = {
 
   chatterbox: {
-    // 'marginTop': '5px',
-    height: window.innerHeight * .15 + 'px',
-    bottom: '0px',
-    position: 'fixed',
-    // 'maxHeight': window.innerHeight - 330 + 'px',
-    // 'height': window.innerHeight - 330 + 'px',
+    'bottom': '10px',
+    'position': 'fixed',
+    'width': '65%',
+    'float': 'left',
+  },
+
+  messageBox: {
+    'height': window.innerHeight * .15 + 'px',
+    'maxHeight': window.innerHeight * .15 + 'px',
     'overflow': 'scroll',
-    width: '50%'
   },
 
   chatMessage: {
