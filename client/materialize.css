@@ -2223,18 +2223,34 @@ th {
   background-image: linear-gradient(to bottom, rgba(64, 158, 181, 0.9), rgba(11, 26, 30, 0.9) 90%, rgba(11, 26, 30, 0)); }
 
 .componentRadGradient {
-  background-image: radial-gradient(ellipse, rgba(64, 158, 181, 0.8), rgba(11, 26, 30, 0.8) 95%, rgba(11, 26, 30, 0)); }
+  background-image: radial-gradient(ellipse, rgba(64, 158, 181, 0.9), rgba(11, 26, 30, 0.9) 90%, rgba(11, 26, 30, 0)); }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.brand-logo {
+  font-family: 'ITCCuppaJoeW01-Regular';
+  color: #D2E9EF !important; }
 
 .btn, .btn-large {
   color: #D2E9EF !important;
   background: linear-gradient(to bottom, #409eb5, #0b1a1e); }
 
+a {
+  color: #D2E9EF !important; }
+
 .chip {
   min-width: 8em; }
 
+.spaced {
+  margin: 1em 1em; }
+
 html {
   box-sizing: border-box;
-  color: white; }
+  color: white !important; }
 
 *, *:before, *:after {
   box-sizing: inherit; }
@@ -2243,7 +2259,8 @@ body {
   background-color: #b0d9e3;
   background: url("./resources/SF_Night_Joe_Parks.jpg") no-repeat center center fixed;
   background-size: cover;
-  color: #D2E9EF; }
+  color: #D2E9EF !important;
+  font-family: 'Eurostile LT W01 Conden1391150'; }
 
 ul {
   padding: 0;
