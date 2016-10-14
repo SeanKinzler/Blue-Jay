@@ -13,13 +13,13 @@ export default ({subscriptions}) => {
   if (subscriptions.length) {
     return (
       <ul className="collection with-header">
-        <li className='collection-header color1'>
+        <li className='collection-header transparent componentGradient'>
           <h5>Subscriptions</h5>
         </li>
 
         { subscriptions.map((sub, i) => {
           return (
-            <li key={i} className="collection-item avatar color1">
+            <li key={i} className="collection-item avatar transparent componentGradient">
               <i className={`material-icons circle ${ allColors() }`}>{ allIcons() }</i>
               <Link to={ `${ sub.creatorName + '/' + urlHelper.slugify(sub.title) }` } >
                 <h3 className="title">{ checkLength(sub.title, 25) }</h3>
@@ -34,7 +34,7 @@ export default ({subscriptions}) => {
         })}
 
 
-        <li className="collection-header color1">
+        <li className="collection-header transparent componentGradient">
         <Link to='subscriptions'>
           <strong>All My Subscriptions</strong>
         </Link>
@@ -44,10 +44,10 @@ export default ({subscriptions}) => {
   } else {
     return (
       <ul className="collection with-header">
-        <li className='collection-header color1'>
+        <li className='collection-header transparent componentGradient'>
           <h5>Subscriptions</h5>
         </li>
-        <li className="collection-item color1">
+        <li className="collection-item transparent componentGradient">
           <div>You have no subscriptions. 
             <Link to='/search'>Go search for some!</Link>
           </div>

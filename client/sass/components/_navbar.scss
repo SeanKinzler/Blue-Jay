@@ -5,6 +5,7 @@ nav {
   width: 100%;
   height: $navbar-height-mobile;
   line-height: $navbar-height-mobile;
+  background-image: linear-gradient(to bottom, color("color1", "base"), color("color1", "darken-5"));
 
   a { color: $navbar-font-color; }
 

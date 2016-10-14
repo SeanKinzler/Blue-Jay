@@ -9,7 +9,7 @@ const StreamsList = ({streams}) => {
   const renderStreams = (streams) => {
 		if (!streams.length) {
 			return (
-				<li className='collection-item color1'>
+				<li className='collection-item transparent componentGradient'>
 					<p>You have not created any streams.</p>
 					<Link to='/create'>Create one here</Link>
 				</li>
@@ -19,7 +19,7 @@ const StreamsList = ({streams}) => {
 			<span>
 				{ streams.map((stream, i) => {
 					return (
-						<li key={ i } className='collection-item avatar color1'>
+						<li key={ i } className='collection-item avatar transparent componentGradient'>
 							<i className={`material-icons circle ${ allColors() }`}>{ allIcons() }</i>
 							<Link to={ `${ stream.username + '/' + urlHelper.slugify(stream.title) }` } >
 								<h3 className='title'>{ checkLength(stream.title, 25) }</h3>
@@ -31,7 +31,7 @@ const StreamsList = ({streams}) => {
 						</li>
 					)
 				})}
-				<li className='collection-item color1'>
+				<li className='collection-item transparent componentGradient'>
 					<Link to='/streams'>Manage Streams</Link>
 				</li>
 			</span>
@@ -40,7 +40,7 @@ const StreamsList = ({streams}) => {
 
 	return (
 		<ul className='collection with-header'>
-			<li className='collection-header color1'>
+			<li className='collection-header transparent componentGradient'>
 				<h5>My Streams</h5>
 			</li>
 			{ renderStreams(streams) }			

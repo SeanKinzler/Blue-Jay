@@ -10,11 +10,11 @@ const UserStreams = ({streams, deleteStream, onStreamSelect, onRequestClose, edi
 			{ streams.map((stream) => {
 				return (
 					<ul key={stream.id} className="collection with-header col s12 m6 l6">
-						<li className="collection-header">
+						<li className="collection-header transparent componentGradient">
 							<h5>{ checkLength(stream.title, 30) }</h5>
 							<p>{ checkLength(stream.description, 50) }</p>
 						</li>
-						<li className="collection-item">
+						<li className="collection-item transparent componentGradient">
 							<table>
 								<tbody>
 									<tr>

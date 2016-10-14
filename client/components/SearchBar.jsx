@@ -7,7 +7,7 @@ const SearchBar = ({ onTermChange }) => {
 			type='text' 
 			placeholder='Search for a stream'
 			onChange={ e => onTermChange(e.target.value) }
-      className='color1-text text-darken-5'
+      className='color1-text text-darken-1'
 		/>
 	)
 }

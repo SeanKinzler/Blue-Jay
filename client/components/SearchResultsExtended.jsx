@@ -5,7 +5,7 @@ const SearchResultsExtended = ({searchResults, openModal, addSubscription, remov
 
 	const isSubscribed = (stream) => {
 		if (subscriptions.includes(stream.title)) {
-			return <i onClick={ () => { removeSubscription(stream) } } className='material-icons circle color1-text text-lighten-5'>done</i>;
+			return <i onClick={ () => { removeSubscription(stream) } } className='material-icons circle color1 lighten-3 color1-text text-darken-3'>done</i>;
 		}
 		return <i onClick={ () => { addSubscription(stream) } } className='material-icons circle color1-text text-lighten-5'>done</i>;
 	}
@@ -22,12 +22,12 @@ const SearchResultsExtended = ({searchResults, openModal, addSubscription, remov
 		<div>
 			{ searchResults.map((stream) => {
 				return (
-				<ul key={stream.id} className="collection with-header col s12 color1">
-				  <li className="collection-header color1">
+				<ul key={stream.id} className="collection with-header col s12 transparent">
+				  <li className="collection-header transparent componentGradient">
 				  	<h5>{ checkLength(stream.title, 50)}</h5>
 				  	<p>{stream.description}</p>
 				  </li>
-				  <li className="collection-item color1">
+				  <li className="collection-item transparent componentGradient">
 				  	<table className='centered'>
 				  		<tbody>
 				  			<tr>

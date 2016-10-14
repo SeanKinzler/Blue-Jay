@@ -7,7 +7,7 @@ import checkLength from '../utils/lengthHelper.jsx';
 const SearchResultsCompact = ({searchResults, openModal, addSubscription, selectedStream, removeSubscription, modalIsOpen, onRequestClose, subscriptions}) => {
 	const isSubscribed = (stream) => {
 		if (subscriptions.includes(stream.title)) {
-			return <i onClick={ () => { removeSubscription(stream) } } className='material-icons circle color1-text text-lighten-5'>done</i>;
+			return <i onClick={ () => { removeSubscription(stream) } } className='material-icons circle color1 lighten-3 color1-text text-darken-3'>done</i>;
 		}
 		return <i onClick={ () => { addSubscription(stream) } } className='material-icons circle color1-text text-lighten-5'>done</i>;
 	}
@@ -25,11 +25,11 @@ const SearchResultsCompact = ({searchResults, openModal, addSubscription, select
 			{ 
 				searchResults.map((stream) => {
 					return (
-						<ul key={stream.id} className="collection with-header col s12 m6 l6 color1">
-						  <li className="collection-header color1">
+						<ul key={stream.id} className="collection with-header col s12 m6 l6 transparent">
+						  <li className="collection-header transparent componentGradient">
 						  	<h5>{ checkLength(stream.title, 23) }</h5>
 						  </li>
-						  <li className="collection-item color1">
+						  <li className="collection-item transparent componentGradient">
 				  	  	<table className='centered'>
 				  	  		<tbody>
 				  	  			<tr>
