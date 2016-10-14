@@ -18,7 +18,7 @@ const UserSubscriptions = ({subscriptions, removeSubscription}) => {
 					<ul key={stream.title} className='collection with-header col s12'>
 							<li className="collection-header">
 								<Link to={`${stream.creatorName + '/' + urlHelper.slugify(stream.title)}`}>
-									<h5>{ checkLength(stream.title, 40) }</h5>
+									<h5 className="color1-text text-lighten-5">{ checkLength(stream.title, 40) }</h5>
 								</Link>
 								<p>{ stream.description }</p>
 							</li>

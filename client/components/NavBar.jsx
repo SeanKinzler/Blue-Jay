@@ -24,7 +24,7 @@ class NavBar extends Component {
     } else {
       return (
         <li>
-          <Link to='/login'>Login</Link>
+          <Link to='/login' className='color1-text text-lighten-5'>Login</Link>
         </li>
       )
     }
@@ -34,10 +34,10 @@ class NavBar extends Component {
     return (
       <nav>
         <div className='nav-wrapper transparent'>
-          <Link className='brand-logo center' to='/'>BlueJay</Link>
-          <ul id="nav-mobile" className="right">
+          <Link className='brand-logo center color1-text text-lighten-5' to='/'>BlueJay</Link>
+          <ul id="nav-mobile" className='right'>
             <li>
-              <Link to='/search'>Search</Link>
+              <Link to='/search' className='color1-text text-lighten-5'>Search</Link>
             </li>
             { this.renderAuthLinks() }
           </ul>       

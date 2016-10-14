@@ -41,7 +41,7 @@ const StreamsList = ({streams}) => {
 	return (
 		<ul className='collection with-header'>
 			<li className='collection-header transparent componentGradient'>
-				<h5>My Streams</h5>
+				<h5 className='color1-text text-lighten-5'>My Streams</h5>
 			</li>
 			{ renderStreams(streams) }			
 		</ul>

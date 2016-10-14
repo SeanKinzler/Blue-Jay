@@ -33,12 +33,12 @@ const SearchResultsExtended = ({searchResults, openModal, addSubscription, remov
 		<div>
 			{ searchResults.map((stream) => {
 				return (
-				<ul key={stream.id} className="collection with-header col s12 transparent">
-				  <li className="collection-header transparent componentGradient">
-				  	<h5>{ checkLength(stream.title, 50)}</h5>
+				<ul key={stream.id} className="collection with-header col s12 transparent componentGradient">
+				  <li className="collection-header transparent">
+				  	<h5 className="color1-text text-lighten-5">{ checkLength(stream.title, 50)}</h5>
 				  	<p>{stream.description}</p>
 				  </li>
-				  <li className="collection-item transparent componentGradient">
+				  <li className="collection-item transparent">
 				  	<table className='centered'>
 				  		<tbody>
 				  			<tr>

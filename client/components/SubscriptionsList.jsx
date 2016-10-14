@@ -14,7 +14,7 @@ export default ({subscriptions}) => {
     return (
       <ul className="collection with-header">
         <li className='collection-header transparent componentGradient'>
-          <h5>Subscriptions</h5>
+          <h5 className='color1-text text-lighten-5'>Subscriptions</h5>
         </li>
 
         { subscriptions.map((sub, i) => {
@@ -43,9 +43,9 @@ export default ({subscriptions}) => {
     );
   } else {
     return (
-      <ul className="collection with-header">
+      <ul className='collection with-header'>
         <li className='collection-header transparent componentGradient'>
-          <h5>Subscriptions</h5>
+          <h5 className='color1-text text-lighten-5'>Subscriptions</h5>
         </li>
         <li className="collection-item transparent componentGradient">
           <div>You have no subscriptions. 

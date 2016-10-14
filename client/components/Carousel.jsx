@@ -34,7 +34,7 @@ export default class Carousel extends Component {
         <div className="carousel-fixed-item center">
           <Link 
             to='/search' 
-            className='btn waves-effect'>
+            className='btn waves-effect color1-text text-lighten-5'>
             Discover Streams
           </Link>
         </div>

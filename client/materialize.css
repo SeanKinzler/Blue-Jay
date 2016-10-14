@@ -2225,6 +2225,10 @@ th {
 .componentRadGradient {
   background-image: radial-gradient(ellipse, rgba(64, 158, 181, 0.8), rgba(11, 26, 30, 0.8) 95%, rgba(11, 26, 30, 0)); }
 
+.btn, .btn-large {
+  color: #D2E9EF !important;
+  background: linear-gradient(to bottom, #409eb5, #0b1a1e); }
+
 html {
   box-sizing: border-box;
   color: white; }
@@ -2235,7 +2239,8 @@ html {
 body {
   background-color: #b0d9e3;
   background: url("./resources/SF_Night_Joe_Parks.jpg") no-repeat center center fixed;
-  background-size: cover; }
+  background-size: cover;
+  color: #D2E9EF; }
 
 ul {
   padding: 0;

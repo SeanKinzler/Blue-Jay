@@ -6,7 +6,7 @@ export default ({categoriesList, selectCategory}) => {
 		<div>
 			<ul className="collection with-header">
 				<li className="collection-header transparent componentGradient">
-					<h5 className='align-center'>Categories</h5>
+					<h5 className='align-center color1-text text-lighten-5'>Categories</h5>
 				</li>
 			</ul>
 			<div className='row'>

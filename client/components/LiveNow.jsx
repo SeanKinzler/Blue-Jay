@@ -38,7 +38,7 @@ export default class LiveNow extends Component {
         <div>
           <ul className="collection with-header">
             <li className="collection-header transparent componentGradient">
-              <h5 className='align-center'>Live Now</h5>
+              <h5 className='align-center color1-text text-lighten-5'>Live Now</h5>
             </li>
           </ul>
           <ul className='collection'>
@@ -79,14 +79,14 @@ export default class LiveNow extends Component {
         <div>
           <ul className="collection with-header">
             <li className="collection-header transparent componentGradient">
-              <h5 className='align-center'>Live Now</h5>
+              <h5 className='align-center color1-text text-lighten-5'>Live Now</h5>
             </li>
           </ul>
           <ul className="collection with-header">
             <li className="collection-header transparent componentGradient">
-              <h5>The are no streams right now.</h5>
+              <h5 className="color1-text text-lighten-5">The are no streams right now.</h5>
               <Link href='/streams'>
-                <h6>Be the first to start streaming!</h6>
+                <h6 className="color1-text text-lighten-5">Be the first to start streaming!</h6>
               </Link>
             </li>
           </ul>

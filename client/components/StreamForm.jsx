@@ -19,7 +19,7 @@ const StreamForm = ({submitHandler, categories}) => {
 			<input name='description' type='text' placeholder='Description' />
 			{ renderCategories() }
       <div className="chips chips-placeholder"></div>
-			<input className='btn' type='submit' value='Create Stream' />
+			<input className='btn color1-text text-lighten-5' type='submit' value='Create Stream' />
 		</form>
 	)
 }
