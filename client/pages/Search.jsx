@@ -6,7 +6,6 @@ import SearchBar from '../components/SearchBar.jsx';
 import SearchFilter from '../components/SearchFilter.jsx';
 import SearchResultsCompact from '../components/SearchResultsCompact.jsx';
 import SearchResultsExtended from '../components/SearchResultsExtended.jsx';
-import SearchResultsModal from '../components/SearchResultsModal.jsx';
 import regex from '../utils/regex';
 
 class Search extends Component {

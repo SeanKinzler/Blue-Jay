@@ -18,7 +18,6 @@ export default class ChatContainer extends Component {
 
     var context = this;
     this.state.socket.on('chatMessage', function (data) {
-      console.log(data);
       context.state.messages.push({
         user: data.user,
         text: data.text
@@ -64,8 +63,8 @@ export default class ChatContainer extends Component {
 
   render() {
     return (
-      <div className="chat">
-        <div id='chats' style={ style.chatterbox }>
+      <div className="chat" style={ style.chatterbox }>
+        <div id='chats'>
           { 
             this.state.messages.map(function (messageObject, index) {
               return <Message message={ messageObject } key={ index } />

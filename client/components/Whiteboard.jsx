@@ -11,7 +11,15 @@ class Whiteboard extends React.Component {
   }
 
   componentDidMount() {
-    this.canvas = new fabric.Canvas('whiteboard', {isDrawingMode: true});
+    this.canvas = new fabric.Canvas(
+                    'whiteboard', 
+                    {
+                      width: window.innerWidth * .65, 
+                      height: window.innerHeight * .65, 
+                      display: 'inline', 
+                      isDrawingMode: true
+                    }
+                  );
 
     //Send whiteboard changes to the server:
     this.canvas.on('path:created', () => this.sendWhiteboard());
@@ -35,7 +43,7 @@ class Whiteboard extends React.Component {
 
   render() {
     return (
-      <div className="whiteboard">
+      <div className="whiteboard hide-on-small-only">
         <canvas id="whiteboard"></canvas>
       </div>
     );

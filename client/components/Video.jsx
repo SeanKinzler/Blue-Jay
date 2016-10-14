@@ -3,8 +3,10 @@ import style from '../styles.js';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../actions/index.jsx';
 import ChatContainer from './ChatContainer.jsx';
+import InfoBox from '../components/InfoBox.jsx';
 import EZRTC from '../lib/webRTC';
 import io from 'socket.io-client';
+import Whiteboard from '../components/Whiteboard.jsx';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import urlUtil from '../utils/urlHelper.jsx';
@@ -77,25 +79,48 @@ class Video extends Component {
       <div className='container'>
         <div className='row'>
           
-          <div className='col s12 m9'>
+         
             <div className='row' id='putVidsHere'>
-              <video
-                controls
-                className='col s9 m12' 
-                id='remoteVideo'
-                poster="/static/video.jpg" 
-                autoPlay>
-              </video>
-              <video
-                className='col s3' 
-                id='localVideo'
-                poster="/static/video.jpg"
-                autoPlay>
-              </video>
+              <div 
+                className='col s12 m9'
+                style={{position:'relative'}}>
+                <video
+                  style={{'max-height': window.innerHeight * .65 + 'px',
+                          'max-width': window.innerWidth * .65 + 'px',
+                          display: 'inline',
+                          'z-index': 1,
+                          position: 'absolute'}}
+                  controls
+                  className='responsive-video' 
+                  id='remoteVideo'
+                  poster="/static/video.jpg" 
+                  autoPlay>
+                </video>
+                <video
+                  style={{'max-width': window.innerWidth * .10 + 'px', 
+                          display: 'inline', 
+                          float: 'left',
+                          'z-index': 10,
+                          position: 'absolute'}}
+                  className='responsive-video' 
+                  id='localVideo'
+                  poster="/static/video.jpg"
+                  autoPlay>
+                </video>
+              </div>
+              <InfoBox 
+                style={{float: 'right'}}
+                className='col s12 m3'
+                video={ this.props.video } 
+                creatorName={ this.props.creatorName } 
+                subscriptions={ this.props.subscriptions }
+                addSubscription={ this.props.addSubscription }
+                removeSubscription={ this.props.removeSubscription}
+              />
             </div>  
-          </div>
-     
-          <div className='col s12 m3' >
+        </div>
+        <div className='row'>
+          <div className='col s12'>
               <ChatContainer 
                 roomId={ this.state.roomId }
                 room={ this.state.room }
@@ -103,17 +128,16 @@ class Video extends Component {
                 socket={ this.state.socket } 
               />
           </div>
-
         </div>
       </div>
     );
   }
 };
 
-
 const mapStateToProps = (state) => {
   return {
-    username: state.auth.username
+    username: state.auth.username,
+    subscriptions: state.subscriptions.data.map(s=>s.title),
   }
 }
 

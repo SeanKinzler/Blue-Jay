@@ -38,7 +38,7 @@ render((
         <Route path='nostream' component={StreamUnavailable} />
         <Route path='nomedia' component={NoMedia} />
         <Route path='jwt/:token' component={JwtPage} />
-        <Route path=':stream/:streamId' component={StreamRoom} onEnter={requireAuth} />
+        <Route path=':creatorName/:streamSlug' component={StreamRoom} onEnter={requireAuth} />
       </Route>
     </Router>
   </Provider>

@@ -51,7 +51,7 @@ module.exports = {
   },
   //return owned streams aswell
   getUser: (req, res) => {
-    var query1 = 'SELECT u.id, u.username, sub.phoneNotifications, sub.emailNotifications, s.id as streamId, s.title, s.subscriberCount, s.description, us.username AS creatorName FROM users u ' + 
+    var query1 = 'SELECT u.id, u.username, u.avatarUrl, u. avatarThumbUrl, sub.phoneNotifications, sub.emailNotifications, s.id as streamId, s.title, s.subscriberCount, s.description, us.username AS creatorName FROM users u ' + 
       'LEFT JOIN (subscriptions sub, streams s, users us) ' + 
       'ON (u.username="' + req.username + '" AND u.id = sub.userId AND s.id = sub.streamId AND s.creatorId=us.id) WHERE u.username="' + req.username + '";\n'
       query2 = 'SELECT s.*, u.username FROM streams s JOIN (users u) ON s.creatorId=u.id WHERE creatorId=(SELECT id FROM users WHERE username="' + req.username +'");\n'
@@ -77,7 +77,9 @@ module.exports = {
                     title: rows[i].title,
                     online: rows[i].online,
                     description: rows[i].description,
-                    creatorName: rows[i].creatorName
+                    creatorName: rows[i].creatorName,
+                    avatarUrl: rows[i].avatarUrl,
+                    avatarThumbUrl: rows[i].avatarThumbUrl
                   });
                 }
               }
@@ -91,7 +93,9 @@ module.exports = {
                     title: rows.title,
                     online: rows.online,
                     description: rows.description,
-                    creatorName: rows.creatorName
+                    creatorName: rows.creatorName,
+                    avatarUrl: rows.avatarUrl,
+                    avatarThumbUrl: rows.avatarThumbUrl
                   });
                 res.send(rows);
                 return;
@@ -277,13 +281,13 @@ module.exports = {
   },
 
   getStream: (req, res) => {
-    var query = 'SELECT * FROM streams WHERE title="' + req.body.title + '";\n' + 
+    var query = 'SELECT * FROM streams WHERE title="' + req.query.title + '";\n' + 
       'SELECT c.* FROM streams s INNER JOIN (streams_categories sc, categories c) ' + 
-      'ON (s.title="' + req.body.title + '" AND s.id = sc.streamId AND c.id = sc.categoryId) ' + 
-      'WHERE s.title = "' + req.body.title + '";\n' +
+      'ON (s.title="' + req.query.title + '" AND s.id = sc.streamId AND c.id = sc.categoryId) ' + 
+      'WHERE s.title = "' + req.query.title + '";\n' +
       'SELECT k.* FROM streams s INNER JOIN (streams_keywords sk, keywords k) ' + 
-      'ON (s.title="' + req.body.title + '" AND s.id = sk.streamId AND k.id = sk.keywordId) ' + 
-      'WHERE s.title = "' + req.body.title + '";\n';
+      'ON (s.title="' + req.query.title + '" AND s.id = sk.streamId AND k.id = sk.keywordId) ' + 
+      'WHERE s.title = "' + req.query.title + '";\n';
     queries = query.split('\n');
     returnQueries(queries, res, function(toRet) {
       toRet[0].categories = [];
