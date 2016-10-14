@@ -13,13 +13,13 @@ export default ({subscriptions}) => {
   if (subscriptions.length) {
     return (
       <ul className="collection with-header">
-        <li className='collection-header color2'>
-          <h5>Subscriptions</h5>
+        <li className='collection-header transparent componentGradient'>
+          <h5 className='color1-text text-lighten-5'>Subscriptions</h5>
         </li>
 
         { subscriptions.map((sub, i) => {
           return (
-            <li key={i} className="collection-item avatar color2">
+            <li key={i} className="collection-item avatar transparent componentGradient">
               <i className={`material-icons circle ${ allColors() }`}>{ allIcons() }</i>
               <Link to={ `${ sub.creatorName + '/' + urlHelper.slugify(sub.title) }` } >
                 <h3 className="title">{ checkLength(sub.title, 25) }</h3>
@@ -27,14 +27,14 @@ export default ({subscriptions}) => {
               <p>{ checkLength(sub.description, 40) }
               </p>
               <Link to={ `${ sub.creatorName + '/' + urlHelper.slugify(sub.title) }` } className="secondary-content">
-                <i className="material-icons">contact_phone</i>
+                <i className="material-icons color1-text text-lighten-5">contact_phone</i>
               </Link>
             </li>
           );
         })}
 
 
-        <li className="collection-header color2">
+        <li className="collection-header transparent componentGradient">
         <Link to='subscriptions'>
           <strong>All My Subscriptions</strong>
         </Link>
@@ -43,11 +43,11 @@ export default ({subscriptions}) => {
     );
   } else {
     return (
-      <ul className="collection with-header">
-        <li className='collection-header color2'>
-          <h5>Subscriptions</h5>
+      <ul className='collection with-header'>
+        <li className='collection-header transparent componentGradient'>
+          <h5 className='color1-text text-lighten-5'>Subscriptions</h5>
         </li>
-        <li className="collection-item color2">
+        <li className="collection-item transparent componentGradient">
           <div>You have no subscriptions. 
             <Link to='/search'>Go search for some!</Link>
           </div>

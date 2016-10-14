@@ -24,14 +24,14 @@ class Dashboard extends Component {
           </div>
           <div className='col s12'>
             <ul className='collection with-header'>
-              <li className='collection-header color2'><h5>Account Settings</h5></li>
-              <li className='collection-item color2'>
+              <li className='collection-header color1'><h5>Account Settings</h5></li>
+              <li className='collection-item color1'>
                 <table className='centered responsive-table'>
                   <tbody>
                     <tr>
-                      <td><i className='material-icons circle'>person_pin</i><br />Profile</td>
-                      <td><i className='material-icons circle'>email</i><br />Notifications</td>
-                      <td><i className='material-icons circle'>credit_card</i><br/>Payments</td>
+                      <td><i className='material-icons circle color1-text text-lighten-5'>person_pin</i><br />Profile</td>
+                      <td><i className='material-icons circle color1-text text-lighten-5'>email</i><br />Notifications</td>
+                      <td><i className='material-icons circle color1-text text-lighten-5'>credit_card</i><br/>Payments</td>
                     </tr>
                   </tbody>
                 </table>

@@ -10,11 +10,11 @@ const UserStreams = ({streams, deleteStream, onStreamSelect, onRequestClose, edi
 			{ streams.map((stream) => {
 				return (
 					<ul key={stream.id} className="collection with-header col s12 m6 l6">
-						<li className="collection-header">
-							<h5>{ checkLength(stream.title, 30) }</h5>
+						<li className="collection-header transparent componentGradient">
+							<h5 className="color1-text text-lighten-5">{ checkLength(stream.title, 30) }</h5>
 							<p>{ checkLength(stream.description, 50) }</p>
 						</li>
-						<li className="collection-item">
+						<li className="collection-item transparent componentGradient">
 							<table>
 								<tbody>
 									<tr>
@@ -28,13 +28,13 @@ const UserStreams = ({streams, deleteStream, onStreamSelect, onRequestClose, edi
 										  	<form onSubmit={ (e) => { editStream(e, stream) } }>
 										  		<input type='text' defaultValue={ stream.title } name='title' />
 										  		<input type='text' defaultValue={ stream.description } name='description' />
-										  		<input type='submit' value='Submit' className='btn' />
+										  		<input type='submit' value='Submit' className='btn color1-text text-lighten-5' />
 										  	</form>
 										  </div>
 										</Modal></td>
 
 										<td><a onClick={ () => { deleteStream(stream); } }>Delete Stream</a></td>
-										<td><i className="material-icons">supervisor_account</i><br/>{ stream.subscriberCount }</td>
+										<td><i className="material-icons color1-text text-lighten-5">supervisor_account</i><br/>{ stream.subscriberCount }</td>
 									</tr>
 								</tbody>
 							</table>
@@ -43,7 +43,7 @@ const UserStreams = ({streams, deleteStream, onStreamSelect, onRequestClose, edi
 				)
 			})}
 			<div>
-				<Link to='/create' className="btn">
+				<Link to='/create' className="btn color1-text text-lighten-5">
 					Create New Stream
 				</Link>
 			</div>

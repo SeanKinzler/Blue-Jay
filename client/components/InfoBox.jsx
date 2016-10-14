@@ -35,7 +35,7 @@ export default ({video, creatorName, subscriptions, addSubscription, removeSubsc
   return (
     <ul className="collection hide-on-med-and-down">
         <li className="collection-header">
-            <h5 className='center-align'>
+            <h5 className='center-align color1-text text-lighten-5'>
               { video.title }
             </h5>
         </li>
