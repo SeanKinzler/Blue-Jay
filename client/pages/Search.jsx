@@ -47,8 +47,8 @@ class Search extends Component {
   }
 
   renderFilterView() {
-    let compact = this.props.streams.view === 'compact' ? 'color1' : '';
-    let extended = this.props.streams.view === 'extended' ? 'color1' : '';
+    let compact = this.props.streams.view === 'compact' ? 'componentGradient' : '';
+    let extended = this.props.streams.view === 'extended' ? 'componentGradient' : '';
     return (
       <span className='align-center'>
         <i onClick={ () => { this.changeViewHandler('compact'); } } className={`material-icons ${compact}`}>view_module</i>
