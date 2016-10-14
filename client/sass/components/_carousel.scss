@@ -67,7 +67,7 @@
 
     .indicator-item {
       &.active {
-        background-color: #fff;
+        background-color: color('color1', 'lighten-5');
       }
 
       display: inline-block;

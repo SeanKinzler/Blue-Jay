@@ -5892,7 +5892,7 @@ input[type=range]:focus::-ms-fill-upper {
       transition: background-color .3s;
       border-radius: 50%; }
       .carousel .indicators .indicator-item.active {
-        background-color: #fff; }
+        background-color: #D2E9EF; }
 
 /* ==========================================================================
    $BASE-PICKER
