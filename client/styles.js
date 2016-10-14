@@ -8,8 +8,8 @@ module.exports = {
   },
 
   messageBox: {
-    'height': window.innerHeight * .15 + 'px',
-    'maxHeight': window.innerHeight * .15 + 'px',
+    'height': window.innerHeight * .13 + 'px',
+    'maxHeight': window.innerHeight * .13 + 'px',
     'overflow': 'scroll',
   },
 
