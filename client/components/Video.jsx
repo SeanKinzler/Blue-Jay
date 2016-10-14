@@ -79,30 +79,45 @@ class Video extends Component {
       <div className='container'>
         <div className='row'>
           
-          <div className='col s12'>
+         
             <div className='row' id='putVidsHere'>
-              <video
-                controls
-                className='col s9 responsive-video' 
-                id='remoteVideo'
-                poster="/static/video.jpg" 
-                autoPlay>
-              </video>
+              <div 
+                className='col s12 m9'
+                style={{position:'relative'}}>
+                <video
+                  style={{'max-height': window.innerHeight * .65 + 'px',
+                          'max-width': window.innerWidth * .65 + 'px',
+                          display: 'inline',
+                          'z-index': 1,
+                          position: 'absolute'}}
+                  controls
+                  className='responsive-video' 
+                  id='remoteVideo'
+                  poster="/static/video.jpg" 
+                  autoPlay>
+                </video>
+                <video
+                  style={{'max-width': window.innerWidth * .10 + 'px', 
+                          display: 'inline', 
+                          float: 'left',
+                          'z-index': 10,
+                          position: 'absolute'}}
+                  className='responsive-video' 
+                  id='localVideo'
+                  poster="/static/video.jpg"
+                  autoPlay>
+                </video>
+              </div>
               <InfoBox 
+                style={{float: 'right'}}
+                className='col s12 m3'
                 video={ this.props.video } 
                 creatorName={ this.props.creatorName } 
                 subscriptions={ this.props.subscriptions }
                 addSubscription={ this.props.addSubscription }
                 removeSubscription={ this.props.removeSubscription}
               />
-              <video
-                className='col s3 responsive-video' 
-                id='localVideo'
-                poster="/static/video.jpg"
-                autoPlay>
-              </video>
             </div>  
-          </div>
         </div>
         <div className='row'>
           <div className='col s12'>
@@ -118,7 +133,6 @@ class Video extends Component {
     );
   }
 };
-
 
 const mapStateToProps = (state) => {
   return {
