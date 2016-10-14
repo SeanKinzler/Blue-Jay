@@ -28,7 +28,7 @@ class StreamRoom extends Component {
 
   render() {
     return (
-      <div className='container'>
+      <div className=''>
         <Video 
           socket={ this.state.socket } 
           video={ this.props.video }
