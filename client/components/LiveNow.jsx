@@ -49,7 +49,7 @@ export default class LiveNow extends Component {
                 var host = streamObj.title.slice(0, streamObj.title.indexOf('/'));
 
                 return ( 
-                  <li className="collection-item avatar" key={ index }>
+                  <li className="collection-item avatar transparent componentGradient" key={ index }>
                     <Link className="valign" to={ '/' + streamObj.title }>
                       <i className={ 'valign material-icons circle ' + randomColor() }>{ randomIcon() }</i>
                     </Link>
