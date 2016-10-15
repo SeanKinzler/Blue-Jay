@@ -7,7 +7,7 @@ export default ({video, creatorName, subscriptions, addSubscription, removeSubsc
     if (subscriptions.includes(stream.title)) {
       return (
         <i onClick={ () => { removeSubscription(stream) } } 
-           className='material-icons circle teal'>
+           className='material-icons circle'>
            done
         </i>
       );

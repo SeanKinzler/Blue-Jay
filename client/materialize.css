@@ -2219,31 +2219,12 @@ td,
 th {
   padding: 0; }
 
-.componentGradient {
-  background-image: linear-gradient(to bottom, rgba(64, 158, 181, 0.9), rgba(11, 26, 30, 0.9) 90%, rgba(11, 26, 30, 0)); }
-
-.componentRadGradient {
-  background-image: radial-gradient(ellipse, rgba(64, 158, 181, 0.8), rgba(11, 26, 30, 0.8) 95%, rgba(11, 26, 30, 0)); }
-
-.btn, .btn-large {
-  color: #D2E9EF !important;
-  background: linear-gradient(to bottom, #409eb5, #0b1a1e); }
-
-.chip {
-  min-width: 8em; }
-
 html {
   box-sizing: border-box;
-  color: white; }
+  color: white !important; }
 
 *, *:before, *:after {
   box-sizing: inherit; }
-
-body {
-  background-color: #b0d9e3;
-  background: url("./resources/SF_Night_Joe_Parks.jpg") no-repeat center center fixed;
-  background-size: cover;
-  color: #D2E9EF; }
 
 ul {
   padding: 0;
@@ -2572,6 +2553,7 @@ td, th {
       border-right: 1px solid #d0d0d0; } }
 .collection {
   margin: 0.5rem 0 1rem 0;
+  border: 1px solid #e0e0e0;
   border-radius: 2px;
   overflow: hidden;
   position: relative; }
@@ -2579,7 +2561,8 @@ td, th {
     background-color: #fff;
     line-height: 1.5rem;
     padding: 10px 20px;
-    margin: 0; }
+    margin: 0;
+    border-bottom: 1px solid #e0e0e0; }
     .collection .collection-item.avatar {
       min-height: 84px;
       padding-left: 72px;
@@ -2621,6 +2604,7 @@ td, th {
       background-color: #ddd; }
   .collection.with-header .collection-header {
     background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
     padding: 10px 20px; }
   .collection.with-header .collection-item {
     padding-left: 30px; }
@@ -6530,5 +6514,51 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 @media (min-height: 40.125em) {
   .picker--time .picker__box {
     margin-bottom: 5em; } }
+.componentGradient {
+  background-image: linear-gradient(to bottom, rgba(64, 158, 181, 0.9), rgba(11, 26, 30, 0.9) 90%, rgba(11, 26, 30, 0)); }
+
+.componentRadGradient {
+  background-image: radial-gradient(ellipse, rgba(64, 158, 181, 0.9), rgba(11, 26, 30, 0.9) 90%, rgba(11, 26, 30, 0)); }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.brand-logo {
+  font-family: 'ITCCuppaJoeW01-Regular';
+  color: #D2E9EF; }
+
+.modal {
+  background-image: linear-gradient(to bottom, rgba(64, 158, 181, 0.9), rgba(11, 26, 30, 0.9));
+  background-color: transparent; }
+  .modal .modal-header,
+  .modal .modal-footer {
+    background-color: transparent; }
+
+.btn, .btn-large {
+  color: #D2E9EF;
+  background-image: linear-gradient(to bottom, rgba(64, 158, 181, 0.9), rgba(11, 26, 30, 0.9)); }
+
+a {
+  color: #D2E9EF !important; }
+
+.chip {
+  min-width: 8em; }
+
+.collection {
+  border: none; }
+  .collection .collection-item {
+    border-bottom: none; }
+  .collection.with-header .collection-header {
+    border-bottom: none; }
+
+body {
+  background-color: #b0d9e3;
+  background: url("./resources/SF_Night_Joe_Parks.jpg") no-repeat center center fixed;
+  background-size: cover;
+  color: #D2E9EF;
+  font-family: 'Eurostile LT W01 Conden1391150'; }
 
 /*# sourceMappingURL=materialize.css.map */

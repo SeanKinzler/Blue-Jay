@@ -53,17 +53,17 @@ export default class LiveNow extends Component {
                     <Link className="valign" to={ '/' + streamObj.title }>
                       <i className={ 'valign material-icons circle ' + randomColor() }>{ randomIcon() }</i>
                     </Link>
-                    <h6 className="title">
+                    <h5 className="title">
                       Title: <Link to={ '/' + urlUtil.slugify(streamObj.title) }>{ title }</Link>
-                    </h6>
+                    </h5>
                     
-                    <h6>
+                    <p>
                       Host: <Link to={ '/' + host }>{ host }</Link>
-                    </h6>
+                    </p>
                     
-                    <h7>
+                    <p>
                       Viewers: { streamObj.size }
-                    </h7>
+                    </p>
                   </li>
                 );
               })
@@ -86,7 +86,7 @@ export default class LiveNow extends Component {
             <li className="collection-header transparent componentGradient">
               <h5 className="color1-text text-lighten-5">The are no streams right now.</h5>
               <Link href='/streams'>
-                <h6 className="color1-text text-lighten-5">Be the first to start streaming!</h6>
+                <p className="color1-text text-lighten-5">Be the first to start streaming!</p>
               </Link>
             </li>
           </ul>

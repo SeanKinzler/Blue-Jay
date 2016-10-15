@@ -1,0 +1,76 @@
+$componentGradient: linear-gradient(to bottom, rgba(64, 158, 181, .9), rgba(11, 26, 30, .9) 90%, rgba(11, 26, 30, 0));
+$componentGradientConstantTransparency: linear-gradient(to bottom, rgba(64, 158, 181, .9), rgba(11, 26, 30, .9));
+$componentRadGradient: radial-gradient(ellipse, rgba(64, 158, 181, .9), rgba(11, 26, 30, .9) 90%, rgba(11, 26, 30, 0));
+
+.componentGradient {
+  background-image: linear-gradient(to bottom, rgba(64, 158, 181, .9), rgba(11, 26, 30, .9) 90%, rgba(11, 26, 30, 0));
+}
+
+.componentRadGradient {
+  background-image: radial-gradient(ellipse, rgba(64, 158, 181, .9), rgba(11, 26, 30, .9) 90%, rgba(11, 26, 30, 0));
+}
+
+//Custom modifications to headers and .brand-logo:
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.brand-logo {
+  font-family: 'ITCCuppaJoeW01-Regular';
+  color: color('color1', 'lighten-5');
+}
+
+.modal {
+  background-image: $componentGradientConstantTransparency;
+  background-color: color('shades', 'transparent');
+
+  .modal-header,
+  .modal-footer {
+    background-color: color('shades', 'transparent');
+  }
+}
+
+//Custom modifications to .btn:
+.btn {
+  color: color('color1', 'lighten-5');
+  background-image: $componentGradientConstantTransparency;
+}
+
+//Custom modifications to a:
+a {
+  color: color('color1', 'lighten-5') !important;
+}
+
+//Custom modifications to .chip:
+.chip {
+  min-width: 8em;
+}
+
+.collection {
+  border: none;
+
+  .collection-item {
+    border-bottom: none;
+  }
+
+  &.with-header {
+    .collection-header {
+      border-bottom: none;
+    }
+  }
+}
+
+.modal {
+
+}
+
+body {
+  background-color: lighten($primary-color, 15%);
+  background: url('./resources/SF_Night_Joe_Parks.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: color('color1', 'lighten-5');
+  font-family:'Eurostile LT W01 Conden1391150';
+//  font-family:'Eurostile LT W01 Medium1391130';
+}
