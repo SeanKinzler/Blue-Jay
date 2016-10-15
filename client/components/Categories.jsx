@@ -12,7 +12,7 @@ export default ({categoriesList, selectCategory}) => {
 			<div className='row'>
 				{ categoriesList.map((category, i) => {
 					return (
-						<div key={i} className='col s3 center-align spaced'>
+						<div key={i} className='col s3 center-align'>
 							<div className="chip transparent componentRadGradient">
 							  <Link to='/search' 
 							  			onClick={()=> { selectCategory([category]) } } >

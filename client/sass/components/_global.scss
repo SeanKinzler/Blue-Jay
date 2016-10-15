@@ -1,47 +1,5 @@
 //Default styles
 
-.componentGradient {
-  background-image: linear-gradient(to bottom, rgba(64, 158, 181, .9), rgba(11, 26, 30, .9) 90%, rgba(11, 26, 30, 0));
-//  background-image: linear-gradient(to bottom, color("color1", "base"), color("color1", "darken-5"));
-}
-
-.componentRadGradient {
-  background-image: radial-gradient(ellipse, rgba(64, 158, 181, .9), rgba(11, 26, 30, .9) 90%, rgba(11, 26, 30, 0));
-//  background-image: linear-gradient(to bottom, color("color1", "base"), color("color1", "darken-5"));
-}
-
-//Custom modifications to headers and .brand-logo:
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.brand-logo {
-  font-family: 'ITCCuppaJoeW01-Regular';
-  color: color('color1', 'lighten-5') !important;
-}
-
-//Custom modifications to .btn:
-.btn {
-  color: color('color1', 'lighten-5') !important;
-  background: linear-gradient(to bottom, rgba(64, 158, 181, 1), rgba(11, 26, 30, 1));
-}
-
-//Custom modifications to a:
-a {
-  color: color('color1', 'lighten-5') !important;
-}
-
-//Custom modifications to .chip:
-.chip {
-  min-width: 8em;
-}
-
-.spaced {
-  margin: 1em 1em;
-}
-
 html {
  box-sizing: border-box;
  color: lighten($primary-color, 50%) !important;
@@ -54,12 +12,6 @@ body {
   // display: flex;
   // min-height: 100vh;
   // flex-direction: column;
-  background-color: lighten($primary-color, 15%);
-  background: url('./resources/SF_Night_Joe_Parks.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color: color('color1', 'lighten-5') !important;
-  font-family:'Eurostile LT W01 Conden1391150';
-//  font-family:'Eurostile LT W01 Medium1391130';
 }
 
 main {
@@ -540,7 +492,7 @@ td, th{
 // Collections
 .collection {
   margin: $element-top-margin 0 $element-bottom-margin 0;
-  //border: 1px solid $collection-border-color;
+  border: 1px solid $collection-border-color;
   border-radius: 2px;
   overflow: hidden;
   position: relative;
@@ -550,7 +502,7 @@ td, th{
     line-height: 1.5rem;
     padding: 10px 20px;
     margin: 0;
-    //border-bottom: 1px solid $collection-border-color;
+    border-bottom: 1px solid $collection-border-color;
 
     // Avatar Collection
     &.avatar {
@@ -620,7 +572,7 @@ td, th{
   &.with-header {
     .collection-header {
       background-color: $collection-bg-color;
-      //border-bottom: 1px solid $collection-border-color;
+      border-bottom: 1px solid $collection-border-color;
       padding: 10px 20px;
     }
     .collection-item {
