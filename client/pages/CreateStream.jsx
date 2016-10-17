@@ -8,7 +8,6 @@ import StreamForm from '../components/StreamForm.jsx';
 import regex from '../utils/regex';
 
 class CreateStream extends Component {
-
   componentDidMount() {
     $('select').material_select();
     $('.chips-placeholder').material_chip({
@@ -36,6 +35,7 @@ class CreateStream extends Component {
     }
     this.props.createStream(newStream);
   }
+
   render() {
     return (
       <div className='container'>

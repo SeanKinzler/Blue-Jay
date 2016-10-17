@@ -4,8 +4,6 @@ import * as Actions from '../actions/index.jsx';
 import { browserHistory } from 'react-router';
 
 class JwtPage extends Component {
-  
-
   componentDidMount() {
     localStorage.token = window.location.pathname.slice(window.location.pathname.lastIndexOf('/') + 1);
     // may be used for login redirect
@@ -23,7 +21,6 @@ class JwtPage extends Component {
 
 
   render() {
-
     return (
       <div className=''>
         <h4 className='center-align'>Redirecting...</h4>
