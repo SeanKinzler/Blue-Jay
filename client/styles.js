@@ -1,5 +1,4 @@
 module.exports = {
-
   chatterbox: {
     'bottom': '10px',
     'position': 'fixed',
@@ -36,5 +35,4 @@ module.exports = {
   '.banner': {
     'text-align': 'center'
   }
-
 };

@@ -18,7 +18,6 @@ class Home extends Component {
     this.props.socket.disconnect();
   }
 
-
   render() {
     return (
       <div>

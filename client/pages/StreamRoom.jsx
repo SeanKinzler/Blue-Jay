@@ -9,7 +9,6 @@ import ChatContainer from '../components/ChatContainer.jsx';
 import urlHelper from '../utils/urlHelper.jsx';
 
 class StreamRoom extends Component {
-
   constructor(props) {
     super(props);
     this.state = {

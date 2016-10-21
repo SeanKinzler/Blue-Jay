@@ -81,9 +81,7 @@ io.sockets.on('connection', function(socket) {
 
       currentRoom[socket.id] = data.roomName;
     } else {  
-
       jwt.decode(data.token, function (error, userData) {
-
         if (error) {
           console.log(error);
           socket.emit('failure', 'That ain\'t a real token!');
@@ -133,14 +131,12 @@ io.sockets.on('connection', function(socket) {
     socket.to(data.recipient).emit('ice-merge', data);
   });
 
-
   socket.on('chatMessage', function (data) {
     socket.broadcast.to(data.room).emit('chatMessage', data);
   });
 
   socket.on('disconnect', function () {
     if (rooms[currentRoom[socket.id]]) {
-
       if (!socket.adapter.rooms[currentRoom[socket.id]]) {
         db.toggleStreamOff({body: { title: currentRoom[socket.id].slice(currentRoom[socket.id].lastIndexOf('/') + 1)}});
       }
@@ -158,12 +154,4 @@ io.sockets.on('connection', function(socket) {
   socket.on('dataFromClient', (data) => socket.broadcast.to(data.room).emit('dataFromServer', data.canvasJSON));
 });
 
-
-
-
 module.exports = server;
-
-
-
-
-
