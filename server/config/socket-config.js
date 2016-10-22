@@ -20,9 +20,7 @@ var rooms = {};
 var currentRoom = {};
 
 io.sockets.on('connection', function(socket) {
-
   /////// LiveNow Component Code /////////////////////////////////////
-
   socket.on('getStreams', function () {
     var results = [];
     var realRoom = true;
@@ -49,7 +47,6 @@ io.sockets.on('connection', function(socket) {
 
     socket.emit('allStreams', results);
   });
-
 
   /////// WebRTC Code ////////////////////////////////////////////////
   socket.on('ready', function () {
@@ -84,7 +81,7 @@ io.sockets.on('connection', function(socket) {
       jwt.decode(data.token, function (error, userData) {
         if (error) {
           console.log(error);
-          socket.emit('failure', 'That ain\'t a real token!');
+          socket.emit('failure', 'Error: Token is invalid.');
         } else {
           db.getUser(userData, {
             send: function (row) {
@@ -104,10 +101,10 @@ io.sockets.on('connection', function(socket) {
                 }
               }
 
-              socket.emit('failure', 'This ain\'t yo stream');
+              socket.emit('failure', 'Error: This is not your stream.');
             },
             sendStatus: function () {
-              socket.emit('failure', 'That ain\'t a real token!');
+              socket.emit('failure', 'Error: Token is invalid.');
             }
           });
         }
@@ -151,6 +148,7 @@ io.sockets.on('connection', function(socket) {
     }
   });
 
+  /////// Whiteboard Code ////////////////////////////////////////////////
   socket.on('dataFromClient', (data) => socket.broadcast.to(data.room).emit('dataFromServer', data.canvasJSON));
 });
 
